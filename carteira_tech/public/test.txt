@@ -1,0 +1,27 @@
+```
+===================== ISA STORE =====================
+CNPJ:00.000.000/0000-00
+64120-000 - Rua Anfrísio Lobão - Centro, 
+            União - PI
+___________________________________________________
+Venda: 10
+Operador: José Carlos Nunes Coelho Neto
+Consumidor: Feiurinha
+Data Venda: 05/05/22
+___________________________________________________
+#  COD NOME              DESC QTD VL.UNIT. VL.TOTAL
+1  1   Blusa Cropped          1     25       25       
+2  2   Blusa T-Shirt          1     30       30       
+3  3   Short Tecido           1     50       50       
+4  4   Short Jeans            1     60       60       
+5  5   Calça Jeans           1     70       70       
+6  6   Vestido Tubinho        1     80       80       
+___________________________________________________
+Quantidade Itens:                            6
+Subtotal:                                    315
+Acrescimos:                                  25.2
+Valor Total:                                 340.2
+___________________________________________________
+                      OBRIGADO!
+                    VOLTE SEMPRE!
+```

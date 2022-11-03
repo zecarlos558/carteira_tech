@@ -1,0 +1,17 @@
+<div>
+    <x-div.card>
+        @isset($header)
+            @slot('header')
+            {{$header}}
+            @endslot
+        @endisset
+        @slot('corpo')
+            {{$slot}}
+        @endslot
+        @isset($rodape)
+            @slot('rodape')
+            {{$rodape}}
+            @endslot
+        @endisset
+    </x-div.card>
+</div>

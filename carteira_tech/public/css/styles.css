@@ -1,0 +1,694 @@
+
+body {
+    min-height: 100vh;
+    padding-bottom: 100px;
+    position: relative;
+}
+
+/* Modo Dark - Contraste */
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.dark-mode #navbvarMenu {
+    background-color: black;
+    color: white;
+}
+
+.dark-mode #navbvarMenu a {
+    font-size: 16px;
+    color: white;
+}
+
+.dark-mode #navbvarMenu a:hover {
+    color: pink;
+}
+
+.dark-mode #navbvarMenu .dropdown-menu {
+    background-color: black;
+    font-size: 18px;
+    color: white;
+}
+
+.dark-mode #navbvarMenu #navbarTogller {
+    background: white;
+    color: white;
+}
+
+.dark-mode .span {
+    background: white;
+    color: white;
+}
+
+.dark-mode #offcanvasMenuPrincipal {
+    background-color: black;
+    color: white;
+}
+
+.dark-mode #offcanvasMenuPrincipal a {
+    font-size: 18px;
+    color: white;
+}
+
+.dark-mode #offcanvasMenuPrincipal a:hover {
+    color: pink;
+}
+
+.dark-mode #offcanvasMenuPrincipal .dropdown-menu {
+    background-color: black;
+    font-size: 18px;
+    color: white;
+}
+
+.dark-mode #offcanvasMenuPrincipal #botaoCloseMenuCanvas {
+    background-color: white;
+    color: white;
+}
+
+.dark-mode #componentPanel{
+    background: white;
+    color: black;
+}
+
+.dark-mode .card-body {
+    background-color: black;
+    color: white;
+}
+
+.dark-mode #dashboardStyle {
+    background: black;
+    color: white;
+}
+
+.dark-mode #isa-container {
+    background: black;
+    color: white;
+}
+
+.dark-mode table {
+    background: black;
+    color: white;
+}
+
+.dark-mode thead {
+    background: white;
+    color: black;
+}
+
+.dark-mode tbody {
+
+    background: black;
+    color: white;
+}
+
+.dark-mode tbody {
+
+    background: black;
+    color: white;
+}
+
+.dark-mode .table-dark>tr:nth-child(odd)>th {
+    background: white;
+    color: black;/* Choose your own color here */
+}
+
+.dark-mode .table-hover>tbody>tr:nth-child(odd)>td,
+.dark-mode .table-hover>tbody>tr:nth-child(odd)>th {
+
+    background: black;
+    color: white;/* Choose your own color here */
+}
+
+.dark-mode .card-header {
+    background-color: black;
+    color: white;
+}
+
+/* Modo Dark - Contraste (FIM) */
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.navbar-toggler {
+    left: 100px;
+}
+
+#h1_rose{
+    color: pink;
+    font-family: 'Lato', sans-serif;
+    font-size: 54px;
+    font-weight: 300;
+    line-height: 58px;
+    margin: 0 0 58px;
+    text-align: center;
+}
+
+.msg {
+    background-color: #D4EDDA;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+    padding: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+img.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.table {
+    margin: 0;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+#p_center{
+    text-align: center;
+}
+
+#navbar a {
+    font-size: 14px;
+    color: black;
+}
+
+#navbar a:hover {
+    color: pink;
+}
+
+#search-container {
+    background-size: cover;
+    background-position: center;
+    height: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Style Panel Relatorio */
+#componentPanelRelatorio {
+    text-align: center;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 5px;
+    padding-left: 0;
+    margin: 0 auto;
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+/* Style Titulo Relatorio */
+#componentTituloRelatorio {
+    text-align: center;
+    background-color: whitesmoke;
+    color: black;
+    padding: 5px;
+    padding-left: 0;
+    margin: 0 auto;
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+/* Style para caixa pesquisa menu */
+#pesquisaMenu {
+    width: 50%;
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Style para alerts */
+.alert {
+    padding: 20px;
+    background-color: goldenrod;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+  }
+
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .closebtn:hover {
+    color: black;
+  }
+
+/* Style para navbar*/
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+/* Style barra de navegação do menu na coluna esquerda*/
+#MenuOpcao {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style Tabela e campo pesquisa*/
+#tabela{
+    width:100%;
+    /*border:solid 1px;*/
+    text-align:left;
+    border-collapse:collapse;
+}
+
+#tabela tbody tr{
+    /*border:solid 1px;*/
+    height:50px;
+    cursor:pointer;
+}
+
+#tabela thead{
+    background:beige;
+}
+
+#tabela th{
+    cursor: pointer;
+}
+/*
+#tabela thead th:nth-child(1){
+    width:100px;
+}
+*/
+#tabela input{
+    color:navy;
+    width:100%;
+}
+
+
+#MenuOpcao li a {
+  font-size: 18px;
+  padding: 12px;
+  text-decoration: none;
+  color: black;
+  display: block
+}
+
+#MenuOpcao li a:hover {
+  background-color: #eee;
+}
+
+#search-container h1 {
+    color: pink;
+    margin-bottom: 30px;
+    font-weight: 900;
+}
+
+#search-container form {
+    /*
+    width: 50%;
+    margin: 0 auto;
+    */
+    width: auto;
+}
+
+.tdShow{
+    font-weight: bold;
+}
+
+#itens-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+#produtos option{
+    font-size: 35px ;
+}
+
+#itens-list{
+    display: flex;
+}
+
+#formButtons{
+    display: inline-block;
+}
+
+#container_button {
+    padding: 0px;
+    padding-left: 0;
+    margin: 0 auto;
+    margin-bottom: 0;
+    /*
+    display: grid;
+    grid-template-columns: 100px 100px;
+    */
+}
+
+#container_button button {
+    font-size: 16px;
+
+}
+
+#container_button a {
+    font-size: 16px;
+
+}
+
+#container_button button:hover {
+    color: pink;
+}
+
+#container_button a:hover {
+    color: pink;
+}
+
+#tbodyLista button {
+    color: whitesmoke;
+}
+
+#tbodyLista a {
+    color: whitesmoke;
+}
+
+#tbodyLista button:hover {
+    color: pink;
+}
+
+#tbodyLista a:hover {
+    color: pink;
+}
+
+/* Componentes */
+
+#componentPanel {
+    text-align: center;
+    background-color: black;
+    color: pink;
+}
+
+/* Lista de objetos */
+
+#isa-container {
+    padding: 20px;
+}
+
+#isa-container h2 {
+    margin-bottom: 10px;
+}
+
+#isa-container .subtitle {
+    color: pink;
+    margin-right: 30px;
+}
+
+#lista-container{
+    display: flex;
+}
+
+#isa-container lista {
+    flex: 1 1 0;
+    max-width: 25%;
+    border-radius: 10px;
+    padding: 0;
+    margin: 5px;
+}
+
+/* Style para os Form*/
+form input{
+    margin-bottom: 8px;
+}
+
+form label{
+    margin-bottom: 8px;
+}
+
+form span{
+    margin-bottom: 8px;
+}
+
+form button{
+    margin-bottom: 8px;
+}
+
+form a{
+    margin-bottom: 8px;
+}
+
+form select{
+    margin-bottom: 8px;
+}
+
+form select .form-select{
+    margin-bottom: 8px;
+}
+
+/* Fim Style para os Form*/
+
+/* Style para os span badge*/
+.badge {
+    width: 110px;
+}
+
+/* Style para os Botões*/
+
+a {
+    margin-bottom: 8px;
+}
+
+.dropdown-toggle {
+    margin-bottom: 8px;
+}
+
+.btn {
+    margin-bottom: 8px;
+}
+
+/* Style para esconder Botão*/
+#botaoParcelamento {
+    display:none;
+
+ }
+
+/* Style de tabela */
+#tabelaProdutos_overflow{
+    max-height:355px;
+    overflow-x:auto;
+}
+
+#tabelaItens_overflow{
+    max-height:450px;
+    overflow-x:auto;
+}
+
+/* Style de card-body */
+#card_body{
+    height:355px;
+    overflow-x:auto;
+}
+
+/* Style do Canvas */
+#chartCanvas{
+    position: relative;
+    /*
+    padding-bottom: 100%;
+    height: 0;
+    */
+    overflow:hidden;
+}
+
+/* div centralizada */
+#div-center {
+    position: absolute;
+    height: 120px;
+    top: 50%;
+    margin-top: -60px; /* Metade da altura */
+    width: 140px;
+    left: 50%;
+    margin-left: -80px; /* Metade da largura */
+
+}
+
+#div_pai_center {
+    position: relative;
+    height: 300px; /* Não necessário */
+  }
+  #div_filho_center {
+    position: absolute;
+    height: 120px;
+    top: 50%;
+    margin-top: -60px; /* Metade da altura */
+    width: 240px;
+    left: 50%;
+    margin-left: -80px; /* Metade da largura */
+  }
+
+  /* Style para página do comprovante */
+
+#container_comprovante {
+    display: flex;
+    justify-content: center;
+}
+
+.comprovante {
+    position: absolute;
+    /*
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    */
+}
+
+.comprovante p{
+    padding: 0;
+    margin: 0;
+}
+
+.comprovante hr{
+    padding: 0;
+    margin: 0;
+}
+
+.comprovante table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px 50px;
+    border-collapse:collapse;
+    border: 0px;
+    padding: 0;
+    margin: 0;
+}
+
+.comprovante th {
+    height: 0;
+}
+
+#modalEditarValores{
+    display: none;
+}
+
+ /* Text Area styles
+
+
+textarea {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+textarea {
+    padding: 10px;
+    max-width: 100%;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+*/
+
+ /* Style para página do comprovante (FIM) */
+
+footer {
+    text-align: center;
+    background-color: blue;
+    color: whitesmoke;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p{
+    margin-bottom: 0;
+}
+
+/* Style para Features e Heroes - Página inicial*/
+.b-example-divider {
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  }
+
+  .bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+  }
+
+  .feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    border-radius: .75rem;
+  }
+
+  .icon-link {
+    display: inline-flex;
+    align-items: center;
+  }
+  .icon-link > .bi {
+    margin-top: .125rem;
+    margin-left: .125rem;
+    transition: transform .25s ease-in-out;
+    fill: currentColor;
+  }
+  .icon-link:hover > .bi {
+    transform: translate(.25rem);
+  }
+
+  .icon-square {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    border-radius: .75rem;
+  }
+
+  .rounded-4 { border-radius: .5rem; }
+  .rounded-5 { border-radius: 1rem; }
+
+  .text-shadow-1 { text-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25); }
+  .text-shadow-2 { text-shadow: 0 .25rem .5rem rgba(0, 0, 0, .25); }
+  .text-shadow-3 { text-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .25); }
+
+  .card-cover {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .b-example-divider {
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+
+  }
+
+  @media (min-width: 992px) {
+    .rounded-lg-3 { border-radius: .3rem; }
+  }
