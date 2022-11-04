@@ -33,7 +33,7 @@ class RoleController extends Controller
     public function create()
     {
         $funcoes = [
-            'categoria', 'conta', 'grupo', 'tipo', 'gasto','caixa',
+            'categoria', 'conta', 'grupo', 'tipo', 'gasto','movimento',
             'renda', 'relatorio', 'empresa', 'configuração', 'usuario'
         ];
 
@@ -75,7 +75,7 @@ class RoleController extends Controller
         $role = Role::findById($id);
         $usuarios = User::role($role->name)->get();
         $funcoes = [
-            'categoria', 'conta', 'grupo', 'tipo', 'gasto','caixa',
+            'categoria', 'conta', 'grupo', 'tipo', 'gasto','movimento',
             'renda', 'relatorio', 'empresa', 'configuração', 'usuario'
         ];
 
@@ -94,7 +94,7 @@ class RoleController extends Controller
     {
         $role = Role::findById($id);
         $funcoes = [
-            'categoria', 'conta', 'grupo', 'tipo', 'gasto','caixa',
+            'categoria', 'conta', 'grupo', 'tipo', 'gasto','movimento',
             'renda', 'relatorio', 'empresa', 'configuração', 'usuario'
         ];
 

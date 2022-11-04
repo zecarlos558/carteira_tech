@@ -10,9 +10,17 @@
     <h5>{{ verificaCountObjeto($movimentos) }}</h5>
     @slot('botao')
         <x-div.button>
-            <x-button.a class="btn-primary create-btn" href="{{ route('createMovimento') }}" role="button" icon='criar'>
-                Cadastrar Movimentos</x-button.a>
+            <x-button.button type="button" class="btn-primary dropdown-toggle" data-bs-toggle="dropdown" icon="criar">Transação</x-button.button>
             <x-button.a href="#filtro" class="btn btn-secondary" data-bs-toggle="collapse" icon='filtrar'>Filtrar</x-button.a>
+            <ul class="dropdown-menu" id="MenuOpcao">
+                <li>
+                    <x-button.a class="dropdown-item" href="{{ route('createMovimentoRenda') }}">+R$ Entrada</x-button.a>
+                </li>
+                <li>
+                    <x-button.a class="dropdown-item" href="{{ route('createMovimentoGasto') }}">-R$ Saida</x-button.a>
+                </li>
+
+            </ul>
         </x-div.button>
     @endslot
     @slot('filtro')
@@ -46,6 +54,7 @@
                     <x-table.th scope="col">#</x-table.th>
                     <x-table.th scope="col">Nome</x-table.th>
                     <x-table.th scope="col">Valor</x-table.th>
+                    <x-table.th scope="col">Tipo</x-table.th>
                 </x-table.tr>
             </x-table.thead>
         <x-table.tbody>
@@ -55,13 +64,14 @@
                     <x-table.td>
                         <x-div.button>
                             @if ($movimento->tipo == 'suprimento')
-                            <x-button.a class="btn-link" href="{{ route('showMovimentoRenda', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
+                                <x-button.a class="btn-link" href="{{ route('showMovimentoRenda', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
                             @else
-                            <x-button.a class="btn-link" href="{{ route('showMovimentoGasto', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
+                                <x-button.a class="btn-link" href="{{ route('showMovimentoGasto', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
                             @endif
                         </x-div.button>
                     </x-table.td>
                     <x-table.td>{{$movimento->valor}} R$</x-table.td>
+                    <x-table.td><x-status_movimento>{{$movimento->tipo}}</x-status_movimento></x-table.td>
                 </x-table.tr>
             @endforeach
         </x-table.tbody>

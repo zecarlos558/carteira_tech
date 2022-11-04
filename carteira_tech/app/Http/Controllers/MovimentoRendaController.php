@@ -20,8 +20,11 @@ class MovimentoRendaController extends Controller
      */
     public function index()
     {
-        $movimentos = Movimento::where('tipo','suprimento')->get();
-        $listaNomes = Movimento::where('tipo','suprimento')->select('nome')->get();
+        $movimentos = Movimento::where('tipo','suprimento')
+                    ->where('user_id_update',Aplication::consultaIDUsuario())->get();
+        $listaNomes = Movimento::where('tipo','suprimento')
+                    ->where('user_id_update',Aplication::consultaIDUsuario())
+                    ->select('id','nome','valor')->get();
 
         return view('movimento_renda.movimento', ['movimentos' => $movimentos,
                                                   'listaNomes' => $listaNomes])->render();
@@ -34,7 +37,7 @@ class MovimentoRendaController extends Controller
      */
     public function create()
     {
-        $contas = Conta::all();
+        $contas = Conta::where('user_id_update',Aplication::consultaIDUsuario())->get();
         $categorias = Categoria::all();
 
         return view('movimento_renda.createMovimento', ['contas' => $contas,
@@ -95,7 +98,7 @@ class MovimentoRendaController extends Controller
     public function edit($id)
     {
         $movimento = Movimento::findOrFail($id);
-        $contas = Conta::all();
+        $contas = Conta::where('user_id_update',Aplication::consultaIDUsuario())->get();
         $categorias = Categoria::all();
 
         return view('movimento_renda.editMovimento', ['movimento' => $movimento,

@@ -20,8 +20,11 @@ class MovimentoGastoController extends Controller
      */
     public function index()
     {
-        $movimentos = Movimento::where('tipo','retirada')->get();
-        $listaNomes = Movimento::where('tipo','retirada')->select('nome')->get();
+        $movimentos = Movimento::where('tipo','retirada')
+        ->where('user_id_update',Aplication::consultaIDUsuario())->get();
+        $listaNomes = Movimento::where('tipo','retirada')
+        ->where('user_id_update',Aplication::consultaIDUsuario())
+        ->select('id','nome','valor')->get();
 
         return view('movimento_gasto.movimento', ['movimentos' => $movimentos,
                                                   'listaNomes' => $listaNomes])->render();

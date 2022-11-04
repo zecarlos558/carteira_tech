@@ -1,23 +1,19 @@
 <?php
 
-namespace App\View\Components\button;
+namespace App\View\Components;
 
-use App\Models\Aplication;
 use Illuminate\View\Component;
 
-class a extends Component
+class status_movimento extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-
-    public $icon;
-
-    public function __construct($icon=null)
+    public function __construct()
     {
-        $this->icon = $icon;
+        //
     }
 
     /**
@@ -27,10 +23,6 @@ class a extends Component
      */
     public function render()
     {
-        //$permissao = Aplication::consultaPermissao();
-
-        return view('components.button.a');
-
-
+        return view('components.status_movimento');
     }
 }

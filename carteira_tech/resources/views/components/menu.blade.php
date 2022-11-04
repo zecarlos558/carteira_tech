@@ -3,7 +3,7 @@
         <div class="container-fluid" id="navbvarMenu">
             <!-- Logo -->
             <a href="{{ route('inicial') }}" class="">
-                <x-logo>130</x-logo>
+                <x-logo>70</x-logo>
             </a>
             <!-- Botão de Expansão -->
             <button class="navbar-toggler" id="navbarTogller" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenuPrincipal" aria-controls="offcanvasMenuPrincipal">

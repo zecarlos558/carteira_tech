@@ -12,7 +12,7 @@ class Conta extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'name','valor'
+        'nome','valor','user_id_create','user_id_update'
     ];
 
     public function tipos()

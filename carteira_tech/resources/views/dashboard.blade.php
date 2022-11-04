@@ -1,7 +1,7 @@
 <x-div.main >
-    @section('title','DASHBOARD')
+    @section('title','Painel Usuário')
     @slot('tituloCentral')
-        DASHBOARD
+    Painel
     @endslot
     <x-div.principal>
 

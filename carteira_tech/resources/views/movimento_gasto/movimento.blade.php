@@ -21,12 +21,12 @@
                 <div class="row">
                     <div class="col-auto">
                         <div class="input-group">
-                            <x-label.span class="input-group-text" icon='conta'>Nome</x-label.span>
+                            <x-label.span class="input-group-text" icon='conta'>Movimento</x-label.span>
                             <x-input.text type="text" value="{{ old('nome') }}"
-                            placeholder="Procurar nome" list="nomes" name="nome" id="nome"></x-input.text>
+                            placeholder="Procurar Movimento" list="nomes" name="nome" id="nome"></x-input.text>
                             <x-input.datalist id="nomes" >
                                 @foreach ($listaNomes as $listaNome)
-                                    <x-input.option value="{{ $listaNome->nome }}"></x-input.option>
+                                    <x-input.option value="{{ $listaNome->id }} - {{ $listaNome->nome }} - {{ $listaNome->valor }}R$"></x-input.option>
                                 @endforeach
                             </x-input.datalist>
                         </div>

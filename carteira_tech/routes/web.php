@@ -24,12 +24,12 @@ use App\Http\Controllers\TipoController;
 */
 
 
-    Route::get('/', function () {
-        return view('welcome');
-        //return redirect()->route('indexAplication');
-    })->name('inicial');
+Route::get('/', function () {
+    //return view('welcome');
+    return redirect()->route('indexAplication');
+})->name('inicial');
 
-    /* Rota Dahsboard
+/* Rota Dahsboard
     Route::get('/dashboard', function () {
         $user = auth()->user();
         return view('dashboard', ['user' => $user]);
@@ -42,10 +42,11 @@ Route::get('/teste', function () {
 
 Route::get('/dashboard', [AplicationController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
-    require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
-    Route::get('/inicial', [AplicationController::class, 'index'])->name('indexAplication')->middleware('auth');
+Route::get('/inicial', [AplicationController::class, 'index'])->name('indexAplication')->middleware('auth');
+Route::get('/cadastro/{id}', [AplicationController::class, 'cadastro'])->name('cadastroAplication')->middleware('auth');
 
 // Rotas de Administração de dados da conta
 

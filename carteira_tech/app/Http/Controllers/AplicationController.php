@@ -8,6 +8,7 @@ use App\Http\Requests\UsuarioRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Aplication;
+use App\Models\Conta;
 use Spatie\Permission\Models\Role;
 
 class AplicationController extends Controller
@@ -149,4 +150,17 @@ class AplicationController extends Controller
         $log->log('info','Usuario Deletou um usuário!');
         return redirect()->route('painelControleUsuario')->with('msg_alert','Usuário deletado com sucesso!');
     }
+
+    public function cadastro($id)
+    {
+        Conta::create([
+            'nome' => "Carteira",
+            'valor' => 0,
+            'user_id_create' => $id,
+            'user_id_update' => $id
+        ])->tipos()->attach(1);
+
+        return redirect()->route('inicial')->with('msg_alert', 'Usuário Cadastrado com Sucesso!');
+    }
+
 }

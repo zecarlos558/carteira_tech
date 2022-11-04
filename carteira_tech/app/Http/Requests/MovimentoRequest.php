@@ -17,6 +17,7 @@ class MovimentoRequest extends FormRequest
             'nome' => ['required'],
             'valor' => ['required'],
             'conta' => ['required'],
+            'data' => ['required'],
             'categoria' => ['required'],
             'valor' => ['required'],
             'valor' => ['numeric']
@@ -28,6 +29,7 @@ class MovimentoRequest extends FormRequest
         return [
             'nome.required' => 'Nome do Movimento deve estar preenchido',
             'valor.required' => 'Valor do Movimento deve estar preenchido',
+            'data.required' => 'Data do Movimento deve estar preenchido',
             'conta.required' => 'Conta do Movimento deve estar preenchido',
             'categoria.required' => 'Categoria do Movimento deve estar preenchido',
             'valor.required' => 'Valor da Conta deve estar preenchido',

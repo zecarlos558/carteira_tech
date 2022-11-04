@@ -21,7 +21,7 @@ class GrupoRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'Nome do Usuário deve estar preenchido'
+            'nome.required' => 'Nome do Grupo deve estar preenchido'
         ];
     }
 }

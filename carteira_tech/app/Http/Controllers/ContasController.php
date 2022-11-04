@@ -19,7 +19,7 @@ class ContasController extends Controller
      */
     public function index()
     {
-        $contas = Conta::all();
+        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
         $listaNomes = Conta::select('nome')->get();
 
         return view('contas.conta', ['contas' => $contas,
@@ -36,7 +36,7 @@ class ContasController extends Controller
         $tipos = Tipo::all();
         $categorias = Categoria::all();
 
-        return view('categoria.createCategoria', ['tipos' => $tipos,
+        return view('contas.createConta', ['tipos' => $tipos,
                                                   'categorias' => $categorias])->render();
     }
 

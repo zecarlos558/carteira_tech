@@ -27,10 +27,8 @@ class button extends Component
     public function render()
     {
         //$usuario = auth()->user();
-        if ( ( ($this->icon == 'editar') || ($this->icon == 'deletar')|| ($this->icon == 'criar') ) && ( (Aplication::verificaFuncao('user')) || (Aplication::verificaFuncao('seller')) ) ) {
 
-        } else {
-            return view('components.button.button');
-        }
+        return view('components.button.button');
+
     }
 }

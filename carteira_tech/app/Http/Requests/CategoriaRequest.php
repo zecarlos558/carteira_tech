@@ -14,14 +14,16 @@ class CategoriaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required']
+            'nome' => ['required'],
+            'grupo' => ['required']
         ];
     }
 
     public function messages()
     {
         return [
-            'nome.required' => 'Nome do Usuário deve estar preenchido'
+            'nome.required' => 'Nome da Categoria deve estar preenchido',
+            'grupo.required' => 'Grupo da Categoria deve estar preenchido'
         ];
     }
 }

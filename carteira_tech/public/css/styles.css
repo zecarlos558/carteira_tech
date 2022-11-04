@@ -5,7 +5,15 @@ body {
     position: relative;
 }
 
-/* Modo Dark - Contraste */
+#corpo{
+    background-color: snow;
+}
+
+#navbvarMenu{
+    background-color: snow;
+}
+
+/* Modo Dark - Contraste
 
 .dark-mode {
     background-color: black;
@@ -23,7 +31,7 @@ body {
 }
 
 .dark-mode #navbvarMenu a:hover {
-    color: pink;
+    color: midnightblue;
 }
 
 .dark-mode #navbvarMenu .dropdown-menu {
@@ -53,7 +61,7 @@ body {
 }
 
 .dark-mode #offcanvasMenuPrincipal a:hover {
-    color: pink;
+    color: midnightblue;
 }
 
 .dark-mode #offcanvasMenuPrincipal .dropdown-menu {
@@ -111,14 +119,14 @@ body {
 
 .dark-mode .table-dark>tr:nth-child(odd)>th {
     background: white;
-    color: black;/* Choose your own color here */
+    color: black;
 }
 
 .dark-mode .table-hover>tbody>tr:nth-child(odd)>td,
 .dark-mode .table-hover>tbody>tr:nth-child(odd)>th {
 
     background: black;
-    color: white;/* Choose your own color here */
+    color: white;
 }
 
 .dark-mode .card-header {
@@ -126,7 +134,7 @@ body {
     color: white;
 }
 
-/* Modo Dark - Contraste (FIM) */
+ Modo Dark - Contraste (FIM) */
 
 header {
     background-color: #fff;
@@ -138,7 +146,7 @@ header {
 }
 
 #h1_rose{
-    color: pink;
+    color: midnightblue;
     font-family: 'Lato', sans-serif;
     font-size: 54px;
     font-weight: 300;
@@ -186,7 +194,7 @@ img.displayed {
 }
 
 #navbar a:hover {
-    color: pink;
+    color: midnightblue;
 }
 
 #search-container {
@@ -310,7 +318,7 @@ img.displayed {
 }
 
 #search-container h1 {
-    color: pink;
+    color: midnightblue;
     margin-bottom: 30px;
     font-weight: 900;
 }
@@ -366,11 +374,11 @@ img.displayed {
 }
 
 #container_button button:hover {
-    color: pink;
+    color: midnightblue;
 }
 
 #container_button a:hover {
-    color: pink;
+    color: midnightblue;
 }
 
 #tbodyLista button {
@@ -382,19 +390,19 @@ img.displayed {
 }
 
 #tbodyLista button:hover {
-    color: pink;
+    color: midnightblue;
 }
 
 #tbodyLista a:hover {
-    color: pink;
+    color: midnightblue;
 }
 
 /* Componentes */
 
 #componentPanel {
     text-align: center;
-    background-color: black;
-    color: pink;
+    background-color: navy;
+    color: whitesmoke;
 }
 
 /* Lista de objetos */
@@ -408,7 +416,7 @@ img.displayed {
 }
 
 #isa-container .subtitle {
-    color: pink;
+    color: midnightblue;
     margin-right: 30px;
 }
 
@@ -607,7 +615,7 @@ footer {
     text-align: center;
     background-color: blue;
     color: whitesmoke;
-    padding: 20px;
+    padding: 5px;
     position: absolute;
     bottom: 0;
     width: 100%;

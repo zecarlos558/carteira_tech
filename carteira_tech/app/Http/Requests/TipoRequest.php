@@ -21,7 +21,7 @@ class TipoRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'Nome do Usuário deve estar preenchido'
+            'nome.required' => 'Nome do Tipo deve estar preenchido'
         ];
     }
 }
