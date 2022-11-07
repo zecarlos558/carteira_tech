@@ -83,7 +83,7 @@
             @endfor
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar'>Editar Função</x-button.button>
+                <x-button.button type="submit" icon='salvar'>Editar Função</x-button.button>
             @endslot
             <script>
                 window.onload = function() {

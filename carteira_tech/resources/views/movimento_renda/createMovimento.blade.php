@@ -14,7 +14,7 @@
             <x-label.label for="nome">Nome:</x-label.label>
             <x-input.text value="{{ old('nome') }}" name="nome" id="nome" placeholder="Nome do Movimento" />
 
-            <x-label.label for="data" class="form-label">Data da Venda</x-label.label>
+            <x-label.label for="data" class="form-label">Data da Renda</x-label.label>
             <x-input.datetime id="data" name="data" value="{{ date('Y-m-d\TH:i') }}"></x-input>
 
             <x-label.label class="form-label" for="valor">Valor da Transação:</x-label.label>
@@ -51,7 +51,7 @@
             </x-div.input>
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Cadastrar Transação</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Cadastrar Transação</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>

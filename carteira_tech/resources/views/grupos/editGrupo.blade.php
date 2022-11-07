@@ -15,7 +15,7 @@
             <x-input.text value="{{ $grupo->nome }}" name="nome" id="nome" placeholder="Nome do Grupo" />
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Editar Grupo</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Editar Grupo</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>

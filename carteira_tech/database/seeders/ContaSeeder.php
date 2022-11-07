@@ -15,9 +15,6 @@ class ContaSeeder extends Seeder
      */
     public function run()
     {
-        Conta::create(['nome' => 'Carteira',
-        'valor' => 0,
-        'user_id_create' => 1,
-        'user_id_update' => 1])->tipos()->attach(1);
+
     }
 }

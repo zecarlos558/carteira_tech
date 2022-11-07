@@ -37,8 +37,8 @@ class MovimentoRendaController extends Controller
      */
     public function create()
     {
-        $contas = Conta::where('user_id_update',Aplication::consultaIDUsuario())->get();
-        $categorias = Categoria::all();
+        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
+        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
         return view('movimento_renda.createMovimento', ['contas' => $contas,
                                                         'categorias' => $categorias])->render();
@@ -98,8 +98,8 @@ class MovimentoRendaController extends Controller
     public function edit($id)
     {
         $movimento = Movimento::findOrFail($id);
-        $contas = Conta::where('user_id_update',Aplication::consultaIDUsuario())->get();
-        $categorias = Categoria::all();
+        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
+        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
         return view('movimento_renda.editMovimento', ['movimento' => $movimento,
                                                         'contas' => $contas,
@@ -129,7 +129,7 @@ class MovimentoRendaController extends Controller
             $movimento->save();
         } catch (\Exception $e) {
             Log::channel('main')->error($e->getMessage());
-            return redirect()->route('createMovimentoRenda')->with('msg_alert','Campos Inseridos invalidos!');
+            return redirect()->route('editMovimentoRenda')->with('msg_alert','Campos Inseridos invalidos!');
         }
 
         $conta = new ContasController();

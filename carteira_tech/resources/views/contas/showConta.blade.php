@@ -23,6 +23,10 @@
                         <x-table.td>{{ $conta->valor }}</x-table.td>
                     </x-table.tr>
                     <x-table.tr>
+                        <x-table.td-show>Tipo da Conta:</x-table.td-show>
+                        <x-table.td>{{ $conta->tipos[0]->nome }}</x-table.td>
+                    </x-table.tr>
+                    <x-table.tr>
                         <x-table.td-show>Data de Criação:</x-table.td-show>
                         <x-table.td>{{ $conta->created_at }}</x-table.td>
                     </x-table.tr>
@@ -40,7 +44,7 @@
                         DELETE
                     @endslot
                     @slot('botao')
-                        <x-button.button type="submit" class="btn-danger delete-btn" icon='deletar'>Deletar</x-button.button>
+                        <x-button.button type="submit" icon='deletar'>Deletar</x-button.button>
                     @endslot
                 </x-div.form>
             </x-div.button>

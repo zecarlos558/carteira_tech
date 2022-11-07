@@ -37,7 +37,7 @@
                 <x-label.span icon="olho" id="olho2" class="input-group-text" data-bs-toggle="tooltip" onclick="exibeSenha2()" title="Mostra Senha!"></x-label.span>
             </div>
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Cadastrar Usuário</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Cadastrar Usuário</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>

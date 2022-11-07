@@ -20,7 +20,7 @@ class ContasController extends Controller
     public function index()
     {
         $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
-        $listaNomes = Conta::select('nome')->get();
+        $listaNomes = Conta::where('user_id_create',Aplication::consultaIDUsuario())->select('id','nome','valor')->get();
 
         return view('contas.conta', ['contas' => $contas,
                                      'listaNomes' => $listaNomes])->render();
@@ -33,11 +33,9 @@ class ContasController extends Controller
      */
     public function create()
     {
-        $tipos = Tipo::all();
-        $categorias = Categoria::all();
+        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
-        return view('contas.createConta', ['tipos' => $tipos,
-                                                  'categorias' => $categorias])->render();
+        return view('contas.createConta', ['tipos' => $tipos])->render();
     }
 
     /**
@@ -85,7 +83,7 @@ class ContasController extends Controller
     public function edit($id)
     {
         $conta = Conta::findOrFail($id);
-        $tipos = Tipo::all();
+        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
         return view('contas.editConta', ['conta' => $conta,
                                          'tipos' => $tipos])->render();
@@ -148,7 +146,7 @@ class ContasController extends Controller
      */
     public function destroy($id)
     {
-        $conta = Conta::findOrFail($id)->delete();
+        Conta::findOrFail($id)->delete();
         return redirect()->route('indexConta')->with('msg_alert','Conta Deletada com sucesso!');
     }
 }

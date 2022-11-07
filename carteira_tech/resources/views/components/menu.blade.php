@@ -28,7 +28,7 @@
                         --}}
                         @if ((auth()->user()->can('read movimento')) || (auth()->user()->can('create movimento')))
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='movimentacao'></x-ionicons.ionic>Transações</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='dolar'></x-ionicons.ionic>Transações</a>
                                 <ul class="dropdown-menu">
                                     @can('read movimento')
                                     <li><a class="dropdown-item" id="indexMovimento" href="{{ route('indexMovimento') }}">Listar Transações</a></li>
@@ -44,7 +44,7 @@
                         @endif
                         @if ((auth()->user()->can('read categoria')) || (auth()->user()->can('create categoria')))
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='movimentacao'></x-ionicons.ionic>Categorias</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='plano'></x-ionicons.ionic>Categorias</a>
                                 <ul class="dropdown-menu">
                                     @can('read categoria')
                                     <li><a class="dropdown-item" id="indexCategoria" href="{{ route('indexCategoria') }}">Listar Categoria</a></li>
@@ -57,7 +57,7 @@
                         @endif
                         @if ((auth()->user()->can('read grupo')) || (auth()->user()->can('create grupo')))
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='movimentacao'></x-ionicons.ionic>Grupos</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='grupo'></x-ionicons.ionic>Grupos</a>
                                 <ul class="dropdown-menu">
                                     @can('read grupo')
                                     <li><a class="dropdown-item" id="indexGrupo" href="{{ route('indexGrupo') }}">Listar Grupo</a></li>
@@ -70,7 +70,7 @@
                         @endif
                         @if ((auth()->user()->can('read tipo')) || (auth()->user()->can('create tipo')))
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='movimentacao'></x-ionicons.ionic>Tipos</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='tipo'></x-ionicons.ionic>Tipos</a>
                                 <ul class="dropdown-menu">
                                     @can('read tipo')
                                     <li><a class="dropdown-item" id="indexTipo" href="{{ route('indexTipo') }}">Listar Tipo</a></li>
@@ -83,7 +83,7 @@
                         @endif
                         @if ((auth()->user()->can('read conta')) || (auth()->user()->can('create conta')))
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='movimentacao'></x-ionicons.ionic>Contas</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='conta'></x-ionicons.ionic>Contas</a>
                                 <ul class="dropdown-menu">
                                     @can('read conta')
                                     <li><a class="dropdown-item" id="indexConta" href="{{ route('indexConta') }}">Listar Conta</a></li>

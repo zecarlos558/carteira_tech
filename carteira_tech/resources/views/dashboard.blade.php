@@ -8,7 +8,6 @@
             @slot('titulo')
                 Você está Logado!<br>
                 Dados do Usuário
-
             @endslot
             @slot('rodape')
                 <x-div.button class="mt-3">

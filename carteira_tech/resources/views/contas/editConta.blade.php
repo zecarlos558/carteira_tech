@@ -17,10 +17,10 @@
             <x-label.label class="form-label" for="valor">Valor da Conta:</x-label.label>
             <x-input.number value="{{$conta->valor}}" name="valor" id="valor" placeholder="Valor da Conta" />
 
-            <x-label.label for="funcao" >Tipo da Conta:</x-label.label>
-            <x-input.select id="funcao" name="funcao" >
+            <x-label.label for="tipo" >Tipo da Conta:</x-label.label>
+            <x-input.select id="tipo" name="tipo" >
                 @foreach ($tipos as $tipo)
-                    @if ($tipo->nome == $conta->funcao)
+                    @if ($tipo->nome == $conta->tipos[0]->nome)
                         <x-input.option selected value="{{$tipo->id}}" >{{$tipo->nome}}</x-input.option>
                     @else
                         <x-input.option value="{{$tipo->id}}" >{{$tipo->nome}}</x-input.option>

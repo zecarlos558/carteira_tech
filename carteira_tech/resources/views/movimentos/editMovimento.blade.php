@@ -50,7 +50,7 @@
             </x-div.input>
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Cadastrar Transação</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Cadastrar Transação</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>

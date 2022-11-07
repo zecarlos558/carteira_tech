@@ -18,8 +18,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        $listaNomes = Categoria::select('nome')->get();
+        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->with('grupos')->get();
+        $listaNomes = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
         return view('categorias.categoria', ['categorias' => $categorias,
                                              'listaNomes' => $listaNomes])->render();
@@ -32,7 +32,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $grupos = Grupo::all();
+        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
         return view('categorias.createCategoria', ['grupos' => $grupos])->render();
     }
@@ -81,7 +81,7 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         $categoria = Categoria::findOrFail($id);
-        $grupos = Grupo::all();
+        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
         return view('categorias.editCategoria', ['categoria' => $categoria,
                                                  'grupos' => $grupos])->render();

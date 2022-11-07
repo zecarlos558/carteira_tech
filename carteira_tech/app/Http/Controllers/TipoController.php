@@ -17,8 +17,8 @@ class TipoController extends Controller
      */
     public function index()
     {
-        $tipos = Tipo::all();
-        $listaNomes = Tipo::select('nome')->get();
+        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $listaNomes = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
         return view('tipos.tipo', ['tipos' => $tipos,
                                    'listaNomes' => $listaNomes])->render();

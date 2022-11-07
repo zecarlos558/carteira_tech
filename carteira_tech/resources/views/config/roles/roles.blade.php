@@ -9,9 +9,9 @@
     <h5>{{ verificaCountObjeto($funcoes) }}</h5>
     @slot('botao')
         <x-div.button>
-            <x-button.a class="btn-primary create-btn" href="{{ route('createRole') }}" role="button" icon='criar'>
+            <x-button.a href="{{ route('createRole') }}" role="button" icon='criar'>
                 Adicionar Novo</x-button.a>
-            <x-button.a href="#filtro" class="btn btn-secondary" data-bs-toggle="collapse" icon='filtrar'>Filtrar</x-button.a>
+            <x-button.a href="#filtro" data-bs-toggle="collapse" icon='filtrar'>Filtrar</x-button.a>
         </x-div.button>
     @endslot
     @slot('filtro')

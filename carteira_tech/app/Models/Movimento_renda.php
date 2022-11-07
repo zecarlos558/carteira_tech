@@ -13,12 +13,12 @@ class Movimento_renda extends Model
 
     public $valorAnterior;
 
-    public function conta()
+    public function contas()
     {
         return $this->belongsTo('App\Models\Conta');
     }
 
-    public function categoria()
+    public function categorias()
     {
         return $this->belongsTo('App\Models\Categoria');
     }

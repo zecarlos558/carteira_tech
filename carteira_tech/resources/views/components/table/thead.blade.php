@@ -1,3 +1,3 @@
-<thead {{ $attributes->merge(['id' => '','class' => 'table-dark']) }} >
+<thead {{ $attributes->merge(['id' => '','class' => 'table-primary']) }} >
     {{$slot}}
 </thead>

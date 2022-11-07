@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <x-div.button class="mt-2">
-                    <x-button.button type="submit" class="btn-success" icon='filtrar'>Resultado</x-button.button>
+                    <x-button.button type="submit" icon='pesquisar'>Resultado</x-button.button>
                     <x-button.a href="{{ route('indexConta') }}" class="btn btn-dark" icon='limpar'>Limpar
                         Filtros</x-button.a>
                 </x-div.button>
@@ -45,6 +45,7 @@
                 <x-table.tr>
                     <x-table.th scope="col">#</x-table.th>
                     <x-table.th scope="col">Nome</x-table.th>
+                    <x-table.th scope="col">Valor</x-table.th>
                     <x-table.th scope="col">Ações</x-table.th>
                 </x-table.tr>
             </x-table.thead>
@@ -58,9 +59,10 @@
                                 {{ $conta->nome }}</x-button.a>
                         </x-div.button>
                     </x-table.td>
+                    <x-table.td>{{$conta->valor}} R$</x-table.td>
                     <x-table.td-button>
                         <x-div.button>
-                            <x-button.a class="btn btn-info edit-btn" href="{{ route('editConta', $conta->id) }}"
+                            <x-button.a href="{{ route('editConta', $conta->id) }}"
                                 role="button" icon='editar'>Editar</x-button.a>
                             <x-div.form action="{{ route('deleteConta', $conta->id) }}" id="formButtons"
                                 method="POST">
@@ -68,7 +70,7 @@
                                     DELETE
                                 @endslot
                                 @slot('botao')
-                                    <x-button.button type="submit" class="btn-danger delete-btn" icon='deletar'>Deletar
+                                    <x-button.button type="submit" icon='deletar'>Deletar
                                     </x-button.button>
                                 @endslot
                             </x-div.form>

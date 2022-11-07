@@ -23,7 +23,7 @@
     <x-ionicons.icon name='remove-circle-outline' ></x-ionicons.icon>
     @elseif ($icon == 'status')
     <x-ionicons.icon name='checkbox-outline' ></x-ionicons.icon>
-    @elseif ($icon == 'produto')
+    @elseif ($icon == 'grupo')
     <x-ionicons.icon name='folder-outline' ></x-ionicons.icon>
     @elseif ($icon == 'cliente')
     <x-ionicons.icon name='person-outline' ></x-ionicons.icon>
@@ -39,7 +39,7 @@
     <x-ionicons.icon name='document-text-outline' ></x-ionicons.icon>
     @elseif ($icon == 'avancado')
     <x-ionicons.icon name='stats-chart-outline' ></x-ionicons.icon>
-    @elseif ($icon == 'caixa')
+    @elseif ($icon == 'conta')
     <x-ionicons.icon name='wallet-outline' ></x-ionicons.icon>
     @elseif ($icon == 'venda')
     <x-ionicons.icon name='cart-outline' ></x-ionicons.icon>
@@ -47,7 +47,7 @@
     <x-ionicons.icon name='cart-outline' ></x-ionicons.icon>
     @elseif ($icon == 'movimentacao')
     <x-ionicons.icon name='cart-outline' ></x-ionicons.icon>
-    @elseif ($icon == 'tipoMovimentacao')
+    @elseif ($icon == 'tipo')
     <x-ionicons.icon name='pricetag-outline' ></x-ionicons.icon>
     @elseif ($icon == 'processar')
     <x-ionicons.icon name='aperture-outline' ></x-ionicons.icon>

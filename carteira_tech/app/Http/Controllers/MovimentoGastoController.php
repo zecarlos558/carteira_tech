@@ -37,8 +37,8 @@ class MovimentoGastoController extends Controller
      */
     public function create()
     {
-        $contas = Conta::all();
-        $categorias = Categoria::all();
+        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
+        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
         return view('movimento_gasto.createMovimento', ['contas' => $contas,
                                                         'categorias' => $categorias])->render();
@@ -98,8 +98,8 @@ class MovimentoGastoController extends Controller
     public function edit($id)
     {
         $movimento = Movimento::findOrFail($id);
-        $contas = Conta::all();
-        $categorias = Categoria::all();
+        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
+        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
 
         return view('movimento_gasto.editMovimento', ['movimento' => $movimento,
                                                         'contas' => $contas,

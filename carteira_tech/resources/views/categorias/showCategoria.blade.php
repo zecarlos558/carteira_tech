@@ -34,13 +34,13 @@
             </x-div.table-show>
             @slot('rodape')
             <x-div.button>
-                <x-button.a href="{{ route('editCategoria', $categoria->id)}}" class="btn-info edit-btn" icon='editar'>Editar</x-button.a>
+                <x-button.a href="{{ route('editCategoria', $categoria->id)}}" icon='editar'>Editar</x-button.a>
                 <x-div.form action="{{ route('deleteCategoria', $categoria->id) }}" id="formButtons" method="POST" >
                     @slot('metodo')
                         DELETE
                     @endslot
                     @slot('botao')
-                        <x-button.button type="submit" class="btn-danger delete-btn" icon='deletar'>Deletar</x-button.button>
+                        <x-button.button type="submit" icon='deletar'>Deletar</x-button.button>
                     @endslot
                 </x-div.form>
             </x-div.button>

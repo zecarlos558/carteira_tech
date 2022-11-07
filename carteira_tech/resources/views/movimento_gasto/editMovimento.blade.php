@@ -20,7 +20,7 @@
             <x-label.label class="form-label" for="valor">Valor da Transação:</x-label.label>
             <div class="input-group">
                 <x-label.span class="input-group-text">-RS</x-label.span>
-                <x-input.number value="{{ old('valor') }}" name="valor" id="valor" placeholder="Valor do Movimento" />
+                <x-input.number value="{{ $movimento->valor }}" name="valor" id="valor" placeholder="Valor do Movimento" />
             </div>
 
             <div class="input-group">
@@ -42,7 +42,7 @@
             <x-label.label for="categoria" >Tipo de Categoria:</x-label.label>
             <x-input.select id="categoria" name="categoria" >
                 @foreach ($categorias as $categoria)
-                @if ($movimento->categoria->id == $conta->id)
+                @if ($movimento->categoria->id == $categoria->id)
                 <x-input.option selected value="{{$categoria->id}}" >{{$categoria->nome}}</x-input.option>
                 @else
                 <x-input.option value="{{$categoria->id}}" >{{$categoria->nome}}</x-input.option>
@@ -57,7 +57,7 @@
             </x-div.input>
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Cadastrar Transação</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Cadastrar Transação</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>

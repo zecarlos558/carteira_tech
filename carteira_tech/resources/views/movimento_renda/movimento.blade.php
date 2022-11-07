@@ -10,9 +10,9 @@
     <h5>{{ verificaCountObjeto($movimentos) }}</h5>
     @slot('botao')
         <x-div.button>
-            <x-button.a class="btn-primary create-btn" href="{{ route('createMovimentoRenda') }}" role="button" icon='criar'>
+            <x-button.a href="{{ route('createMovimentoRenda') }}" role="button" icon='criar'>
                 Cadastrar Movimentos</x-button.a>
-            <x-button.a href="#filtro" class="btn btn-secondary" data-bs-toggle="collapse" icon='filtrar'>Filtrar</x-button.a>
+            <x-button.a href="#filtro" data-bs-toggle="collapse" icon='filtrar'>Filtrar</x-button.a>
         </x-div.button>
     @endslot
     @slot('filtro')
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <x-div.button class="mt-2">
-                    <x-button.button type="submit" class="btn-success" icon='filtrar'>Resultado</x-button.button>
+                    <x-button.button type="submit" icon='pesquisar'>Resultado</x-button.button>
                     <x-button.a href="{{ route('indexMovimentoRenda') }}" class="btn btn-dark" icon='limpar'>Limpar
                         Filtros</x-button.a>
                 </x-div.button>
@@ -59,7 +59,7 @@
                     </x-table.td>
                     <x-table.td-button>
                         <x-div.button>
-                            <x-button.a class="btn btn-info edit-btn" href="{{ route('editMovimentoRenda', $movimento->id) }}"
+                            <x-button.a href="{{ route('editMovimentoRenda', $movimento->id) }}"
                                 role="button" icon='editar'>Editar</x-button.a>
                             <x-div.form action="{{ route('deleteMovimentoRenda', $movimento->id) }}" id="formButtons"
                                 method="POST">
@@ -67,7 +67,7 @@
                                     DELETE
                                 @endslot
                                 @slot('botao')
-                                    <x-button.button type="submit" class="btn-danger delete-btn" icon='deletar'>Deletar
+                                    <x-button.button type="submit" icon='deletar'>Deletar
                                     </x-button.button>
                                 @endslot
                             </x-div.form>

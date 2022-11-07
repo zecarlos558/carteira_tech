@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
         $log = new Logger();
-        $log->log('alert','Foi cadastrado um novo usuário sem permissão!');
+        $log->log('notice','Um novo usuário se cadastrou!');
 
         return redirect()->route('cadastroAplication', auth()->user()->id);
         //return redirect(RouteServiceProvider::HOME);

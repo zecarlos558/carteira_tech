@@ -10,7 +10,7 @@
     <h5>{{ verificaCountObjeto($usuarios) }}</h5>
     @slot('botao')
         <x-div.button>
-            <x-button.a class="btn-primary create-btn" href="{{ route('createUsuario') }}" role="button" icon='criar'>
+            <x-button.a href="{{ route('createUsuario') }}" role="button" icon='criar'>
                 Cadastrar Usuário</x-button.a>
         </x-div.button>
     @endslot
@@ -33,7 +33,7 @@
                     </x-table.td>
                     <x-table.td-button>
                         <x-div.button>
-                            <x-button.a class="btn btn-info edit-btn" href="{{ route('editUsuario', $usuario->id) }}"
+                            <x-button.a href="{{ route('editUsuario', $usuario->id) }}"
                                 role="button" icon='editar'>Editar</x-button.a>
                             <x-div.form action="{{ route('deleteUsuario', $usuario->id) }}" id="formButtons"
                                 method="POST">
@@ -41,7 +41,7 @@
                                     DELETE
                                 @endslot
                                 @slot('botao')
-                                    <x-button.button type="submit" class="btn-danger delete-btn" icon='deletar'>Deletar
+                                    <x-button.button type="submit" icon='deletar'>Deletar
                                     </x-button.button>
                                 @endslot
                             </x-div.form>

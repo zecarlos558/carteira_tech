@@ -15,7 +15,7 @@
             <x-input.text value="{{ $categoria->nome }}" name="nome" id="nome" placeholder="Nome da Categoria" />
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Editar Categoria</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Editar Categoria</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>

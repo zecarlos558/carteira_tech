@@ -29,7 +29,7 @@
             </x-input.select>
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Editar Usuário</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Editar Usuário</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>

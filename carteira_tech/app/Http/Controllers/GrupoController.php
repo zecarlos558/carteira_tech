@@ -16,8 +16,8 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        $grupos = Grupo::all();
-        $listaNomes = Grupo::select('nome')->get();
+        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $listaNomes = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
         return view('grupos.grupo', ['grupos' => $grupos,
                                      'listaNomes' => $listaNomes])->render();

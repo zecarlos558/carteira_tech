@@ -52,7 +52,7 @@
                         DELETE
                     @endslot
                     @slot('botao')
-                        <x-button.button type="submit" class="btn-danger delete-btn" icon='deletar'>Deletar</x-button.button>
+                        <x-button.button type="submit" icon='deletar'>Deletar</x-button.button>
                     @endslot
                 </x-div.form>
             </x-div.button>

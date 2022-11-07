@@ -8,7 +8,12 @@ use App\Http\Requests\UsuarioRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Aplication;
+use App\Models\Categoria;
 use App\Models\Conta;
+use App\Models\Grupo;
+use App\Models\Movimento;
+use App\Models\Relatorio;
+use App\Models\Tipo;
 use Spatie\Permission\Models\Role;
 
 class AplicationController extends Controller
@@ -23,8 +28,25 @@ class AplicationController extends Controller
     {
         $usuario = Aplication::consultaUsuario();
         //session(['device' => checkDevice()]);
+        $dadosRenda = Relatorio::consultaTotalRenda()
+        ->whereMonth('data', '=', formatarData(date('d-m-y'),'m'))
+        ->first();
+        $dadosGastos = Relatorio::consultaTotalGastos()
+        ->whereMonth('data', '=', formatarData(date('d-m-y'),'m'))
+        ->first();
 
-        return view('inicial',['usuario' => $usuario]);
+        $relatorio = new Relatorio;
+        $relatorio->construtorSaida($dadosGastos);
+        $relatorio->construtorEntrada($dadosRenda);
+        $relatorio->calculaBarraProgresso();
+
+        $contas = Conta::where('user_id_create',$usuario->id)->orderBy('valor','desc')->get();
+        $movimentos = Movimento::where('user_id_create',$usuario->id)->limit(4)->get();
+
+        return view('inicial',['usuario' => $usuario,
+                               'relatorio' => $relatorio,
+                               'contas' => $contas,
+                               'movimentos' => $movimentos]);
     }
 
     public function dashboard()
@@ -145,6 +167,10 @@ class AplicationController extends Controller
     {
         $usuario = User::findOrFail($id);
         $usuario->removeRole($usuario->getRoleNames()[0]);
+        Tipo::where('user_id_create',$id)->delete();
+        Conta::where('user_id_create',$id)->delete();
+        Grupo::where('user_id_create',$id)->delete();
+        Categoria::where('user_id_create',$id)->delete();
         $usuario->delete();
         $log = new Logger();
         $log->log('info','Usuario Deletou um usuário!');

@@ -10,6 +10,7 @@ use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\MovimentoController;
 use App\Http\Controllers\MovimentoGastoController;
 use App\Http\Controllers\MovimentoRendaController;
+use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\TipoController;
 
 /*
@@ -204,6 +205,30 @@ Route::prefix('categoria')->middleware('auth')->group(function () {
         });
         Route::group(['middleware' => ['permission:delete categoria']], function () {
             Route::delete('/{id}', 'destroy')->name('deleteCategoria');
+        });
+    });
+});
+
+// Rotas de Relatório Financeiro
+Route::prefix('relatorio')->middleware('auth')->group(function () {
+    Route::controller(RelatorioController::class)->group(function () {
+        //Route::get('/inicial', 'index')->name('indexAplication');
+        Route::group(['middleware' => ['permission:read relatorio']], function () {
+            Route::get('/', 'index')->name('indexRelatorio');
+            Route::get('/show/{id}', 'show')->name('showRelatorio');
+            Route::get('/showRenda', 'showRenda')->name('showRelatorioRenda');
+            Route::get('/showGasto', 'showGasto')->name('showRelatorioGasto');
+        });
+        Route::group(['middleware' => ['permission:create relatorio']], function () {
+            Route::get('/create', 'create')->name('createRelatorio');
+            Route::post('/store', 'store')->name('storeRelatorio');
+        });
+        Route::group(['middleware' => ['permission:edit relatorio']], function () {
+            Route::get('/edit/{id}', 'edit')->name('editRelatorio');
+            Route::post('/update/{id}', 'update')->name('updateRelatorio');
+        });
+        Route::group(['middleware' => ['permission:delete relatorio']], function () {
+            Route::delete('/{id}', 'destroy')->name('deleteRelatorio');
         });
     });
 });

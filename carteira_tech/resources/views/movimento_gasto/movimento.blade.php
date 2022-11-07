@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <x-div.button class="mt-2">
-                    <x-button.button type="submit" class="btn-success" icon='filtrar'>Resultado</x-button.button>
+                    <x-button.button type="submit" icon='pesquisar'>Resultado</x-button.button>
                     <x-button.a href="{{ route('indexMovimentoGasto') }}" class="btn btn-dark" icon='limpar'>Limpar
                         Filtros</x-button.a>
                 </x-div.button>
@@ -59,7 +59,7 @@
                     </x-table.td>
                     <x-table.td-button>
                         <x-div.button>
-                            <x-button.a class="btn btn-info edit-btn" href="{{ route('editMovimentoGasto', $movimento->id) }}"
+                            <x-button.a href="{{ route('editMovimentoGasto', $movimento->id) }}"
                                 role="button" icon='editar'>Editar</x-button.a>
                             <x-div.form action="{{ route('deleteMovimentoGasto', $movimento->id) }}" id="formButtons"
                                 method="POST">
@@ -67,7 +67,7 @@
                                     DELETE
                                 @endslot
                                 @slot('botao')
-                                    <x-button.button type="submit" class="btn-danger delete-btn" icon='deletar'>Deletar
+                                    <x-button.button type="submit" icon='deletar'>Deletar
                                     </x-button.button>
                                 @endslot
                             </x-div.form>

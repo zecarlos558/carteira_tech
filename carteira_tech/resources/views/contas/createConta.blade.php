@@ -17,8 +17,8 @@
             <x-label.label class="form-label" for="valor">Valor de abertura:</x-label.label>
             <x-input.number value="" name="valor" id="valor" placeholder="Valor da Conta" />
 
-            <x-label.label for="funcao" >Tipo da Conta:</x-label.label>
-            <x-input.select id="funcao" name="funcao" >
+            <x-label.label for="tipo" >Tipo da Conta:</x-label.label>
+            <x-input.select id="tipo" name="tipo" >
                 <x-input.option value="">Selecione o tipo da Conta</x-input.option>
                 @foreach ($tipos as $tipo)
                 <x-input.option value="{{$tipo->id}}" >{{$tipo->nome}}</x-input.option>
@@ -26,7 +26,7 @@
             </x-input.select>
 
             @slot('rodape')
-                <x-button.button type="submit" class="btn-primary" icon='salvar' >Cadastrar Conta</x-button.button>
+                <x-button.button type="submit" icon='salvar' >Cadastrar Conta</x-button.button>
             @endslot
         </x-div.form>
     </x-div.principal>
