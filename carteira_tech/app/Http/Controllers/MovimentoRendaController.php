@@ -20,7 +20,7 @@ class MovimentoRendaController extends Controller
      */
     public function index()
     {
-        $movimentos = Movimento::where('tipo','suprimento')
+        $movimentos = Movimento::where('tipo','suprimento')->with('categoria')
                     ->where('user_id_update',Aplication::consultaIDUsuario())->get();
         $listaNomes = Movimento::where('tipo','suprimento')
                     ->where('user_id_update',Aplication::consultaIDUsuario())

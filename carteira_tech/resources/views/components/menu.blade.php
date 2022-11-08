@@ -44,7 +44,7 @@
                         @endif
                         @if ((auth()->user()->can('read categoria')) || (auth()->user()->can('create categoria')))
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='plano'></x-ionicons.ionic>Categorias</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='categoria'></x-ionicons.ionic>Categorias</a>
                                 <ul class="dropdown-menu">
                                     @can('read categoria')
                                     <li><a class="dropdown-item" id="indexCategoria" href="{{ route('indexCategoria') }}">Listar Categoria</a></li>

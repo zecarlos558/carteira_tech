@@ -5,10 +5,10 @@
     @endslot
     <x-div.principal>
         @slot('titulo')
-        <x-nav_pills.div-menu class="card-header-tabs">
-            <x-nav_pills.menu type="active" href="gasto">Gastos</x-nav_pills.menu>
-            <x-nav_pills.menu type="fade" href="filtro">Filtrar</x-nav_pills.menu>
-        </x-nav_pills.div-menu>
+            <x-nav_pills.div-menu>
+                <x-nav_pills.menu type="active" href="gasto">Gastos</x-nav_pills.menu>
+                <x-nav_pills.menu type="fade" href="filtro">Filtrar</x-nav_pills.menu>
+            </x-nav_pills.div-menu>
         @endslot
         @slot('rodape')
             {{ formataDataRelatorio($data) }}
@@ -36,24 +36,24 @@
                         </x-div.card>
                     </x-div.col>
                     @if (session(['device' => checkDevice()]) == false)
-                    <x-div.col>
-                        <x-div.card>
-                            @slot('header')
-                                <h3>Evolução das Saidas Mensal</h3>
-                            @endslot
-                            @slot('corpo')
-                                @if ($array['valorTotal'] != null)
-                                    <x-chart.bar :array="$array" />
-                                @else
-                                    <div class="d-none d-lg-block" id="div_pai_center">
-                                        <div id="div_filho_center">
-                                            <h5>Não foi encontrado dados para essa consulta!</h5>
+                        <x-div.col>
+                            <x-div.card>
+                                @slot('header')
+                                    <h3>Evolução das Saidas Mensal</h3>
+                                @endslot
+                                @slot('corpo')
+                                    @if ($array['valorTotal'] != null)
+                                        <x-chart.bar :array="$array" />
+                                    @else
+                                        <div class="d-none d-lg-block" id="div_pai_center">
+                                            <div id="div_filho_center">
+                                                <h5>Não foi encontrado dados para essa consulta!</h5>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
-                            @endslot
-                        </x-div.card>
-                    </x-div.col>
+                                    @endif
+                                @endslot
+                            </x-div.card>
+                        </x-div.col>
                     @endif
                 </x-div.row>
                 <x-div.row>
@@ -67,16 +67,16 @@
                                     <x-table.tbody>
                                         @foreach ($movimentos as $movimento)
                                             <x-table.tr>
-                                                <x-table.td>
-                                                    <x-div.button>
-                                                        <x-button.a class="btn-link"
-                                                            href="{{ route('showMovimentoRenda', $movimento->id) }}">
-                                                            {{ $movimento->nome }}</x-button.a>
-                                                    </x-div.button>
+                                                <x-table.td style="display: flex">{{ $movimento->categoria->nome }}
                                                 </x-table.td>
+                                                <x-table.td style="display: flex">
+                                                    <h5>{{ $movimento->nome }}</h5>
+                                                </x-table.td>
+                                                <x-table.td></x-table.td>
                                                 <x-table.td style="display: flex; color: blue;">
                                                     {{ formatarData($movimento->data) }} </x-table.td>
-                                                <x-table.td style="display: flex">R$ +{{ $movimento->valor }} </x-table.td>
+                                                <x-table.td style="display: flex; color: red">R$
+                                                    -{{ $movimento->valor }} </x-table.td>
                                             </x-table.tr>
                                         @endforeach
                                     </x-table.tbody>
@@ -90,7 +90,7 @@
                                 <h3>Categorias</h3>
                             @endslot
                             @slot('corpo')
-                                <x-div.input id="card_body" style="height: 350px;" >
+                                <x-div.input id="card_body" style="height: 350px;">
                                     @foreach ($relatorioCategorias as $relatorios)
                                         <h4>{{ $relatorios->nome }}</h4>
                                         <h5>{{ $relatorios->valorTotal }}</h5>

@@ -82,18 +82,14 @@ class Relatorio extends Model
 
     protected static function consultaGastos()
     {
-        return DB::table('movimentos')
-        ->where('user_id_create',Aplication::consultaIDUsuario())
-        ->where('tipo','retirada')
-        ;
+        return Movimento::where('tipo','retirada')->with('categoria')
+        ->where('user_id_update',Aplication::consultaIDUsuario());
     }
 
     protected static function consultaRenda()
     {
-        return DB::table('movimentos')
-        ->where('user_id_create',Aplication::consultaIDUsuario())
-        ->where('tipo','suprimento')
-        ;
+        return Movimento::where('tipo','suprimento')->with('categoria')
+        ->where('user_id_update',Aplication::consultaIDUsuario());
     }
 
     protected static function consultaTotalGastos()
@@ -119,8 +115,9 @@ class Relatorio extends Model
         return DB::table('movimentos')
         ->join('categorias','categorias.id','movimentos.categoria_id')
         ->where('movimentos.user_id_create',Aplication::consultaIDUsuario())
-        ->select(DB::raw('categorias.id as id, categorias.nome as nome, sum(movimentos.valor) as valorTotal'))
-        ->groupBy('categorias.id','categorias.nome')
+        ->select(DB::raw('categorias.id as id, categorias.nome as nome,
+                         sum(movimentos.valor) as valorTotal, movimentos.tipo as tipo'))
+        ->groupBy('categorias.id','categorias.nome','movimentos.tipo')
         ->orderBy('valor','desc')
         ;
     }

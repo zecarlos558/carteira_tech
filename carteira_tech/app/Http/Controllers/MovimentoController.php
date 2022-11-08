@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aplication;
+use App\Models\Categoria;
 use App\Models\Movimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,22 +15,19 @@ class MovimentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = date('d-m-y');
+        $dados = $request->all();
+        if ($request->data == null) {
+            $dados['data'] = date('d-m-y');
+        }
 
-        $usuario = Aplication::consultaIDUsuario();
-        $movimentos = Movimento::where('user_id_create',$usuario)
-        ->whereMonth('data', '=', formatarData($data,'m'))
-        ->select(DB::raw("(IF(tipo = 'suprimento', +valor, -valor)) AS total,
-                            id, nome, valor, tipo, data"))
-        ->get();
-
-        $listaNomes = Movimento::where('user_id_create',$usuario)->select('id','nome','valor')->get();
+        $movimentos = Movimento::filtroIndex($dados);
+        $categorias = Categoria::all();
 
         return view('movimentos.movimento', ['movimentos' => $movimentos,
-                                             'listaNomes' => $listaNomes,
-                                             'data' => $data])->render();
+                                             'categorias' => $categorias,
+                                             'data' => $dados['data']])->render();
     }
 
     /**

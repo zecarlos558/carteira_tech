@@ -82,20 +82,16 @@
                         <x-table.tbody>
                             @foreach ($movimentos as $movimento)
                                 <x-table.tr>
-                                    <x-table.td>
-                                        <x-div.button>
-                                            @if ($movimento->tipo == 'suprimento')
-                                                <x-button.a class="btn-link" href="{{ route('showMovimentoRenda', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
-                                            @else
-                                                <x-button.a class="btn-link" href="{{ route('showMovimentoGasto', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
-                                            @endif
-                                        </x-div.button>
+                                    <x-table.td style="display: flex">{{$movimento->categoria->nome}}</x-table.td>
+                                    <x-table.td style="display: flex">
+                                        <h5>{{ $movimento->nome }}</h5>
                                     </x-table.td>
+                                    <x-table.td></x-table.td>
                                     <x-table.td style="display: flex; color: blue;" > {{formatarData($movimento->data)}} </x-table.td>
                                     @if ($movimento->tipo == 'suprimento')
-                                    <x-table.td style="display: flex" >R$  +{{$movimento->valor}} </x-table.td>
+                                    <x-table.td style="display: flex; color: green" >R$  +{{$movimento->valor}} </x-table.td>
                                     @else
-                                    <x-table.td style="display: flex" >R$  -{{$movimento->valor}} </x-table.td>
+                                    <x-table.td style="display: flex; color: red" >R$  -{{$movimento->valor}} </x-table.td>
                                     @endif
                                 </x-table.tr>
                             @endforeach

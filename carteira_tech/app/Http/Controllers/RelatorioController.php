@@ -14,9 +14,14 @@ class RelatorioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = date('d-m-y');
+        if ($request->data != null) {
+            $data = $request->data;
+        } else {
+            $data = date('y-m-d');
+        }
+
         $dadosRenda = Relatorio::consultaTotalRenda()
         ->whereMonth('data', '=', formatarData($data,'m'))
         ->first();
@@ -36,6 +41,7 @@ class RelatorioController extends Controller
         $relatorio->calculaBarraCategorias($relatorioCategorias);
 
         return view('relatorios.index', ['relatorio' => $relatorio,
+                                         'data' => $data,
                                          'relatorioCategorias' => $relatorioCategorias])->render();
     }
 
@@ -74,7 +80,6 @@ class RelatorioController extends Controller
     public function showRenda(Request $request)
     {
         $data = date('y-m-d');
-
         $dadosRendaMensal = Relatorio::consultaTotalRenda()
         ->addSelect(DB::raw('EXTRACT(YEAR_MONTH FROM data) as mes_ano'))
         ->groupBy( DB::raw('EXTRACT(YEAR_MONTH FROM data)') )
@@ -84,32 +89,26 @@ class RelatorioController extends Controller
         $movimentos = Relatorio::consultaRenda();
         $dadosRenda = Relatorio::consultaTotalRenda();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
+
         if ( count($dados) > 0 && $dados['opcao_data'] == 'personalizado') {
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
             $dados['dataFim'] = $dados['dataFim'].'-30';
-
             $movimentos = $movimentos->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
-
             $dadosRenda = $dadosRenda->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->first();
-
             $relatorioCategorias = $relatorioCategorias->where('tipo','suprimento')
             ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
-
             $data = $dados;
         } else {
             if (isset($dados['opcao_data']) == 'mensal') {
                 $data = $dados['data'];
             }
-
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
             ->get();
-
             $dadosRenda = $dadosRenda->whereMonth('data', '=', formatarData($data,'m'))
             ->first();
-
             $relatorioCategorias = $relatorioCategorias->where('tipo','suprimento')
             ->whereMonth('data', '=', formatarData($data,'m'))
             ->get();
@@ -165,32 +164,26 @@ class RelatorioController extends Controller
         $movimentos = Relatorio::consultaGastos();
         $dadosGasto = Relatorio::consultaTotalGastos();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
+
         if ( count($dados) > 0 && $dados['opcao_data'] == 'personalizado') {
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
             $dados['dataFim'] = $dados['dataFim'].'-30';
-
             $movimentos = $movimentos ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
-
             $dadosGasto = $dadosGasto->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->first();
-
             $relatorioCategorias = $relatorioCategorias->where('tipo','retirada')
             ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
-
             $data = $dados;
         } else {
             if (isset($dados['opcao_data']) == 'mensal') {
                 $data = $dados['data'];
             }
-
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
             ->get();
-
             $dadosGasto = $dadosGasto->whereMonth('data', '=', formatarData($data,'m'))
             ->first();
-
             $relatorioCategorias = $relatorioCategorias->where('tipo','retirada')
             ->whereMonth('data', '=', formatarData($data,'m'))
             ->get();

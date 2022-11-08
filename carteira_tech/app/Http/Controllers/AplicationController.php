@@ -24,10 +24,9 @@ class AplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $usuario = Aplication::consultaUsuario();
-        //session(['device' => checkDevice()]);
         $dadosRenda = Relatorio::consultaTotalRenda()
         ->whereMonth('data', '=', formatarData(date('d-m-y'),'m'))
         ->first();
@@ -41,7 +40,8 @@ class AplicationController extends Controller
         $relatorio->calculaBarraProgresso();
 
         $contas = Conta::where('user_id_create',$usuario->id)->orderBy('valor','desc')->get();
-        $movimentos = Movimento::where('user_id_create',$usuario->id)->limit(4)->get();
+        $movimentos = Movimento::where('user_id_create',$usuario->id)
+        ->with('categoria')->limit(4)->get();
 
         return view('inicial',['usuario' => $usuario,
                                'relatorio' => $relatorio,

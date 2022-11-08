@@ -24,4 +24,24 @@ class Movimento extends Model
         return $this->belongsTo('App\Models\Categoria');
     }
 
+    protected static function filtroIndex($dados)
+    {
+        $movimentos = Movimento::where('movimentos.user_id_create',Aplication::consultaIDUsuario())
+        ->join('categorias','categorias.id','movimentos.categoria_id')
+        ->whereMonth('data', '=', formatarData($dados['data'],'m'))
+        ->addSelect(DB::raw("(IF(movimentos.tipo = 'suprimento', +valor, -valor)) AS total,
+        movimentos.id, movimentos.nome, valor, tipo, data, categorias.nome as categoria_nome"));
+        if ( (isset($dados['categoria']) && $dados['categoria']!=null) && (isset($dados['tipo']) && $dados['tipo']!=null) ) {
+            $movimentos = $movimentos->where('categoria_id',$dados['categoria'])
+            ->where('tipo',$dados['tipo']);
+        } elseif ( (isset($dados['categoria']) && $dados['categoria']!=null) ) {
+            $movimentos = $movimentos->where('categoria_id',$dados['categoria']);
+        } elseif ( (isset($dados['tipo']) && $dados['tipo']!=null) ) {
+            $movimentos = $movimentos->where('tipo',$dados['tipo']);
+        }
+
+
+        return $movimentos->get();
+    }
+
 }

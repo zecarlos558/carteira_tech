@@ -29,7 +29,7 @@
     <x-ionicons.icon name='person-outline' ></x-ionicons.icon>
     @elseif ($icon == 'fornecedor')
     <x-ionicons.icon name='business-outline' ></x-ionicons.icon>
-    @elseif ($icon == 'plano')
+    @elseif ($icon == 'categoria')
     <x-ionicons.icon name='documents-outline' ></x-ionicons.icon>
     @elseif ($icon == 'home')
     <x-ionicons.icon name='home-outline' ></x-ionicons.icon>

@@ -1,16 +1,17 @@
 <x-div.table-list>
     @section('title', 'Movimentos')
     @slot('tituloCentral')
-    MOVIMENTOS
+        MOVIMENTOS
     @endslot
 
     @slot('titulo')
-        Lista de Movimentos - {{ucfirst(formataMes(formatarData($data,'m')))}}
+        Lista de Movimentos - {{ ucfirst(formataMes(formatarData($data, 'm'))) }}
     @endslot
     <h5>{{ verificaCountObjeto($movimentos) }}</h5>
     @slot('botao')
         <x-div.button>
-            <x-button.button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" icon="criar">Transação</x-button.button>
+            <x-button.button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" icon="criar">Transação
+            </x-button.button>
             <x-button.a href="#filtro" data-bs-toggle="collapse" icon='filtrar'>Filtrar</x-button.a>
             <ul class="dropdown-menu" id="MenuOpcao">
                 <li>
@@ -26,20 +27,36 @@
     @slot('filtro')
         <x-div.principal id="filtro" class="collapse mt-2">
             <form autocomplete="off">
-                <div class="row">
-                    <div class="col-auto">
+                <x-div.row>
+                    <x-div.col type="auto">
                         <div class="input-group">
-                            <x-label.span class="input-group-text" icon='conta'>Nome</x-label.span>
-                            <x-input.text type="text" value="{{ old('nome') }}"
-                            placeholder="Procurar nome" list="nomes" name="nome" id="nome"></x-input.text>
-                            <x-input.datalist id="nomes" >
-                                @foreach ($listaNomes as $listaNome)
-                                    <x-input.option value="{{ $listaNome->nome }}"></x-input.option>
-                                @endforeach
-                            </x-input.datalist>
+                            <x-label.span class="input-group-text" icon='calendario'>Data</x-label.span>
+                            <x-input.date-month id="data" name="data" value="{{ date('Y-m') }}">
+                            </x-input.date-month>
                         </div>
-                    </div>
-                </div>
+                    </x-div.col>
+                    <x-div.col type="auto">
+                        <div class="input-group">
+                            <x-label.span class="input-group-text" icon='categoria'>Categoria</x-label.span>
+                            <x-input.select id="categoria" name="categoria">
+                                <x-input.option value="">Selecione</x-input.option>
+                                @foreach ($categorias as $categoria)
+                                    <x-input.option value="{{ $categoria->id }}">{{ $categoria->nome }}</x-input.option>
+                                @endforeach
+                            </x-input.select>
+                        </div>
+                    </x-div.col>
+                    <x-div.col type="auto">
+                        <div class="input-group">
+                            <x-label.span class="input-group-text" icon='tipo'>Tipo</x-label.span>
+                            <x-input.select id="tipo" name="tipo">
+                                <x-input.option value="">Selecione</x-input.option>
+                                <x-input.option value="suprimento">Suprimento</x-input.option>
+                                <x-input.option value="retirada">Retirada</x-input.option>
+                            </x-input.select>
+                        </div>
+                    </x-div.col>
+                </x-div.row>
                 <x-div.button class="mt-2">
                     <x-button.button type="submit" icon='pesquisar'>Resultado</x-button.button>
                     <x-button.a href="{{ route('indexMovimento') }}" class="btn btn-dark" icon='limpar'>Limpar
@@ -49,15 +66,15 @@
         </x-div.principal>
     @endslot
     <x-div.table>
-            <x-table.thead>
-                <x-table.tr>
-                    <x-table.th scope="col">#</x-table.th>
-                    <x-table.th scope="col">Nome</x-table.th>
-                    <x-table.th scope="col">Data</x-table.th>
-                    <x-table.th scope="col">Valor</x-table.th>
-                    <x-table.th scope="col">Tipo</x-table.th>
-                </x-table.tr>
-            </x-table.thead>
+        <x-table.thead>
+            <x-table.tr>
+                <x-table.th scope="col">#</x-table.th>
+                <x-table.th scope="col">Nome</x-table.th>
+                <x-table.th scope="col">Data</x-table.th>
+                <x-table.th scope="col">Valor</x-table.th>
+                <x-table.th scope="col">Categoria</x-table.th>
+            </x-table.tr>
+        </x-table.thead>
         <x-table.tbody>
             @foreach ($movimentos as $movimento)
                 <x-table.tr>
@@ -65,24 +82,29 @@
                     <x-table.td>
                         <x-div.button>
                             @if ($movimento->tipo == 'suprimento')
-                                <x-button.a class="btn-link" href="{{ route('showMovimentoRenda', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
+                                <x-button.a class="btn-link" href="{{ route('showMovimentoRenda', $movimento->id) }}">
+                                    {{ $movimento->nome }}</x-button.a>
                             @else
-                                <x-button.a class="btn-link" href="{{ route('showMovimentoGasto', $movimento->id) }}">{{ $movimento->nome }}</x-button.a>
+                                <x-button.a class="btn-link" href="{{ route('showMovimentoGasto', $movimento->id) }}">
+                                    {{ $movimento->nome }}</x-button.a>
                             @endif
                         </x-div.button>
                     </x-table.td>
-                    <x-table.td> {{formatarData($movimento->data)}} </x-table.td>
-                    <x-table.td> {{$movimento->valor}} R$ </x-table.td>
-                    <x-table.td><x-status_movimento>{{$movimento->tipo}}</x-status_movimento></x-table.td>
+                    <x-table.td> {{ formatarData($movimento->data) }} </x-table.td>
+                    <x-table.td> {{ $movimento->valor }} R$ </x-table.td>
+                    <x-table.td style="display: flex; padding: 0px;">{{ $movimento->categoria_nome }}
+                    </x-table.td>
+                    <x-table.td style="display: flex; padding: 0px;">
+                        <x-status_movimento>{{ $movimento->tipo }}</x-status_movimento>
+                    </x-table.td>
                 </x-table.tr>
             @endforeach
         </x-table.tbody>
     </x-div.table>
     <x-card.footer>
         <x-div.row type="justify-content-around">
-            <div class="col-auto" >{{count($movimentos)}} Transações</div>
-            <div class="col-auto" >R$ {{$movimentos->sum('total')}},00</div>
+            <div class="col-auto">{{ count($movimentos) }} Transações</div>
+            <div class="col-auto">R$ {{ $movimentos->sum('total') }},00</div>
         </x-div.row>
     </x-card.footer>
 </x-div.table-list>
-

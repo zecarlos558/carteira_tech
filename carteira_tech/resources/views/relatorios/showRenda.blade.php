@@ -6,7 +6,7 @@
     <x-div.principal>
 
         @slot('titulo')
-            <x-nav_pills.div-menu class="card-header-tabs">
+            <x-nav_pills.div-menu>
                 <x-nav_pills.menu type="active" href="renda">Renda</x-nav_pills.menu>
                 <x-nav_pills.menu type="fade" href="filtro">Filtrar</x-nav_pills.menu>
             </x-nav_pills.div-menu>
@@ -68,16 +68,16 @@
                                     <x-table.tbody>
                                         @foreach ($movimentos as $movimento)
                                             <x-table.tr>
-                                                <x-table.td>
-                                                    <x-div.button>
-                                                        <x-button.a class="btn-link"
-                                                            href="{{ route('showMovimentoRenda', $movimento->id) }}">
-                                                            {{ $movimento->nome }}</x-button.a>
-                                                    </x-div.button>
+                                                <x-table.td style="display: flex">{{ $movimento->categoria->nome }}
                                                 </x-table.td>
+                                                <x-table.td style="display: flex">
+                                                    <h5>{{ $movimento->nome }}</h5>
+                                                </x-table.td>
+                                                <x-table.td></x-table.td>
                                                 <x-table.td style="display: flex; color: blue;">
                                                     {{ formatarData($movimento->data) }} </x-table.td>
-                                                <x-table.td style="display: flex">R$ +{{ $movimento->valor }} </x-table.td>
+                                                <x-table.td style="display: flex; color: green">R$
+                                                    -{{ $movimento->valor }} </x-table.td>
                                             </x-table.tr>
                                         @endforeach
                                     </x-table.tbody>
