@@ -107,6 +107,18 @@
         return date($formato, strtotime($data));
     }
 
+    function formataDataRelatorio($data, $formato = 'd/m/y')
+    {
+        if (isset($data['dataInicio'])) {
+            return formataMes(formatarData($data['dataInicio'],'m')).' de '.formatarData($data['dataInicio'],'y')
+            . ' - '.
+            formataMes(formatarData($data['dataFim'],'m')).' de '.formatarData($data['dataFim'],'y');
+        } else {
+            return formataMes(formatarData($data,'m')).' de '.formatarData($data,'y');
+        }
+
+    }
+
      function formataPesquisa($request)
     {
         if ($request) {
@@ -186,6 +198,7 @@
 
     function formataMes($numeroMes)
     {
+        $numeroMes = (int) $numeroMes;
         $mes = array('', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
         return $mes[$numeroMes];
     }

@@ -61,6 +61,20 @@ function verificaRole(funcao,funcoes) {
 
 }
 
+function selecionaData() {
+    var select = document.getElementById('opcao_data');
+    var option = select.options[select.selectedIndex];
+    opcao = option.value;
+
+    if (opcao == 'mensal') {
+        document.getElementById('mensal').style.display = 'block';
+        document.getElementById('personalizado').style.display = 'none';
+    } else if(opcao == 'personalizado') {
+        document.getElementById('mensal').style.display = 'none';
+        document.getElementById('personalizado').style.display = 'block';
+    }
+}
+
 function corSistema() {
     body_background = document.getElementById("body").value;
     body_text = document.getElementById("bodyText").value;
