@@ -61,7 +61,7 @@ class AplicationController extends Controller
     {
         $roles = Role::all()->pluck('name');
         $funcao = retornaRole(Aplication::consultaFuncao(),$roles);
-        $users = User::role($funcao)->get();
+        $users = User::all();
 
         return view('aplication.painelControle' ,['usuarios' => $users]);
     }
@@ -103,7 +103,7 @@ class AplicationController extends Controller
         }
         $usuario->assignRole($request->funcao);
         $log = new Logger();
-        $log->log('info','Usuario criou um novo usuário!');
+        $log->log('info','Usuario criou um novo usuário! / ID:'.$usuario->id.' - Nome:'.$usuario->name);
         return redirect()->route('painelControleUsuario')->with('msg_alert','Usuário Cadastrado com sucesso!');
     }
 
@@ -153,8 +153,8 @@ class AplicationController extends Controller
         $usuario->syncRoles([$request->funcao]);
         $usuario->save();
         $log = new Logger();
-        $log->log('info','Usuario alterou um usuário!');
-        return redirect()->route('painelControleUsuario')->with('msg_alert','Usuário editado com sucesso!');
+        $log->log('info','Usuario alterou um usuário! / ID:'.$usuario->id.' - Nome:'.$usuario->name);
+        return redirect()->route('dashboard')->with('msg_alert','Usuário editado com sucesso!');
     }
 
     /**
@@ -167,13 +167,14 @@ class AplicationController extends Controller
     {
         $usuario = User::findOrFail($id);
         $usuario->removeRole($usuario->getRoleNames()[0]);
+        Movimento::where('user_id_create',$id)->delete();
         Tipo::where('user_id_create',$id)->delete();
         Conta::where('user_id_create',$id)->delete();
         Grupo::where('user_id_create',$id)->delete();
         Categoria::where('user_id_create',$id)->delete();
         $usuario->delete();
         $log = new Logger();
-        $log->log('info','Usuario Deletou um usuário!');
+        $log->log('info','Usuario Deletou um usuário! / ID:'.$usuario->id.' - Nome:'.$usuario->name);
         return redirect()->route('painelControleUsuario')->with('msg_alert','Usuário deletado com sucesso!');
     }
 

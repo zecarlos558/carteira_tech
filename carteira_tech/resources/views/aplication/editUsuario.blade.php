@@ -1,7 +1,7 @@
 <x-div.main>
-    @section('title','Editar User')
+    @section('title', 'Editar User')
     @slot('tituloCentral')
-    EDITAR USUÁRIO
+        EDITAR USUÁRIO
     @endslot
     <x-div.principal>
         @slot('titulo')
@@ -16,20 +16,28 @@
 
             <x-label.label for="email">Email:</x-label.label>
             <x-input.email value="{{ $usuario->email }}" name="email" id="email"></x-input.email>
-            <x-label.label for="funcao" >Selecione o nível de Função:</x-label.label>
-            <x-input.select id="funcao" name="funcao" >
-                <x-input.option value="">Selecione o nível de permissão do Usuário</x-input.option>
-                @foreach ($funcoes as $funcao)
-                    @if ($funcao->name == $usuario->funcao)
-                        <x-input.option selected value="{{$funcao->name}}" >{{$funcao->name}}</x-input.option>
-                    @else
-                        <x-input.option value="{{$funcao->name}}" >{{$funcao->name}}</x-input.option>
-                    @endif
-                @endforeach
-            </x-input.select>
 
+            @can('create usuario')
+            <div style="display: block;" >
+            @else
+            <div style="display: none;" >
+            @endcan
+                <x-label.label for="funcao">Selecione o nível de Função:</x-label.label>
+                <x-input.select id="funcao" name="funcao">
+                    <x-input.option value="">Selecione o nível de permissão do Usuário</x-input.option>
+                    @foreach ($funcoes as $funcao)
+                        @if ($funcao->name == $usuario->getRoleNames()[0])
+                            <x-input.option selected value="{{ $funcao->name }}">{{ $funcao->name }}</x-input.option>
+                        @else
+                            <x-input.option value="{{ $funcao->name }}">{{ $funcao->name }}</x-input.option>
+                        @endif
+                    @endforeach
+                </x-input.select>
+            </div>
             @slot('rodape')
-                <x-button.button type="submit" icon='salvar' >Editar Usuário</x-button.button>
+                <x-div.button>
+                    <x-button.button type="submit" icon='salvar'>Editar Usuário</x-button.button>
+                </x-div.button>
             @endslot
         </x-div.form>
     </x-div.principal>

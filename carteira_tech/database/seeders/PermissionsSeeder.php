@@ -86,17 +86,19 @@ class PermissionsSeeder extends Seeder
         // create roles user
         $user = Role::create(['name' => 'user']);
         $user->givePermissionTo('read categoria', 'read conta', 'read grupo',
-                                'read tipo', 'read gasto', 'read renda','read movimento');
+                                'read tipo', 'read gasto', 'read renda',
+                                'read movimento', 'read relatorio');
         $user->givePermissionTo('create categoria', 'create conta', 'create grupo',
-                                'create tipo', 'create gasto','create renda', 'create movimento');
-        $user->givePermissionTo('edit categoria', 'edit conta',
+                                'create tipo', 'create gasto','create renda',
+                                'create movimento', 'create relatorio');
+        $user->givePermissionTo('edit categoria', 'edit conta', 'edit usuario',
                                 'edit grupo', 'edit tipo',
                                 'edit gasto', 'edit renda',
-                                'edit movimento');
+                                'edit movimento', 'edit relatorio');
         $user->givePermissionTo('delete categoria', 'delete conta',
                                 'delete grupo', 'delete tipo',
                                 'delete gasto', 'delete renda',
-                                'delete movimento');
+                                'delete movimento', 'delete relatorio');
         // create roles manager
         $manager = Role::create(['name' => 'manager']);
         $manager->givePermissionTo('read categoria', 'read conta', 'read grupo',

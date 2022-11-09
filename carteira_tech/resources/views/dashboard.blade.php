@@ -17,6 +17,9 @@
                     @can('read config')
                     <x-button.a href="{{ route('indexConfig') }}" class="btn btn-success" icon="config" >Configurações</x-button.a>
                     @endcan
+                    @can('edit usuario')
+                    <x-button.a href="{{ route('editUsuario', $user->id) }}" class="btn btn-primary" icon="config" >Editar Dados</x-button.a>
+                    @endcan
                 </x-div.button>
             @endslot
             <x-div.show>
