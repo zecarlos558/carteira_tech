@@ -14,13 +14,14 @@ class GrupoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
-        $listaNomes = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
+        $dados = $request->all();
+        $grupos = Grupo::filtroIndex($dados);
+        $listaGrupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
         return view('grupos.grupo', ['grupos' => $grupos,
-                                     'listaNomes' => $listaNomes])->render();
+                                     'listaGrupos' => $listaGrupos])->render();
     }
 
     /**

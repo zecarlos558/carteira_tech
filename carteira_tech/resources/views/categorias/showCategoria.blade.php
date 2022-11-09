@@ -1,7 +1,7 @@
-<x-div.main >
-    @section('title','Detalhe Categoria')
+<x-div.main>
+    @section('title', 'Detalhe Categoria')
     @slot('tituloCentral')
-    DETALHE DA CATEGORIA
+        DETALHE DA CATEGORIA
     @endslot
     <x-div.principal>
         @slot('titulo')
@@ -33,19 +33,20 @@
                 </x-table.tbody>
             </x-div.table-show>
             @slot('rodape')
-            <x-div.button>
-                <x-button.a href="{{ route('editCategoria', $categoria->id)}}" icon='editar'>Editar</x-button.a>
-                <x-div.form action="{{ route('deleteCategoria', $categoria->id) }}" id="formButtons" method="POST" >
-                    @slot('metodo')
-                        DELETE
-                    @endslot
-                    @slot('botao')
-                        <x-button.button type="submit" icon='deletar'>Deletar</x-button.button>
-                    @endslot
-                </x-div.form>
-            </x-div.button>
+                @if ($categoria->user_id_create == auth()->user()->id)
+                    <x-div.button>
+                        <x-button.a href="{{ route('editCategoria', $categoria->id) }}" icon='editar'>Editar</x-button.a>
+                        <x-div.form action="{{ route('deleteCategoria', $categoria->id) }}" id="formButtons" method="POST">
+                            @slot('metodo')
+                                DELETE
+                            @endslot
+                            @slot('botao')
+                                <x-button.button type="submit" icon='deletar'>Deletar</x-button.button>
+                            @endslot
+                        </x-div.form>
+                    </x-div.button>
+                @endif
             @endslot
         </x-div.show>
     </x-div.principal>
 </x-div.main>
-

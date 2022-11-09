@@ -39,8 +39,6 @@ class Movimento extends Model
         } elseif ( (isset($dados['tipo']) && $dados['tipo']!=null) ) {
             $movimentos = $movimentos->where('tipo',$dados['tipo']);
         }
-
-
         return $movimentos->get();
     }
 

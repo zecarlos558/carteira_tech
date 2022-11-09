@@ -17,13 +17,16 @@ class ContasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
-        $listaNomes = Conta::where('user_id_create',Aplication::consultaIDUsuario())->select('id','nome','valor')->get();
+        $dados = $request->all();
+        $contas = Conta::filtroIndex($dados);
+        $listaContas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->select('id','nome','valor')->get();
+        $tipos = Tipo::all();
 
         return view('contas.conta', ['contas' => $contas,
-                                     'listaNomes' => $listaNomes])->render();
+                                     'tipos' => $tipos,
+                                     'listaContas' => $listaContas])->render();
     }
 
     /**

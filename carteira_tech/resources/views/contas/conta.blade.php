@@ -18,20 +18,32 @@
     @slot('filtro')
         <x-div.principal id="filtro" class="collapse mt-2">
             <form autocomplete="off">
-                <div class="row">
-                    <div class="col-auto">
+                <x-div.row>
+                    <x-div.col type="auto">
                         <div class="input-group">
-                            <x-label.span class="input-group-text" icon='conta'>Nome</x-label.span>
-                            <x-input.text type="text" value="{{ old('nome') }}"
-                            placeholder="Procurar nome" list="nomes" name="nome" id="nome"></x-input.text>
-                            <x-input.datalist id="nomes" >
-                                @foreach ($listaNomes as $listaNome)
-                                    <x-input.option value="{{ $listaNome->nome }}"></x-input.option>
+                            <x-label.span class="input-group-text" icon='conta'>Conta</x-label.span>
+                            <x-input.text type="text" value="{{ old('conta') }}"
+                            placeholder="Procurar conta" list="contas" name="conta" id="conta"></x-input.text>
+                            <x-input.datalist id="contas" >
+                                <x-input.option value=""></x-input.option>
+                                @foreach ($listaContas as $conta)
+                                    <x-input.option value="{{$conta->id}}">{{ $conta->nome }}</x-input.option>
                                 @endforeach
                             </x-input.datalist>
                         </div>
-                    </div>
-                </div>
+                    </x-div.col>
+                    <x-div.col type="auto">
+                        <div class="input-group">
+                            <x-label.span class="input-group-text" icon='tipo'>Tipo</x-label.span>
+                            <x-input.select id="tipo" name="tipo">
+                                <x-input.option value="">Selecione</x-input.option>
+                                @foreach ($tipos as $tipo)
+                                    <x-input.option value="{{ $tipo->id }}">{{ $tipo->nome }}</x-input.option>
+                                @endforeach
+                            </x-input.select>
+                        </div>
+                    </x-div.col>
+                </x-div.row>
                 <x-div.button class="mt-2">
                     <x-button.button type="submit" icon='pesquisar'>Resultado</x-button.button>
                     <x-button.a href="{{ route('indexConta') }}" class="btn btn-dark" icon='limpar'>Limpar
@@ -45,6 +57,7 @@
                 <x-table.tr>
                     <x-table.th scope="col">#</x-table.th>
                     <x-table.th scope="col">Nome</x-table.th>
+                    <x-table.th scope="col">Tipo</x-table.th>
                     <x-table.th scope="col">Valor</x-table.th>
                     <x-table.th scope="col">Ações</x-table.th>
                 </x-table.tr>
@@ -59,6 +72,7 @@
                                 {{ $conta->nome }}</x-button.a>
                         </x-div.button>
                     </x-table.td>
+                    <x-table.td>{{$conta->tipos[0]->nome}}</x-table.td>
                     <x-table.td>{{$conta->valor}} R$</x-table.td>
                     <x-table.td-button>
                         <x-div.button>

@@ -35,4 +35,22 @@ class Conta extends Model
         return $this->hasMany('App\Models\Movimento_gasto');
     }
 
+    protected static function filtroIndex($dados)
+    {
+        $contas = Conta::where('user_id_create',[Aplication::consultaIDUsuario()])->with('tipos');
+        if ( (isset($dados['conta']) && $dados['conta']!=null) && (isset($dados['tipo']) && $dados['tipo']!=null) ) {
+            $contas = $contas->where('id',formataPesquisa($dados['conta']))
+            ->leftJoin('conta_tipo','conta_tipo.conta_id','contas.id')
+            ->where('conta_tipo.tipo_id',$dados['tipo']);
+        } elseif ( (isset($dados['conta']) && $dados['conta']!=null) ) {
+            $contas = $contas->where('id',formataPesquisa($dados['conta']));
+        } elseif ( (isset($dados['tipo']) && $dados['tipo']!=null) ) {
+            $contas = $contas
+            ->leftJoin('conta_tipo','conta_tipo.conta_id','contas.id')
+            ->where('conta_tipo.tipo_id',$dados['tipo']);
+        }
+
+        return $contas->get();
+    }
+
 }

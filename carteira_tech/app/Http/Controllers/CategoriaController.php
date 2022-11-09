@@ -16,13 +16,16 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->with('grupos')->get();
-        $listaNomes = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
+        $dados = $request->all();
+        $categorias = Categoria::filtroIndex($dados);
+        $grupos = Grupo::all();
+        $listaCategorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
         return view('categorias.categoria', ['categorias' => $categorias,
-                                             'listaNomes' => $listaNomes])->render();
+                                             'grupos' => $grupos,
+                                             'listaCategorias' => $listaCategorias])->render();
     }
 
     /**

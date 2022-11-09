@@ -18,4 +18,13 @@ class Grupo extends Model
         return $this->belongsToMany('App\Models\Categoria');
     }
 
+    protected static function filtroIndex($dados)
+    {
+        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()]);
+        if ( (isset($dados['grupo']) && $dados['grupo']!=null) ) {
+            $grupos = $grupos->where('id',formataPesquisa($dados['grupo']));
+        }
+        return $grupos->get();
+    }
+
 }

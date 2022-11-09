@@ -15,13 +15,14 @@ class TipoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
-        $listaNomes = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
+        $dados = $request->all();
+        $tipos = Tipo::filtroIndex($dados);
+        $listaTipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
         return view('tipos.tipo', ['tipos' => $tipos,
-                                   'listaNomes' => $listaNomes])->render();
+                                   'listaTipos' => $listaTipos])->render();
     }
 
     /**

@@ -20,4 +20,13 @@ class Tipo extends Model
         return $this->belongsToMany('App\Models\Conta');
     }
 
+    protected static function filtroIndex($dados)
+    {
+        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()]);
+        if ( (isset($dados['tipo']) && $dados['tipo']!=null) ) {
+            $tipos = $tipos->where('id',formataPesquisa($dados['tipo']));
+        }
+        return $tipos->get();
+    }
+
 }

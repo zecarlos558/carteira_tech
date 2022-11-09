@@ -1,7 +1,7 @@
 <x-div.table-list>
     @section('title', 'Grupos')
     @slot('tituloCentral')
-    GRUPOS
+        GRUPOS
     @endslot
 
     @slot('titulo')
@@ -18,20 +18,21 @@
     @slot('filtro')
         <x-div.principal id="filtro" class="collapse mt-2">
             <form autocomplete="off">
-                <div class="row">
-                    <div class="col-auto">
+                <x-div.row>
+                    <x-div.col type="auto">
                         <div class="input-group">
-                            <x-label.span class="input-group-text" icon='conta'>Nome</x-label.span>
-                            <x-input.text type="text" value="{{ old('nome') }}"
-                            placeholder="Procurar nome" list="nomes" name="nome" id="nome"></x-input.text>
-                            <x-input.datalist id="nomes" >
-                                @foreach ($listaNomes as $listaNome)
-                                    <x-input.option value="{{ $listaNome->nome }}"></x-input.option>
+                            <x-label.span class="input-group-text" icon='grupo'>Grupo</x-label.span>
+                            <x-input.text type="text" value="{{ old('grupo') }}" placeholder="Procurar grupo" list="grupos"
+                                name="grupo" id="grupo"></x-input.text>
+                            <x-input.datalist id="grupos">
+                                <x-input.option value=""></x-input.option>
+                                @foreach ($listaGrupos as $grupo)
+                                    <x-input.option value="{{ $grupo->id }}">{{ $grupo->nome }}</x-input.option>
                                 @endforeach
                             </x-input.datalist>
                         </div>
-                    </div>
-                </div>
+                    </x-div.col>
+                </x-div.row>
                 <x-div.button class="mt-2">
                     <x-button.button type="submit" icon='pesquisar'>Resultado</x-button.button>
                     <x-button.a href="{{ route('indexGrupo') }}" class="btn btn-dark" icon='limpar'>Limpar
@@ -41,13 +42,15 @@
         </x-div.principal>
     @endslot
     <x-div.table>
-            <x-table.thead>
-                <x-table.tr>
-                    <x-table.th scope="col">#</x-table.th>
-                    <x-table.th scope="col">Nome</x-table.th>
+        <x-table.thead>
+            <x-table.tr>
+                <x-table.th scope="col">#</x-table.th>
+                <x-table.th scope="col">Nome</x-table.th>
+                @if ($grupos->last()->user_id_create == auth()->user()->id)
                     <x-table.th scope="col">Ações</x-table.th>
-                </x-table.tr>
-            </x-table.thead>
+                @endif
+            </x-table.tr>
+        </x-table.thead>
         <x-table.tbody>
             @foreach ($grupos as $grupo)
                 <x-table.tr>
@@ -58,22 +61,25 @@
                                 {{ $grupo->nome }}</x-button.a>
                         </x-div.button>
                     </x-table.td>
-                    <x-table.td-button>
-                        <x-div.button>
-                            <x-button.a href="{{ route('editGrupo', $grupo->id) }}"
-                                role="button" icon='editar'>Editar</x-button.a>
-                            <x-div.form action="{{ route('deleteGrupo', $grupo->id) }}" id="formButtons"
-                                method="POST">
-                                @slot('metodo')
-                                    DELETE
-                                @endslot
-                                @slot('botao')
-                                    <x-button.button type="submit" icon='deletar'>Deletar
-                                    </x-button.button>
-                                @endslot
-                            </x-div.form>
-                        </x-div.button>
-                    </x-table.td-button>
+
+                    @if ($grupo->user_id_create == auth()->user()->id)
+                        <x-table.td-button>
+                            <x-div.button>
+                                <x-button.a href="{{ route('editGrupo', $grupo->id) }}" role="button" icon='editar'>
+                                    Editar</x-button.a>
+                                <x-div.form action="{{ route('deleteGrupo', $grupo->id) }}" id="formButtons"
+                                    method="POST">
+                                    @slot('metodo')
+                                        DELETE
+                                    @endslot
+                                    @slot('botao')
+                                        <x-button.button type="submit" icon='deletar'>Deletar
+                                        </x-button.button>
+                                    @endslot
+                                </x-div.form>
+                            </x-div.button>
+                        </x-table.td-button>
+                    @endif
                 </x-table.tr>
             @endforeach
         </x-table.tbody>

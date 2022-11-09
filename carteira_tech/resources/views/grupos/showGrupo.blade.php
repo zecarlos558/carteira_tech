@@ -29,6 +29,7 @@
                 </x-table.tbody>
             </x-div.table-show>
             @slot('rodape')
+            @if ($grupo->user_id_create == auth()->user()->id)
             <x-div.button>
                 <x-button.a href="{{ route('editGrupo', $grupo->id)}}" icon='editar'>Editar</x-button.a>
                 <x-div.form action="{{ route('deleteGrupo', $grupo->id) }}" id="formButtons" method="POST" >
@@ -40,6 +41,7 @@
                     @endslot
                 </x-div.form>
             </x-div.button>
+            @endif
             @endslot
         </x-div.show>
     </x-div.principal>
