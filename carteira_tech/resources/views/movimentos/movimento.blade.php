@@ -70,8 +70,12 @@
             <x-table.tr>
                 <x-table.th scope="col">#</x-table.th>
                 <x-table.th scope="col">Nome</x-table.th>
+                @if (session()->get('device'))
+                <x-table.th scope="col">Valor</x-table.th>
+                @else
                 <x-table.th scope="col">Data</x-table.th>
                 <x-table.th scope="col">Valor</x-table.th>
+                @endif
                 <x-table.th scope="col">Categoria</x-table.th>
             </x-table.tr>
         </x-table.thead>
@@ -90,11 +94,15 @@
                             @endif
                         </x-div.button>
                     </x-table.td>
+                    @if (session()->get('device'))
+                    <x-table.td> {{ formatarData($movimento->data) }} <br> {{ $movimento->valor }} R$ </x-table.td>
+                    @else
                     <x-table.td> {{ formatarData($movimento->data) }} </x-table.td>
                     <x-table.td> {{ $movimento->valor }} R$ </x-table.td>
-                    <x-table.td style="display: flex; padding: 0px;">{{ $movimento->categoria_nome }}
+                    @endif
+                    <x-table.td style="display: flex; padding-bottom: 0px;">{{ $movimento->categoria_nome }}
                     </x-table.td>
-                    <x-table.td style="display: flex; padding: 0px;">
+                    <x-table.td style="display: flex; padding-top: 0px;">
                         <x-status_movimento>{{ $movimento->tipo }}</x-status_movimento>
                     </x-table.td>
                 </x-table.tr>

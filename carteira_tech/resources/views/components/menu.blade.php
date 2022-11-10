@@ -1,9 +1,9 @@
 <div>
-    <nav class="navbar navbar-expand-xl py-0 bg-light navbar-light">
-        <div class="container-fluid" id="navbvarMenu">
+    <nav class="navbar navbar-expand-xl py-0 bg-light navbar-light" id="navbvarMenu">
+        <div class="container-fluid" >
             <!-- Logo -->
             <a href="{{ route('inicial') }}" class="">
-                <x-logo>70</x-logo>
+                <x-logo>60</x-logo>
             </a>
             <!-- Botão de Expansão -->
             <button class="navbar-toggler" id="navbarTogller" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenuPrincipal" aria-controls="offcanvasMenuPrincipal">

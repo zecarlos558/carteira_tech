@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-
 </head>
 
 <body id="corpo">
@@ -28,11 +26,11 @@
             <!-- Container wrapper -->
             <div class="container-fluid">
                 <!-- Toggle button -->
-                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <a href="{{ route('index') }}" class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                    <x-logo>40</x-logo>
+                </a>
 
                 <!-- Collapsible wrapper -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -61,14 +59,13 @@
 
                     <!-- Notifications -->
                     <div class="dropdown">
-                        <x-button.a class="btn-outline-primary" href="{{ route('register') }}" icon="usuario">Criar Conta
-                        </x-button.a>
+                        <a class="btn btn-outline-primary" href="{{ route('register') }}"><x-ionicons.ionic icon="usuario"></x-ionicons.ionic>Criar Conta</a>
                     </div>
                     <!-- Avatar -->
                     <div class="dropdown">
-                        <x-button.a class="btn-outline-info" href="{{ route('login') }}" icon="login">Login
-                        </x-button.a>
+                        <a class="btn btn-outline-info" href="{{ route('login') }}"><x-ionicons.ionic icon="login"></x-ionicons.ionic>Login</a>
                     </div>
+
                 </div>
                 <!-- Right elements -->
             </div>
@@ -80,9 +77,6 @@
     <div class="container-fluid">
         <div id="index">
             <div class="row mt-5">
-                <div class="col-sm" id="logo">
-                    <x-logo>400</x-logo>
-                </div>
                 <div class="col-sm" id="texto" style="background-color: lightskyblue;">
                     <div class="center-block">
                         <h1 style="color: green">Carteira Tech</h1>
@@ -93,6 +87,9 @@
                             <li>Organize sua vida financeira</li>
                         </ul>
                     </div>
+                </div>
+                <div class="col-sm" id="logo">
+                    <x-logo>400</x-logo>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@ body {
 
 #navbvarMenu {
     background-color: snow;
+    padding-bottom: 0;
 }
 
 /* Modo Dark - Contraste
@@ -463,6 +464,7 @@ img.displayed {
     text-align: center;
     background-color: navy;
     color: whitesmoke;
+    padding-top: 0;
 }
 
 /* Lista de objetos */
