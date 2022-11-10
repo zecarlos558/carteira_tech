@@ -52,7 +52,7 @@ class AplicationController extends Controller
     public function dashboard()
     {
         $usuario = Aplication::consultaUsuario();
-        $usuario->funcao = $usuario->getRoleNames()[0];
+        $usuario->funcao = $usuario->getRoleNames()->first();
 
         return view('dashboard',['user' => $usuario]);
     }
@@ -116,7 +116,7 @@ class AplicationController extends Controller
     public function show($id)
     {
         $usuario = User::findOrFail($id);
-        $usuario->funcao = $usuario->getRoleNames()[0];
+        $usuario->funcao = $usuario->getRoleNames()->first();
 
         return view('aplication.showUsuario' ,['usuario' => $usuario]);
     }
@@ -149,7 +149,10 @@ class AplicationController extends Controller
     {
         $usuario = User::findOrFail($id);
         $usuario->name = $request->nome;
-        $usuario->email = $request->email;
+        if ($usuario->email != $request->email) {
+            $usuario->email = $request->email;
+            $usuario->email_verified_at = null;
+        }
         $usuario->syncRoles([$request->funcao]);
         $usuario->save();
         $log = new Logger();
@@ -188,6 +191,11 @@ class AplicationController extends Controller
         ])->tipos()->attach(1);
 
         return redirect()->route('inicial')->with('msg_alert', 'Usuário Cadastrado com Sucesso!');
+    }
+
+    public function autentica_email()
+    {
+        return redirect()->route('dashboard')->with('msg_alert', 'Usuário com email autenticado!');
     }
 
 }

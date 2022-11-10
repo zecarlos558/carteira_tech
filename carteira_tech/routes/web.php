@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', function () {
+    return view('index');
+})->middleware('guest')->name('index');
+
+Route::get('/inicial', function () {
     //return view('welcome');
     return redirect()->route('indexAplication');
 })->name('inicial');

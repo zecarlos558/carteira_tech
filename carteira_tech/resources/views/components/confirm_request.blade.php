@@ -1,5 +1,5 @@
 @if (session('msg_alert'))
-<div class="alert text-center text-uppercase" >
+<div class="alert text-center text-uppercase" id="alert" >
     <strong>{{ session('msg_alert') }}</strong>
     <span class="closebtn" onclick="closebtn();">&times;</span>
     <button style="display: none;" class="btn closebtn" id="closebtn" onclick="closebtn();">&times;</button>

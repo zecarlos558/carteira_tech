@@ -41,6 +41,10 @@
                             <x-table.td-show>Nível de Acesso:</x-table.td-show>
                             <x-table.td>{{ $user->funcao }}</x-table.td>
                         </x-table.tr>
+                        <x-table.tr>
+                            <x-table.td-show>Email Autenticado:</x-table.td-show>
+                            <x-table.td>{{ ($user->email_verified_at) ? 'Verificado' : 'Não verificado' }}</x-table.td>
+                        </x-table.tr>
                     </x-table.tbody>
                 </x-div.table-show>
             </x-div.show>

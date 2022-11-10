@@ -262,6 +262,7 @@ Route::prefix('usuario')->middleware('auth')->group(function () {
         Route::group(['middleware' => ['permission:edit usuario']], function () {
             Route::get('/edit/{id}', 'edit')->name('editUsuario');
             Route::post('/update/{id}', 'update')->name('updateUsuario');
+            Route::get('/autentica-email', 'autentica_email')->middleware('verified')->name('autentica_email');
         });
         Route::group(['middleware' => ['permission:delete usuario']], function () {
             Route::delete('/{id}', 'destroy')->name('deleteUsuario');

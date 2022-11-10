@@ -26,7 +26,7 @@
                 <x-input.select id="funcao" name="funcao">
                     <x-input.option value="">Selecione o nível de permissão do Usuário</x-input.option>
                     @foreach ($funcoes as $funcao)
-                        @if ($funcao->name == $usuario->getRoleNames()[0])
+                        @if ($funcao->name == $usuario->getRoleNames()->first())
                             <x-input.option selected value="{{ $funcao->name }}">{{ $funcao->name }}</x-input.option>
                         @else
                             <x-input.option value="{{ $funcao->name }}">{{ $funcao->name }}</x-input.option>
@@ -37,6 +37,7 @@
             @slot('rodape')
                 <x-div.button>
                     <x-button.button type="submit" icon='salvar'>Editar Usuário</x-button.button>
+                    <x-button.a class="btn-secondary" href="{{ route('autentica_email') }}">Autenticar Email</x-button.a>
                 </x-div.button>
             @endslot
         </x-div.form>
