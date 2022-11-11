@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => 'container-fluid']) }} id="isa-container">
+<div {{ $attributes->merge(['class' => 'container-fluid']) }} id="tech-container">
     @foreach ($relatorioEntradaSinteticos as $relatorioEntradaSintetico)
             <div id="componentPanelRelatorio" class="panel-group">
                 <div class="panel-heading">

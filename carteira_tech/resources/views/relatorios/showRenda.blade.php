@@ -119,7 +119,7 @@
                         <x-input.option value="mensal">Mensal</x-input.option>
                         <x-input.option value="personalizado">Personalizado</x-input.option>
                     </x-input.select>
-                    <div id="mensal">
+                    <div class="input-group" id="mensal">
                         <x-label.span class="input-group-text" icon='calendario'>Data Mês</x-label.span>
                         <x-input.date-month id="data" name="data" value="{{ date('Y-m') }}">
                         </x-input.date-month>

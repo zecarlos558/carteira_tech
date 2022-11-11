@@ -25,6 +25,12 @@ body {
     padding-bottom: 0;
 }
 
+@media screen and (max-width: 480px) {
+    span ion-icon {
+        font-size: 24px;
+    }
+}
+
 /* Modo Dark - Contraste
 
 .dark-mode {
@@ -102,7 +108,7 @@ body {
     color: white;
 }
 
-.dark-mode #isa-container {
+.dark-mode #tech-container {
     background: black;
     color: white;
 }
@@ -469,15 +475,15 @@ img.displayed {
 
 /* Lista de objetos */
 
-#isa-container {
+#tech-container {
     padding: 20px;
 }
 
-#isa-container h2 {
+#tech-container h2 {
     margin-bottom: 10px;
 }
 
-#isa-container .subtitle {
+#tech-container .subtitle {
     color: midnightblue;
     margin-right: 30px;
 }
@@ -486,7 +492,7 @@ img.displayed {
     display: flex;
 }
 
-#isa-container lista {
+#tech-container lista {
     flex: 1 1 0;
     max-width: 25%;
     border-radius: 10px;

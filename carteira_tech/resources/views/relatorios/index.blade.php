@@ -75,7 +75,7 @@
                     @slot('header')
                         Consultar Dados por Data
                     @endslot
-                    <div id="mensal">
+                    <div class="input-group" id="mensal">
                         <x-label.span class="input-group-text" icon='calendario'>Data Mês</x-label.span>
                         <x-input.date-month id="data" name="data" value="{{ date('Y-m') }}">
                         </x-input.date-month>
