@@ -73,7 +73,7 @@
                         </x-div.button>
                     </x-table.td>
                     <x-table.td>{{$conta->tipos[0]->nome}}</x-table.td>
-                    <x-table.td>{{$conta->valor}} R$</x-table.td>
+                    <x-table.td>{{$conta->getValor()}} R$</x-table.td>
                     <x-table.td-button>
                         <x-div.button>
                             <x-button.a href="{{ route('editConta', $conta->id) }}"

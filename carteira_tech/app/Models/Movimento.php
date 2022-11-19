@@ -14,6 +14,10 @@ class Movimento extends Model
 
     public $valorAnterior;
 
+    public function getValor() {
+        return formatarNumero($this->valor);
+    }
+
     public function conta()
     {
         return $this->belongsTo('App\Models\Conta');

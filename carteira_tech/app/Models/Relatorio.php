@@ -35,7 +35,19 @@ class Relatorio extends Model
 
     public function construtorSaldo()
     {
-        $this->saldoTotal = $this->valorTotalSaida - $this->valorTotalEntrada;
+        $this->saldoTotal = $this->valorTotalEntrada - $this->valorTotalSaida;
+    }
+
+    public function getValorSaida() {
+        return formatarNumero($this->valorTotalSaida);
+    }
+
+    public function getValorEntrada() {
+        return formatarNumero($this->valorTotalEntrada);
+    }
+
+    public function getValorSaldo() {
+        return formatarNumero($this->saldoTotal);
     }
 
     // Calcula Barra de Progresso do index

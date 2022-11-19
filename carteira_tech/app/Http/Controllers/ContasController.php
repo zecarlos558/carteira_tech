@@ -132,10 +132,10 @@ class ContasController extends Controller
         $conta = Conta::findOrFail($movimento->conta->id);
 
         if ($movimento->tipo == 'suprimento') {
-            $conta->valor = $conta->valor - $movimento->valorAnterio;
+            $conta->valor = $conta->valor - $movimento->valorAnterior;
             $conta->valor = $conta->valor + $movimento->valor;
         } elseif ($movimento->tipo == 'retirada') {
-            $conta->valor = $conta->valor + $movimento->valorAnterio;
+            $conta->valor = $conta->valor + $movimento->valorAnterior;
             $conta->valor = $conta->valor - $movimento->valor;
         }
         $conta->save();

@@ -13,6 +13,10 @@ class Movimento_renda extends Model
 
     public $valorAnterior;
 
+    public function getValor() {
+        return formatarNumero($this->valor);
+    }
+
     public function contas()
     {
         return $this->belongsTo('App\Models\Conta');

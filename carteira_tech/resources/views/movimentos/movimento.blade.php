@@ -95,10 +95,10 @@
                         </x-div.button>
                     </x-table.td>
                     @if (session()->get('device'))
-                    <x-table.td> {{ formatarData($movimento->data) }} <br> {{ $movimento->valor }} R$ </x-table.td>
+                    <x-table.td> {{ formatarData($movimento->data) }} <br> {{ $movimento->getValor() }} R$ </x-table.td>
                     @else
                     <x-table.td> {{ formatarData($movimento->data) }} </x-table.td>
-                    <x-table.td> {{ $movimento->valor }} R$ </x-table.td>
+                    <x-table.td> {{ $movimento->getValor() }} R$ </x-table.td>
                     @endif
                     <x-table.td style="display: flex; padding-bottom: 0px;">{{ $movimento->categoria_nome }}
                     </x-table.td>
@@ -112,7 +112,7 @@
     <x-card.footer>
         <x-div.row type="justify-content-around">
             <div class="col-auto">{{ count($movimentos) }} Transações</div>
-            <div class="col-auto">R$ {{ $movimentos->sum('total') }},00</div>
+            <div class="col-auto">R$ {{formatarNumero($movimentos->sum('total'))}}</div>
         </x-div.row>
     </x-card.footer>
 </x-div.table-list>

@@ -13,6 +13,10 @@ class Movimento_gasto extends Model
 
     public $valorAnterior;
 
+    public function getValor() {
+        return formatarNumero($this->valor);
+    }
+
     public function contas()
     {
         return $this->belongsTo('App\Models\Conta');

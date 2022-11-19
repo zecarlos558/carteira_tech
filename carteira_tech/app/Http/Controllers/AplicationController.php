@@ -37,6 +37,7 @@ class AplicationController extends Controller
         $relatorio = new Relatorio;
         $relatorio->construtorSaida($dadosGastos);
         $relatorio->construtorEntrada($dadosRenda);
+        $relatorio->construtorSaldo();
         $relatorio->calculaBarraProgresso();
 
         $contas = Conta::where('user_id_create',$usuario->id)->orderBy('valor','desc')->get();

@@ -15,6 +15,10 @@ class Conta extends Model
         'nome','valor','user_id_create','user_id_update'
     ];
 
+    public function getValor() {
+        return formatarNumero($this->valor);
+    }
+
     public function tipos()
     {
         return $this->belongsToMany('App\Models\Tipo');

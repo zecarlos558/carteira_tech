@@ -20,7 +20,7 @@
                     </x-table.tr>
                     <x-table.tr>
                         <x-table.td-show>Valor:</x-table.td-show>
-                        <x-table.td>{{ $conta->valor }}</x-table.td>
+                        <x-table.td>{{ $conta->getValor()}} R$</x-table.td>
                     </x-table.tr>
                     <x-table.tr>
                         <x-table.td-show>Tipo da Conta:</x-table.td-show>

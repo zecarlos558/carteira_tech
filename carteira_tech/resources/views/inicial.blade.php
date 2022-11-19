@@ -23,7 +23,7 @@
                 @foreach ($contas as $conta)
                     <x-table.tr>
                         <x-table.td-show>{{ $conta->nome }}</x-table.td-show>
-                        <x-table.td>{{ $conta->valor }}</x-table.td>
+                        <x-table.td>{{ $conta->getValor() }}</x-table.td>
                     </x-table.tr>
                     @break($loop->index == 2)
                 @endforeach
@@ -43,7 +43,7 @@
                     @slot('corpo')
                     <x-div.input>
                         <h4>Saídas</h4>
-                        <h5>{{ $relatorio->valorTotalSaida }}</h5>
+                        <h5>{{ $relatorio->getValorSaida() }}</h5>
                         <div class="progress">
                             <div class="progress-bar bg-danger" role="progressbar"
                                 style="width: {{ $relatorio->barraProgressoSaida }}%"
@@ -53,7 +53,7 @@
                     </x-div.input>
                     <x-div.input>
                         <h4>Renda</h4>
-                        <h5>{{ $relatorio->valorTotalEntrada }}</h5>
+                        <h5>{{ $relatorio->getValorEntrada() }}</h5>
                         <div class="progress">
                             <div class="progress-bar bg-success" role="progressbar"
                                 style="width: {{ $relatorio->barraProgressoEntrada }}%"
@@ -62,7 +62,7 @@
                         </div>
                     </x-div.input>
                     <x-div.input class="mt-3">
-                        <h4>Saldo: {{$relatorio->valorTotalEntrada - $relatorio->valorTotalSaida}}</h4>
+                        <h4>Saldo: {{$relatorio->getValorSaldo()}}</h4>
                     </x-div.input>
                     @endslot
                     @slot('rodape')
@@ -89,9 +89,9 @@
                                     <x-table.td></x-table.td>
                                     <x-table.td style="display: flex; color: blue;" > {{formatarData($movimento->data)}} </x-table.td>
                                     @if ($movimento->tipo == 'suprimento')
-                                    <x-table.td style="display: flex; color: green" >R$  +{{$movimento->valor}} </x-table.td>
+                                    <x-table.td style="display: flex; color: green" >R$  +{{$movimento->getValor()}} </x-table.td>
                                     @else
-                                    <x-table.td style="display: flex; color: red" >R$  -{{$movimento->valor}} </x-table.td>
+                                    <x-table.td style="display: flex; color: red" >R$  -{{$movimento->getValor()}} </x-table.td>
                                     @endif
                                 </x-table.tr>
                             @endforeach

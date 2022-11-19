@@ -26,7 +26,7 @@
                             placeholder="Procurar Movimento" list="nomes" name="nome" id="nome"></x-input.text>
                             <x-input.datalist id="nomes" >
                                 @foreach ($listaNomes as $listaNome)
-                                    <x-input.option value="{{ $listaNome->id }} - {{ $listaNome->nome }} - {{ $listaNome->valor }}R$"></x-input.option>
+                                    <x-input.option value="{{ $listaNome->id }} - {{ $listaNome->nome }} - {{ $listaNome->getValor() }}R$"></x-input.option>
                                 @endforeach
                             </x-input.datalist>
                         </div>
