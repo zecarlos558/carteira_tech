@@ -615,73 +615,134 @@ a {
     /* Metade da largura */
 }
 
-/* Style para página do comprovante */
-
-#container_comprovante {
-    display: flex;
-    justify-content: center;
+/* Style para botão de transação */
+.fab {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
 }
 
-.comprovante {
+.fab a {
+    cursor: pointer;
+    justify-content: start;
+    width: 48px;
+    height: 48px;
+    border-radius: 30px;
+    background-color: #cb60b3;
+    border: none;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
+    font-size: 20px;
+    color: white;
+
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
+}
+
+.fab a ion-icon {
+    font-size: 26px;
+}
+
+.fab a:focus {
+    outline: none;
+}
+
+.fab button.main {
     position: absolute;
-    /*
-    width: 40%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    */
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #5b19b7;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+
+    cursor: pointer;
+    border: none;
+    font-size: 24px;
+    color: white;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
 }
 
-.comprovante p {
+.fab button.main:before {
+    content: '⏚';
+}
+
+.fab ul {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     padding: 0;
+    padding-right: 5px;
     margin: 0;
+    list-style: none;
+    z-index: 10;
+
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
 }
 
-.comprovante hr {
-    padding: 0;
-    margin: 0;
+.fab ul li {
+    display: flex;
+    justify-content: end;
+    position: relative;
+    margin-bottom: -10%;
+    opacity: 0;
+
+    -webkit-transition: .3s ease-out;
+    -moz-transition: .3s ease-out;
+    transition: .3s ease-out;
 }
 
-.comprovante table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 10px 50px;
-    border-collapse: collapse;
-    border: 0px;
-    padding: 0;
-    margin: 0;
-}
-
-.comprovante th {
-    height: 0;
-}
-
-#modalEditarValores {
-    display: none;
-}
-
-/* Text Area styles
-
-
-textarea {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-textarea {
-    padding: 10px;
-    max-width: 100%;
-    line-height: 1.5;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-shadow: 1px 1px 1px #999;
-}
-
-label {
+.fab ul li label {
+    margin-right: 10px;
+    white-space: nowrap;
     display: block;
-    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 0px 8px 25px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+    border-radius: 3px;
+    height: 18px;
+    font-size: 18px;
+    pointer-events: none;
+    opacity: 0;
+
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
 }
-*/
+
+.fab.show button.main,
+.fab.show button.main {
+    outline: none;
+    background-color: #7716ff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .5);
+}
+
+.fab.show button.main:before,
+.fab.show button.main:before {
+    content: '↑';
+}
+
+.fab.show button.main+ul,
+.fab.show button.main+ul {
+    bottom: 70px;
+}
+
+.fab.show button.main+ul li,
+.fab.show button.main+ul li {
+    margin-bottom: 10px;
+    opacity: 1;
+}
+
+.fab.show button.main+ul li label,
+.fab.show button.main+ul li label {
+    opacity: 1;
+}
 
 /* Style para página do comprovante (FIM) */
 
@@ -689,7 +750,7 @@ footer {
     text-align: center;
     background-color: blue;
     color: whitesmoke;
-    padding: 5px;
+    padding: 0;
     position: absolute;
     bottom: 0;
     width: 100%;

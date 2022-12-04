@@ -23,9 +23,9 @@
     </header>
 
     @yield('content')
-
+    <x-button.flutuante></x-button.flutuante>
     <footer>
-        <p ><ion-icon name="logo-laravel"></ion-icon> SAMOTECH &copy; {{date('d/m/Y')}}</p>
+        <p >SAMOTECH &copy; {{date('d/m/Y')}}</p>
     </footer>
         <!-- Script do Framework Ionicons -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

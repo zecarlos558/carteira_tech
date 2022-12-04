@@ -32,8 +32,6 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        $log = new Logger();
-        $log->log('info','Usuário fez Login!');
         session(['device' => checkDevice()]);
         return redirect()->intended(RouteServiceProvider::HOME);
     }

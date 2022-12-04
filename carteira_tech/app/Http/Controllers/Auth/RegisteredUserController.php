@@ -49,8 +49,6 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-        $log = new Logger();
-        $log->log('notice','Um novo usuário se cadastrou!');
 
         return redirect()->route('cadastroAplication', auth()->user()->id);
         //return redirect(RouteServiceProvider::HOME);

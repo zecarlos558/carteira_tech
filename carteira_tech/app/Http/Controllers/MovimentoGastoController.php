@@ -73,7 +73,7 @@ class MovimentoGastoController extends Controller
         $conta = new ContasController();
         $conta->storeMovimento($movimento);
 
-        return redirect()->route('indexMovimentoGasto')->with('msg_alert','Movimento Cadastrado com sucesso!');
+        return redirect()->route('inicial')->with('msg_alert','Movimento Cadastrado com sucesso!');
     }
 
     /**
@@ -135,7 +135,7 @@ class MovimentoGastoController extends Controller
         $conta = new ContasController();
         $conta->updateMovimento($movimento);
 
-        return redirect()->route('indexMovimentoGasto')->with('msg_alert','Movimento alterado com sucesso!');
+        return redirect()->route('inicial')->with('msg_alert','Movimento alterado com sucesso!');
     }
 
     /**
@@ -152,6 +152,6 @@ class MovimentoGastoController extends Controller
         $conta->save();
         $movimento->delete();
 
-        return redirect()->route('indexMovimentoGasto')->with('msg_alert','Movimento deletado com sucesso!');
+        return redirect()->route('inicial')->with('msg_alert','Movimento deletado com sucesso!');
     }
 }

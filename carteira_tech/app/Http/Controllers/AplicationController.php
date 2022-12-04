@@ -42,7 +42,11 @@ class AplicationController extends Controller
 
         $contas = Conta::where('user_id_create',$usuario->id)->orderBy('valor','desc')->get();
         $movimentos = Movimento::where('user_id_create',$usuario->id)
-        ->with('categoria')->limit(4)->get();
+        ->orderBy('data','desc')->with('categoria')->limit(4)->get();
+
+        if (session()->missing('device')) {
+            session(['device' => checkDevice()]);
+        }
 
         return view('inicial',['usuario' => $usuario,
                                'relatorio' => $relatorio,
