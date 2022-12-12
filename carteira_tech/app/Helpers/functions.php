@@ -31,6 +31,12 @@
         }
     }
 
+    function checkButton($valor)
+    {
+        $icons = array("criar","editar","deletar","filtrar");
+        return (in_array($valor,$icons));
+    }
+
     function formatarPermissoes($permissoes)
     {
         $textoPermissoes = "";

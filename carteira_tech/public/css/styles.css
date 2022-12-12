@@ -346,6 +346,10 @@ img.displayed {
     border-radius: 3px;
 }
 
+#tabela tbody td a {
+    text-align: start;
+}
+
 #tabela tbody tr {
     border-radius: 3px;
     box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
