@@ -8,7 +8,7 @@
   * [Diagrama do Banco de Dados](#Diagrama-do-Banco-de-Dados)
 * [Tecnologias](#Tecnologias)
   * [Instalar e utilizar](#Como-instalar-e-utilizar)
-* [Endpoints](#Endpoints-e-Telas
+* [Endpoints](#Endpoints-e-Telas)
 
 ## O Projeto
 
@@ -27,14 +27,15 @@ Projeto desenvolvido individualmente para uso pessoal e desenvolver habilidades.
 
 ## Estrutura do Software
 
-O sistema consiste nas funcionalidades de CRUD para Usuários, Contas, Tipos de Conta, Transações, Categoria da Transação, Grupo da Categoria e geração de relatórios e gráficos. As funcionalidades são acessadas através de páginas WEB para a listagem/cadastro/edição/deleção de todas as funciolidades acima descritas, as páginas devem ter navegação entre elas, e uma página para exibir os relatório de receitas e despesas. O sistema possui transações de retirada e suprimento, precisando ser selecionada a conta que vai ser movimentada e a categoria da transação para caracteriza-la. Sendo as categorias das transações definidas por grupo. O projeto foi desenvolvido dentro do Padrão da Arquitetura MVC. O sistema possui autenticação do usuário para acessar as funcionalidades do CRUD e relatório. Também possui integração com o [Laravel Telescope](https://laravel.com/docs/9.x/telescope) para facilitar a depuração e análise de informações da aplicação.
+O sistema consiste nas funcionalidades de CRUD para Usuários, Contas, Tipos de Conta, Transações, Categoria da Transação, Grupo da Categoria e geração de relatórios e gráficos. As funcionalidades são acessadas através de páginas WEB para a listagem/cadastro/edição/deleção de todas as funciolidades acima descritas, as páginas devem ter navegação entre elas, e uma página para exibir os relatório de receitas e despesas.
+O sistema possui transações de retirada e suprimento, precisando ser selecionada a conta que vai ser movimentada e a categoria da transação para caracteriza-la. Sendo as categorias das transações definidas por grupo. O projeto foi desenvolvido dentro do Padrão da Arquitetura MVC. O sistema possui autenticação do usuário para acessar as funcionalidades do CRUD e relatório. Também possui integração com o [Laravel Telescope](https://laravel.com/docs/9.x/telescope) para facilitar a depuração e análise de informações da aplicação.
 
 
 ### Diagrama do Banco de Dados
 
 Apresentação do Diagrama de Entidade Relacionamento desenvolvido no projeto.
 
-![Diagrama do Banco de Dados](https://raw.githubusercontent.com/zecarlos558/Carteira_tech/docs/imagens/DER_carteira_tech.png)
+![Diagrama do Banco de Dados](https://github.com/zecarlos558/Carteira_tech/blob/be1892f27bcef1ab81d6d7460756e988385fd598/carteira_tech/docs/imagens/DER_carteira_tech.png)
 
 ## Tecnologias
 
@@ -75,7 +76,7 @@ Apresentação do Diagrama de Entidade Relacionamento desenvolvido no projeto.
         php artisan migrate
         ```
 
-  - Por fim no terminal na pasta do projeto digite o comando para iniciar o servidor
+  - Por fim no terminal na pasta do projeto digite o comando para iniciar o servidor para teste
 
       - ```less
         php artisan serve
@@ -86,7 +87,7 @@ Apresentação do Diagrama de Entidade Relacionamento desenvolvido no projeto.
   - Vá ao navegador e digite a url:
 
       - ```http
-        http://127.0.0.1:8000/
+        http://localhost:8000/
         ```
         
 ## Endpoints e Telas
@@ -101,7 +102,7 @@ Tela de apresentação, possui acesso ao cadastro de conta e login do sistema
 http://localhost/
 ```
 
-![HOME](https://raw.githubusercontent.com/zecarlos558/Carteira_tech/dosc/imagens/HOME.png)
+![HOME](https://github.com/zecarlos558/Carteira_tech/blob/4112da8a8803220a5c0e466104ef6cf5d69dcfa9/carteira_tech/docs/imagens/HOME.png)
 
 ##### Painel do Usuário - Dashboard
 
@@ -111,4 +112,4 @@ Tela de DASHBOARD, possui acesso as principais funcionalidades e relatórios sim
 http://localhost/usuario/inicial
 ```
 
-![DASHBOARD](https://raw.githubusercontent.com/zecarlos558/Carteira_tech/docs/imagens/DASHBOARD.png)
+![DASHBOARD](https://github.com/zecarlos558/Carteira_tech/blob/4112da8a8803220a5c0e466104ef6cf5d69dcfa9/carteira_tech/docs/imagens/DASHBOARD.png)
