@@ -95,13 +95,15 @@ class Relatorio extends Model
     protected static function consultaGastos()
     {
         return Movimento::where('tipo','retirada')->with('categoria')
-        ->where('user_id_update',Aplication::consultaIDUsuario());
+        ->where('user_id_update',Aplication::consultaIDUsuario())
+        ->orderBy('data','desc');
     }
 
     protected static function consultaRenda()
     {
         return Movimento::where('tipo','suprimento')->with('categoria')
-        ->where('user_id_update',Aplication::consultaIDUsuario());
+        ->where('user_id_update',Aplication::consultaIDUsuario())
+        ->orderBy('data','desc');
     }
 
     protected static function consultaTotalGastos()
