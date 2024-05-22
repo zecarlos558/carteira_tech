@@ -1,3 +1,3 @@
-<th {{ $attributes->merge(['id' => '','class' => '']) }} scope="{{$scope}}" >
+<th {{ $attributes->merge(['id' => '','class' => '']) }} scope="{{@$scope}}" >
     {{$slot}}
 </th>

@@ -1,4 +1,4 @@
-<form {{ $attributes->merge(['class' => '']) }} id="{{$id}}" action="{{$action}}" method="{{$method}}" autocomplete="off">
+<form {{ $attributes->merge(['class' => '']) }} id="{{@$id}}" action="{{@$action}}" method="{{@$method}}" autocomplete="off">
     @isset($metodo)
         @if (strcasecmp($metodo, "POST") == 0)
         @method('POST')

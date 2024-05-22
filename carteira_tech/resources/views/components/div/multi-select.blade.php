@@ -7,7 +7,7 @@
     @endsection
 
     @slot('tituloCentral')
-        {{$tituloCentral}}
+        {{@$tituloCentral}}
     @endslot
 {{--
     <x-div.titulo-header>

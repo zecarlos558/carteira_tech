@@ -1,4 +1,4 @@
-@if (count($movimentos))
+@if (count(@$movimentos))
 
 
     <h2 style="text-align: center;" >Movimentos</h2>

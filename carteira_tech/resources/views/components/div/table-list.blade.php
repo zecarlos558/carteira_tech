@@ -5,16 +5,16 @@
     @endsection
 
     @slot('tituloCentral')
-        {{$tituloCentral}}
+        {{@$tituloCentral}}
     @endslot
 
     <x-div.titulo-header>
         @slot('titulo')
-            {{ $titulo }}
+            {{ @$titulo }}
         @endslot
         @isset($botao)
             @slot('botao')
-                {{ $botao }}
+                {{ @$botao }}
             @endslot
         @endisset
     </x-div.titulo-header>

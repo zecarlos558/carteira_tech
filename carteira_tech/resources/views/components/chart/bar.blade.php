@@ -6,12 +6,12 @@
     var chartColors = ['red','orange','blue','green','yellow','purple','grey','cyan'];
 
     //recebe a string com elementos separados, vindos do PHP
-    string_valorTotal_array = "<?php echo $array['valorTotal']; ?>";
+    string_valorTotal_array = "<?php echo @$array['valorTotal']; ?>";
     //transforma esta string em um array próprio do Javascript
     array_valorTotal = string_valorTotal_array.split("|");
 
     //recebe a string com elementos separados, vindos do PHP
-    string_mes_array = "<?php echo $array['mes']; ?>";
+    string_mes_array = "<?php echo @$array['mes']; ?>";
     //transforma esta string em um array próprio do Javascript
     array_mes = string_mes_array.split("|");
     tamanho = array_mes.length;

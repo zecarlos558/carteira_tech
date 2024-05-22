@@ -3,12 +3,12 @@
     google.charts.setOnLoadCallback(drawChart);
 
     //recebe a string com elementos separados, vindos do PHP
-    string_nomes_array = "<?php echo $array['nomes']; ?>";
+    string_nomes_array = "<?php echo @$array['nomes']; ?>";
     //transforma esta string em um array próprio do Javascript
     array_nomes = string_nomes_array.split("|");
 
     //recebe a string com elementos separados, vindos do PHP
-    string_numeros_array = "<?php echo $array['percentual']; ?>";
+    string_numeros_array = "<?php echo @$array['percentual']; ?>";
     //transforma esta string em um array próprio do Javascript
     array_numeros = string_numeros_array.split("|");
 

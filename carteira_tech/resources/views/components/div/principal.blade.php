@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => '']) }} id="{{ $id ? $id : '' }}">
+<div {{ $attributes->merge(['class' => '']) }} id="{{ @$id ? $id : '' }}">
 
     {{-- Outra Formtação
     @isset($titulo)

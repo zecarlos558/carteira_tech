@@ -1,3 +1,3 @@
-<tr {{ $attributes->merge(['class' => '']) }} id="{{$id}}">
+<tr {{ $attributes->merge(['class' => '']) }} id="{{@$id}}">
     {{$slot}}
 </tr>

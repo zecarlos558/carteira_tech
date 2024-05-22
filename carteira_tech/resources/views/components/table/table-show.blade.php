@@ -1,3 +1,3 @@
-<table {{ $attributes->merge(['class' => 'table table-hover']) }} id="{{$id}}" >
+<table {{ $attributes->merge(['class' => 'table table-hover']) }} id="{{@$id}}" >
     {{$slot}}
 </table>

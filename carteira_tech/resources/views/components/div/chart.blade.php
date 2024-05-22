@@ -7,10 +7,10 @@
 @endsection
 
 @slot('tituloCentral')
-    {{$tituloCentral}}
+    {{@$tituloCentral}}
 @endslot
 
-<div {{ $attributes->merge(['class' => '']) }} id="{{ $id ? $id : '' }}" >
+<div {{ $attributes->merge(['class' => '']) }} id="{{ @$id ? $id : '' }}" >
     {{$slot}}
 </div>
 
