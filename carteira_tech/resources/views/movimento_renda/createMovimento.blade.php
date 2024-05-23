@@ -15,7 +15,7 @@
             <x-input.text value="{{ old('nome') }}" name="nome" id="nome" placeholder="Nome do Movimento" />
 
             <x-label.label for="data" class="form-label">Data da Renda</x-label.label>
-            <x-input.datetime id="data" name="data" value="{{ date('Y-m-d\TH:i') }}"></x-input>
+            <x-input.date id="data" name="data" value="{{ date('Y-m-d') }}"></x-input>
 
             <x-label.label class="form-label" for="valor">Valor da Transação:</x-label.label>
             <div class="input-group">
@@ -46,8 +46,7 @@
 
             <x-div.input>
                 <x-label.label for="descricao">Descrição:</x-label.label>
-                <x-input.textarea name="descricao" rows="5" id="descricao" placeholder="Digite a descrição do produto">
-                    {{ old('descricao') }}</x-input.textarea>
+                <x-input.textarea name="descricao" rows="5" id="descricao" placeholder="Digite a descrição do produto">{{ old('descricao') }}</x-input.textarea>
             </x-div.input>
 
             @slot('rodape')

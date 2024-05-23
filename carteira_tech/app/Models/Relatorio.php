@@ -131,7 +131,7 @@ class Relatorio extends Model
         ->where('movimentos.user_id_create',Aplication::consultaIDUsuario())
         ->select(DB::raw('categorias.id as id, categorias.nome as nome,
                          sum(movimentos.valor) as valorTotal, movimentos.tipo as tipo'))
-        ->groupBy('categorias.id','categorias.nome','movimentos.tipo')
+        ->groupBy('categorias.id','categorias.nome','movimentos.tipo', 'movimentos.valor')
         ->orderBy('valor','desc')
         ;
     }

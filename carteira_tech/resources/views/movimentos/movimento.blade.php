@@ -5,7 +5,7 @@
     @endslot
 
     @slot('titulo')
-        Lista de Movimentos - {{ ucfirst(formataMes(formatarData($data, 'm'))) }}
+        Lista de Movimentos - {{ ucfirst(formataDataRelatorio($data)) }}
     @endslot
     <h5>{{ verificaCountObjeto($movimentos) }}</h5>
     @slot('botao')

@@ -21,7 +21,7 @@ class MovimentoGastoController extends Controller
     public function index()
     {
         $movimentos = Movimento::where('tipo','retirada')->with('categoria')
-        ->where('user_id_update',Aplication::consultaIDUsuario())->get();
+        ->where('user_id_update',Aplication::consultaIDUsuario())->simplePaginate(100);
         $listaNomes = Movimento::where('tipo','retirada')
         ->where('user_id_update',Aplication::consultaIDUsuario())
         ->select('id','nome','valor')->get();

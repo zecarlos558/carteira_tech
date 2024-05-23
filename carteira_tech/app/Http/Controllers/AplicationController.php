@@ -26,12 +26,19 @@ class AplicationController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->data != null) {
+            $data = $request->data;
+        } else {
+            $data = date('Y-m-d');
+        }
         $usuario = Aplication::consultaUsuario();
         $dadosRenda = Relatorio::consultaTotalRenda()
-        ->whereMonth('data', '=', formatarData(date('d-m-y'),'m'))
+        ->whereMonth('data', '=', formatarData($data,'m'))
+        ->whereYear('data', '=', formatarData($data,'Y'))
         ->first();
         $dadosGastos = Relatorio::consultaTotalGastos()
-        ->whereMonth('data', '=', formatarData(date('d-m-y'),'m'))
+        ->whereMonth('data', '=', formatarData($data,'m'))
+        ->whereYear('data', '=', formatarData($data,'Y'))
         ->first();
 
         $relatorio = new Relatorio;

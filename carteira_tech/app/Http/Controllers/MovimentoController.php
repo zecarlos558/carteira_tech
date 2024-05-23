@@ -19,7 +19,7 @@ class MovimentoController extends Controller
     {
         $dados = $request->all();
         if ($request->data == null) {
-            $dados['data'] = date('d-m-y');
+            $dados['data'] = date('Y-m-d');
         }
 
         $movimentos = Movimento::filtroIndex($dados);

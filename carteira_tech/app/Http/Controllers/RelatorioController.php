@@ -19,14 +19,16 @@ class RelatorioController extends Controller
         if ($request->data != null) {
             $data = $request->data;
         } else {
-            $data = date('y-m-d');
+            $data = date('Y-m-d');
         }
 
         $dadosRenda = Relatorio::consultaTotalRenda()
         ->whereMonth('data', '=', formatarData($data,'m'))
+        ->whereYear('data', '=', formatarData($data,'Y'))
         ->first();
         $dadosGastos = Relatorio::consultaTotalGastos()
         ->whereMonth('data', '=', formatarData($data,'m'))
+        ->whereYear('data', '=', formatarData($data,'Y'))
         ->first();
 
         $relatorio = new Relatorio;
@@ -36,6 +38,7 @@ class RelatorioController extends Controller
 
         $relatorioCategorias = Relatorio::consultaPorCategoria()
         ->whereMonth('data', '=', formatarData($data,'m'))
+        ->whereYear('data', '=', formatarData($data,'Y'))
         ->get();
 
         $relatorio->calculaBarraCategorias($relatorioCategorias);
@@ -79,7 +82,11 @@ class RelatorioController extends Controller
 
     public function showRenda(Request $request)
     {
-        $data = date('y-m-d');
+        if ($request->data != null) {
+            $data = formatarData($request->data, 'Y-m-d');
+        } else {
+            $data = date('Y-m-d');
+        }
         $dadosRendaMensal = Relatorio::consultaTotalRenda()
         ->addSelect(DB::raw('EXTRACT(YEAR_MONTH FROM data) as mes_ano'))
         ->groupBy( DB::raw('EXTRACT(YEAR_MONTH FROM data)') )
@@ -90,7 +97,7 @@ class RelatorioController extends Controller
         $dadosRenda = Relatorio::consultaTotalRenda();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
 
-        if ( count($dados) > 0 && $dados['opcao_data'] == 'personalizado') {
+        if ( count($dados) > 0 && @$dados['opcao_data'] == 'personalizado') {
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
             $dados['dataFim'] = $dados['dataFim'].'-30';
             $movimentos = $movimentos->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
@@ -106,11 +113,14 @@ class RelatorioController extends Controller
                 $data = $dados['data'];
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
+            ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
             $dadosRenda = $dadosRenda->whereMonth('data', '=', formatarData($data,'m'))
+            ->whereYear('data', '=', formatarData($data,'Y'))
             ->first();
             $relatorioCategorias = $relatorioCategorias->where('tipo','suprimento')
             ->whereMonth('data', '=', formatarData($data,'m'))
+            ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
         }
 
@@ -165,7 +175,7 @@ class RelatorioController extends Controller
         $dadosGasto = Relatorio::consultaTotalGastos();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
 
-        if ( count($dados) > 0 && $dados['opcao_data'] == 'personalizado') {
+        if ( count($dados) > 0 && @$dados['opcao_data'] == 'personalizado') {
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
             $dados['dataFim'] = $dados['dataFim'].'-30';
             $movimentos = $movimentos ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
@@ -181,11 +191,14 @@ class RelatorioController extends Controller
                 $data = $dados['data'];
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
+            ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
             $dadosGasto = $dadosGasto->whereMonth('data', '=', formatarData($data,'m'))
+            ->whereYear('data', '=', formatarData($data,'Y'))
             ->first();
             $relatorioCategorias = $relatorioCategorias->where('tipo','retirada')
             ->whereMonth('data', '=', formatarData($data,'m'))
+            ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
         }
 

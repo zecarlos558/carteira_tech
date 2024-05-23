@@ -14,8 +14,8 @@
             <x-label.label for="nome">Nome:</x-label.label>
             <x-input.text value="{{ $movimento->nome }}" name="nome" id="nome" placeholder="Nome do Usuário" />
 
-            <x-label.label for="data" class="form-label">Data da Edição</x-label.label>
-            <x-input.datetime id="data" name="data" value="{{ date('Y-m-d\TH:i') }}"></x-input>
+            <x-label.label for="data" class="form-label">Data da Despesa</x-label.label>
+            <x-input.date id="data" name="data" value="{{ $movimento->data ? date('Y-m-d', strtotime($movimento->data)) : date('Y-m-d') }}"></x-input>
 
             <x-label.label class="form-label" for="valor">Valor da Transação:</x-label.label>
             <div class="input-group">
@@ -52,8 +52,7 @@
 
             <x-div.input>
                 <x-label.label for="descricao">Descrição:</x-label.label>
-                <x-input.textarea name="descricao" rows="5" id="descricao" placeholder="Digite a descrição do produto">
-                    {{ $movimento->descricao }}</x-input.textarea>
+                <x-input.textarea name="descricao" rows="5" id="descricao" placeholder="Digite a descrição do produto">{{ $movimento->descricao }}</x-input.textarea>
             </x-div.input>
 
             @slot('rodape')

@@ -120,7 +120,7 @@
             . ' - '.
             formataMes(formatarData($data['dataFim'],'m')).' de '.formatarData($data['dataFim'],'y');
         } else {
-            return formataMes(formatarData($data,'m')).' de '.formatarData($data,'y');
+            return formataMes(formatarData($data,'m')).' de '.formatarData($data,'Y');
         }
 
     }

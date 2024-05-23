@@ -33,6 +33,7 @@ class Movimento extends Model
         $movimentos = Movimento::where('movimentos.user_id_create',Aplication::consultaIDUsuario())
         ->join('categorias','categorias.id','movimentos.categoria_id')
         ->whereMonth('data', '=', formatarData($dados['data'],'m'))
+        ->whereYear('data', '=', formatarData($dados['data'],'Y'))
         ->addSelect(DB::raw("(IF(movimentos.tipo = 'suprimento', +valor, -valor)) AS total,
         movimentos.id, movimentos.nome, valor, tipo, data, categorias.nome as categoria_nome"));
         if ( (isset($dados['categoria']) && $dados['categoria']!=null) && (isset($dados['tipo']) && $dados['tipo']!=null) ) {

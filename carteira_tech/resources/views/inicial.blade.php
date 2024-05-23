@@ -38,7 +38,7 @@
             <x-div.col>
                 <x-div.card>
                     @slot('header')
-                        <h3>Resumo Mensal - {{ucfirst(formataMes(date('m')))}}</h3>
+                        <h3>Resumo Mensal - {{ucfirst(formataDataRelatorio(date('Y-m-d')))}}</h3>
                     @endslot
                     @slot('corpo')
                     <x-div.input>

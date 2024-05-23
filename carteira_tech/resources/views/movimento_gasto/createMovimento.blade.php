@@ -15,7 +15,7 @@
             <x-input.text value="{{ old('nome') }}" name="nome" id="nome" placeholder="Nome do Movimento" />
 
             <x-label.label for="data" class="form-label">Data da Despesa</x-label.label>
-            <x-input.datetime id="data" name="data" value="{{ date('Y-m-d\TH:i') }}"></x-input>
+            <x-input.date id="data" name="data" value="{{ date('Y-m-d') }}"></x-input>
 
             <x-label.label class="form-label" for="valor">Valor da Transação:</x-label.label>
             <div class="input-group">

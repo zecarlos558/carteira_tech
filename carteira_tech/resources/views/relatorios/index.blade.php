@@ -16,9 +16,9 @@
         <x-nav_pills.div-content>
 
             <x-nav_pills.content id="resumo" type="active">
-                <x-div.row type="justify-content-around mt-2">
-                    <div class="col">
-                        <x-button.a class="btn-outline-info" href="{{ route('showRelatorioRenda') }}">
+                <x-div.row type="">
+                    <x-div.col>
+                        <x-button.a class="btn-outline-info" href="{{ route('showRelatorioRenda', ['data' => $data]) }}">
                             <x-div.card class="bg-success" style="color: white">
                                 @slot('header')
                                     Renda
@@ -31,8 +31,8 @@
                                 @endslot
                             </x-div.card>
                         </x-button.a>
-                    </div>
-                    <div class="col">
+                    </x-div.col>
+                    <x-div.col>
                         <x-button.a class="btn-outline-info" href="{{ route('showRelatorioGasto') }}">
                             <x-div.card class="bg-danger" style="color: white">
                                 @slot('header')
@@ -46,7 +46,7 @@
                                 @endslot
                             </x-div.card>
                         </x-button.a>
-                    </div>
+                    </x-div.col>
                 </x-div.row>
                 <hr>
                 <x-div.input class="border" id="isa-container">

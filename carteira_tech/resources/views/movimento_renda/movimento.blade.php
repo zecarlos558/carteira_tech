@@ -78,4 +78,7 @@
         </x-table.tbody>
     </x-div.table>
 </x-div.table-list>
+<div class="d-flex justify-content-center">
+    {{ $movimentos->links() }}
+</div>
 
