@@ -22,20 +22,14 @@
                     <x-div.col type="auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='conta'>Conta</x-label.span>
-                            <x-input.text type="text" value="{{ old('conta') }}"
-                            placeholder="Procurar conta" list="contas" name="conta" id="conta"></x-input.text>
-                            <x-input.datalist id="contas" >
-                                <x-input.option value=""></x-input.option>
-                                @foreach ($listaContas as $conta)
-                                    <x-input.option value="{{$conta->id}}">{{ $conta->nome }}</x-input.option>
-                                @endforeach
-                            </x-input.datalist>
+                            <x-input.text type="text" value="{{ old('descricao') }}"
+                            placeholder="Procurar descricao" name="descricao" id="descricao"></x-input.text>
                         </div>
                     </x-div.col>
                     <x-div.col type="auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='tipo'>Tipo</x-label.span>
-                            <x-input.select id="tipo" name="tipo">
+                            <x-input.select id="tipo_id" name="tipo_id">
                                 <x-input.option value="">Selecione</x-input.option>
                                 @foreach ($tipos as $tipo)
                                     <x-input.option value="{{ $tipo->id }}">{{ $tipo->nome }}</x-input.option>
@@ -94,4 +88,5 @@
             @endforeach
         </x-table.tbody>
     </x-div.table>
+    <x-div.paginacao :dados="$contas"></x-div.paginacao>
 </x-div.table-list>

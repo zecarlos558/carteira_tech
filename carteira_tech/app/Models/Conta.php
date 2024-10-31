@@ -15,7 +15,8 @@ class Conta extends Model
         'nome','valor','user_id_create','user_id_update'
     ];
 
-    public function getValor() {
+    public function getValor()
+    {
         return formatarNumero($this->valor);
     }
 
@@ -41,20 +42,13 @@ class Conta extends Model
 
     protected static function filtroIndex($dados)
     {
-        $contas = Conta::where('user_id_create',[Aplication::consultaIDUsuario()])->with('tipos');
-        if ( (isset($dados['conta']) && $dados['conta']!=null) && (isset($dados['tipo']) && $dados['tipo']!=null) ) {
-            $contas = $contas->where('id',formataPesquisa($dados['conta']))
-            ->leftJoin('conta_tipo','conta_tipo.conta_id','contas.id')
-            ->where('conta_tipo.tipo_id',$dados['tipo']);
-        } elseif ( (isset($dados['conta']) && $dados['conta']!=null) ) {
-            $contas = $contas->where('id',formataPesquisa($dados['conta']));
-        } elseif ( (isset($dados['tipo']) && $dados['tipo']!=null) ) {
-            $contas = $contas
-            ->leftJoin('conta_tipo','conta_tipo.conta_id','contas.id')
-            ->where('conta_tipo.tipo_id',$dados['tipo']);
-        }
+        $offset = request('offset') ?? 10;
+        $contas = Conta::where('user_id_create', [Aplication::consultaIDUsuario()])
+            ->when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%" . $dados['descricao'] . "%"))
+            ->when(!empty($dados['tipo_id']), function ($query) use ($dados) {
+                $query->whereHas('tipos', fn($q) => $q->where('id', $dados['tipo_id']));
+            })->with('tipos');
 
-        return $contas->get();
+        return $contas->paginate($offset);
     }
-
 }
