@@ -109,3 +109,18 @@ document.querySelectorAll('.fab ul li button').forEach((item)=>{
 		toggleFAB('.fab');
 	});
 });
+
+function FuncaoPesquisaTabela() {
+    $(document).ready(function () {
+        $("#inputPesquisa").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tabelaItens_overflow #tabelaPesquisa tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+            $("#itens_show #tabelaPesquisa tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+}
+
