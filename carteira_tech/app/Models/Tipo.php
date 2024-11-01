@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\UsuarioScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,11 @@ class Tipo extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected bool $withAdmin;
+    public function __construct() {
+        $this->withAdmin = true;
+        static::addGlobalScope(new UsuarioScope);
+    }
     protected $fillable = [
         'name'
     ];
@@ -22,11 +27,16 @@ class Tipo extends Model
 
     protected static function filtroIndex($dados)
     {
-        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()]);
-        if ( (isset($dados['tipo']) && $dados['tipo']!=null) ) {
-            $tipos = $tipos->where('id',formataPesquisa($dados['tipo']));
-        }
-        return $tipos->get();
+        $offset = request('offset') ?? 10;
+        $tipos = Tipo::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', $dados['descricao']));
+        return $tipos->paginate($offset);
     }
 
+    function getWithAdmin() {
+        return $this->withAdmin;
+    }
+
+    function setWithAdmin($withAdmin) {
+        return $this->withAdmin = $withAdmin;
+    }
 }
