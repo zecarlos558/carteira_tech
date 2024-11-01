@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Scopes\UsuarioScope;
 
 class Grupo extends Model
 {
     use HasFactory;
+
+    protected bool $withAdmin;
+    public function __construct() {
+        $this->withAdmin = true;
+        static::addGlobalScope(new UsuarioScope);
+    }
 
     protected $fillable = [
         'name'
@@ -20,11 +27,16 @@ class Grupo extends Model
 
     protected static function filtroIndex($dados)
     {
-        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()]);
-        if ( (isset($dados['grupo']) && $dados['grupo']!=null) ) {
-            $grupos = $grupos->where('id',formataPesquisa($dados['grupo']));
-        }
-        return $grupos->get();
+        $offset = request('offset') ?? 10;
+        $grupos = Grupo::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', $dados['descricao']));
+        return $grupos->paginate($offset);
     }
 
+    function getWithAdmin() {
+        return $this->withAdmin;
+    }
+
+    function setWithAdmin($withAdmin) {
+        return $this->withAdmin = $withAdmin;
+    }
 }

@@ -18,10 +18,8 @@ class GrupoController extends Controller
     {
         $dados = $request->all();
         $grupos = Grupo::filtroIndex($dados);
-        $listaGrupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
-        return view('grupos.grupo', ['grupos' => $grupos,
-                                     'listaGrupos' => $listaGrupos])->render();
+        return view('grupos.grupo', ['grupos' => $grupos])->render();
     }
 
     /**
