@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\UsuarioScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,11 @@ class Categoria extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected bool $withAdmin;
+    public function __construct() {
+        $this->withAdmin = true;
+        static::addGlobalScope(new UsuarioScope);
+    }
 
     protected $fillable = [
         'name'
@@ -37,20 +43,21 @@ class Categoria extends Model
 
     protected static function filtroIndex($dados)
     {
-        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->with('grupos');
-        if ( (isset($dados['categoria']) && $dados['categoria']!=null) && (isset($dados['grupo']) && $dados['grupo']!=null) ) {
-            $categorias = $categorias->where('id',formataPesquisa($dados['categoria']))
-            ->leftJoin('categoria_grupo','categoria_grupo.categoria_id','categorias.id')
-            ->where('categoria_grupo.grupo_id',$dados['grupo']);
-        } elseif ( (isset($dados['categoria']) && $dados['categoria']!=null) ) {
-            $categorias = $categorias->where('id',formataPesquisa($dados['categoria']));
-        } elseif ( (isset($dados['grupo']) && $dados['grupo']!=null) ) {
-            $categorias = $categorias
-            ->leftJoin('categoria_grupo','categoria_grupo.categoria_id','categorias.id')
-            ->where('categoria_grupo.grupo_id',$dados['grupo']);
-        }
+        $offset = request('offset') ?? 10;
+        $categorias = Categoria::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%".$dados['descricao']."%"))
+        ->when(!empty($dados['grupo_id']), function ($query) use ($dados) {
+            $query->whereHas('grupos', fn($q) => $q->where('id', '=', $dados['grupo_id']));
+        })
+        ->with('grupos');
 
-        return $categorias->get();
+        return $categorias->paginate($offset);
     }
 
+    function getWithAdmin() {
+        return $this->withAdmin;
+    }
+
+    function setWithAdmin($withAdmin) {
+        return $this->withAdmin = $withAdmin;
+    }
 }

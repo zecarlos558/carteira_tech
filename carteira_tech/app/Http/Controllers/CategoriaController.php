@@ -21,11 +21,9 @@ class CategoriaController extends Controller
         $dados = $request->all();
         $categorias = Categoria::filtroIndex($dados);
         $grupos = Grupo::all();
-        $listaCategorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->select('id','nome')->get();
 
         return view('categorias.categoria', ['categorias' => $categorias,
-                                             'grupos' => $grupos,
-                                             'listaCategorias' => $listaCategorias])->render();
+                                             'grupos' => $grupos])->render();
     }
 
     /**
@@ -35,7 +33,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $grupos = Grupo::all();
 
         return view('categorias.createCategoria', ['grupos' => $grupos])->render();
     }
@@ -84,7 +82,7 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         $categoria = Categoria::findOrFail($id);
-        $grupos = Grupo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $grupos = Grupo::all();
 
         return view('categorias.editCategoria', ['categoria' => $categoria,
                                                  'grupos' => $grupos])->render();
