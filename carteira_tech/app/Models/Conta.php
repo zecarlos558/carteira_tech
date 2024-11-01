@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\UsuarioScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,11 @@ class Conta extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected bool $withAdmin;
+    public function __construct() {
+        $this->withAdmin = false;
+        static::addGlobalScope(new UsuarioScope);
+    }
     protected $fillable = [
         'nome','valor','user_id_create','user_id_update'
     ];
@@ -43,12 +48,19 @@ class Conta extends Model
     protected static function filtroIndex($dados)
     {
         $offset = request('offset') ?? 10;
-        $contas = Conta::where('user_id_create', [Aplication::consultaIDUsuario()])
-            ->when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%" . $dados['descricao'] . "%"))
+        $contas = Conta::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%" . $dados['descricao'] . "%"))
             ->when(!empty($dados['tipo_id']), function ($query) use ($dados) {
                 $query->whereHas('tipos', fn($q) => $q->where('id', $dados['tipo_id']));
             })->with('tipos');
 
         return $contas->paginate($offset);
+    }
+
+    function getWithAdmin() {
+        return $this->withAdmin;
+    }
+
+    function setWithAdmin($withAdmin) {
+        return $this->withAdmin = $withAdmin;
     }
 }

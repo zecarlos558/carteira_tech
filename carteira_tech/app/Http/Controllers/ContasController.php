@@ -21,12 +21,10 @@ class ContasController extends Controller
     {
         $dados = $request->all();
         $contas = Conta::filtroIndex($dados);
-        $listaContas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->select('id','nome','valor')->get();
         $tipos = Tipo::all();
 
         return view('contas.conta', ['contas' => $contas,
-                                     'tipos' => $tipos,
-                                     'listaContas' => $listaContas])->render();
+                                     'tipos' => $tipos])->render();
     }
 
     /**
@@ -36,7 +34,7 @@ class ContasController extends Controller
      */
     public function create()
     {
-        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $tipos = Tipo::all();
 
         return view('contas.createConta', ['tipos' => $tipos])->render();
     }
@@ -86,7 +84,7 @@ class ContasController extends Controller
     public function edit($id)
     {
         $conta = Conta::findOrFail($id);
-        $tipos = Tipo::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $tipos = Tipo::all();
 
         return view('contas.editConta', ['conta' => $conta,
                                          'tipos' => $tipos])->render();
@@ -99,7 +97,7 @@ class ContasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContaRequest $request, $id)
     {
         $conta = Conta::findOrFail($id);
         $conta->nome = $request->nome;

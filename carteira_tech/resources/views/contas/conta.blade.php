@@ -66,7 +66,7 @@
                                 {{ $conta->nome }}</x-button.a>
                         </x-div.button>
                     </x-table.td>
-                    <x-table.td>{{$conta->tipos[0]->nome}}</x-table.td>
+                    <x-table.td>{{@$conta->tipos[0]->nome}}</x-table.td>
                     <x-table.td>{{$conta->getValor()}} R$</x-table.td>
                     <x-table.td-button>
                         <x-div.button>
@@ -88,5 +88,5 @@
             @endforeach
         </x-table.tbody>
     </x-div.table>
-    <x-div.paginacao :dados="$contas"></x-div.paginacao>
 </x-div.table-list>
+<x-div.paginacao :dados="$contas"></x-div.paginacao>
