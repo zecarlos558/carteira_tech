@@ -22,13 +22,8 @@
                     <div class="col-auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='conta'>Movimento</x-label.span>
-                            <x-input.text type="text" value="{{ old('nome') }}"
-                            placeholder="Procurar Movimento" list="nomes" name="nome" id="nome"></x-input.text>
-                            <x-input.datalist id="nomes" >
-                                @foreach ($listaNomes as $listaNome)
-                                    <x-input.option value="{{ $listaNome->id }} - {{ $listaNome->nome }} - {{ $listaNome->getValor() }}R$"></x-input.option>
-                                @endforeach
-                            </x-input.datalist>
+                            <x-input.text type="text" value="{{ old('descricao') }}"
+                            placeholder="Procurar Movimento" name="descricao" id="descricao"></x-input.text>
                         </div>
                     </div>
                 </div>

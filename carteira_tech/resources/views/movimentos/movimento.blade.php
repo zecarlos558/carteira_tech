@@ -30,6 +30,13 @@
                 <x-div.row>
                     <x-div.col type="auto">
                         <div class="input-group">
+                            <x-label.span class="input-group-text" icon='movimento'>Movimento</x-label.span>
+                            <x-input.text type="text" value="{{ old('descricao') }}" placeholder="Procurar Movimento"
+                                name="descricao" id="descricao"></x-input.text>
+                        </div>
+                    </x-div.col>
+                    <x-div.col type="auto">
+                        <div class="input-group">
                             <x-label.span class="input-group-text" icon='calendario'>Data</x-label.span>
                             <x-input.date-month id="data" name="data" value="{{ date('Y-m') }}">
                             </x-input.date-month>
@@ -38,7 +45,7 @@
                     <x-div.col type="auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='categoria'>Categoria</x-label.span>
-                            <x-input.select id="categoria" name="categoria">
+                            <x-input.select id="categoria_id" name="categoria_id">
                                 <x-input.option value="">Selecione</x-input.option>
                                 @foreach ($categorias as $categoria)
                                     <x-input.option value="{{ $categoria->id }}">{{ $categoria->nome }}</x-input.option>
@@ -100,7 +107,7 @@
                     <x-table.td> {{ formatarData($movimento->data) }} </x-table.td>
                     <x-table.td> {{ $movimento->getValor() }} R$ </x-table.td>
                     @endif
-                    <x-table.td style="display: flex; padding-bottom: 0px;">{{ $movimento->categoria_nome }}
+                    <x-table.td style="display: flex; padding-bottom: 0px;">{{ $movimento->categoria->nome }}
                     </x-table.td>
                     <x-table.td style="display: flex; padding-top: 0px;">
                         <x-status_movimento>{{ $movimento->tipo }}</x-status_movimento>

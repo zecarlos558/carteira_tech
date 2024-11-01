@@ -20,14 +20,7 @@ class MovimentoRendaController extends Controller
      */
     public function index()
     {
-        $movimentos = Movimento::where('tipo','suprimento')->with('categoria')
-                    ->where('user_id_update',Aplication::consultaIDUsuario())->simplePaginate(100);
-        $listaNomes = Movimento::where('tipo','suprimento')
-                    ->where('user_id_update',Aplication::consultaIDUsuario())
-                    ->select('id','nome','valor')->get();
-
-        return view('movimento_renda.movimento', ['movimentos' => $movimentos,
-                                                  'listaNomes' => $listaNomes])->render();
+        return redirect()->route('indexMovimento', ['tipo' => "suprimento"]);
     }
 
     /**
@@ -37,8 +30,8 @@ class MovimentoRendaController extends Controller
      */
     public function create()
     {
-        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
-        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $contas = Conta::all();
+        $categorias = Categoria::all();
 
         return view('movimento_renda.createMovimento', ['contas' => $contas,
                                                         'categorias' => $categorias])->render();
@@ -98,8 +91,8 @@ class MovimentoRendaController extends Controller
     public function edit($id)
     {
         $movimento = Movimento::findOrFail($id);
-        $contas = Conta::where('user_id_create',Aplication::consultaIDUsuario())->get();
-        $categorias = Categoria::whereIn('user_id_create',[1,Aplication::consultaIDUsuario()])->get();
+        $contas = Conta::all();
+        $categorias = Categoria::all();
 
         return view('movimento_renda.editMovimento', ['movimento' => $movimento,
                                                         'contas' => $contas,

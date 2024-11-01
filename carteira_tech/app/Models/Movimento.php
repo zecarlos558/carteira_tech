@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\UsuarioScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -11,8 +12,12 @@ class Movimento extends Model
     use HasFactory;
 
     protected $guarded = [];
-
     public $valorAnterior;
+    protected bool $withAdmin;
+    public function __construct() {
+        $this->withAdmin = true;
+        static::addGlobalScope(new UsuarioScope);
+    }
 
     public function getValor() {
         return formatarNumero($this->valor);
@@ -30,21 +35,41 @@ class Movimento extends Model
 
     protected static function filtroIndex($dados)
     {
-        $movimentos = Movimento::where('movimentos.user_id_create',Aplication::consultaIDUsuario())
-        ->join('categorias','categorias.id','movimentos.categoria_id')
-        ->whereMonth('data', '=', formatarData($dados['data'],'m'))
-        ->whereYear('data', '=', formatarData($dados['data'],'Y'))
-        ->addSelect(DB::raw("(IF(movimentos.tipo = 'suprimento', +valor, -valor)) AS total,
-        movimentos.id, movimentos.nome, valor, tipo, data, categorias.nome as categoria_nome"));
-        if ( (isset($dados['categoria']) && $dados['categoria']!=null) && (isset($dados['tipo']) && $dados['tipo']!=null) ) {
-            $movimentos = $movimentos->where('categoria_id',$dados['categoria'])
-            ->where('tipo',$dados['tipo']);
-        } elseif ( (isset($dados['categoria']) && $dados['categoria']!=null) ) {
-            $movimentos = $movimentos->where('categoria_id',$dados['categoria']);
-        } elseif ( (isset($dados['tipo']) && $dados['tipo']!=null) ) {
-            $movimentos = $movimentos->where('tipo',$dados['tipo']);
-        }
-        return $movimentos->orderBy('data','desc')->get();
+        $offset = request('offset') ?? 10;
+        $movimentos = Movimento::select("*", DB::raw("(IF(movimentos.tipo = 'suprimento', +valor, -valor)) AS total"))
+        ->when(!empty($dados['data']), function ($query) use($dados) {
+            $query->whereMonth('data', '=', formatarData($dados['data'],'m'))
+            ->whereYear('data', '=', formatarData($dados['data'],'Y'));
+        })
+        ->when(!empty($dados['descricao']), function ($query) use($dados) {
+            $query->where(function ($q) use($dados) {
+                $q->where('nome', 'like', "%".$dados['descricao']."%")
+                ->orWhere('descricao', 'like', "%".$dados['descricao']."%");
+            });
+        })
+        ->when(!empty($dados['categoria_id']), fn($q) => $q->where('categoria_id', '=', $dados['categoria_id']))
+        ->when(!empty($dados['tipo']), fn($q) => $q->tipo($dados['tipo']))
+        ->with('conta', 'categoria');
+        return $movimentos->orderBy('data','desc')->paginate($offset);
     }
 
+    public function scopeTipo($query, $tipo) {
+        $query->where('tipo', $tipo);
+    }
+
+    public function scopeRetirada ($query) {
+        $query->tipo('retirada');
+    }
+
+    public function scopeSuprimento ($query) {
+        $query->tipo('suprimento');
+    }
+    
+    function getWithAdmin() {
+        return $this->withAdmin;
+    }
+
+    function setWithAdmin($withAdmin) {
+        return $this->withAdmin = $withAdmin;
+    }
 }
