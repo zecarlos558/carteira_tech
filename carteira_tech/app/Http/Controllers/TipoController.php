@@ -76,6 +76,9 @@ class TipoController extends Controller
     public function edit($id)
     {
         $tipo = Tipo::findOrFail($id);
+        if ($tipo->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
 
         return view('tipos.editTipo', ['tipo' => $tipo])->render();
     }
@@ -87,9 +90,12 @@ class TipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TipoRequest $request, $id)
     {
         $tipo = Tipo::findOrFail($id);
+        if ($tipo->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $tipo->nome = $request->nome;
         $tipo->user_id_update = Aplication::consultaIDUsuario();
         try {
@@ -109,7 +115,11 @@ class TipoController extends Controller
      */
     public function destroy($id)
     {
-        Tipo::findOrFail($id)->delete();
+        $tipo = Tipo::findOrFail($id);
+        if ($tipo->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
+        $tipo->delete();
         return redirect()->route('indexTipo')->with('msg_alert','Tipo deletado com sucesso!');
     }
 }

@@ -78,6 +78,9 @@ class MovimentoRendaController extends Controller
     public function show($id)
     {
         $movimento = Movimento::findOrFail($id);
+        if ($movimento->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
 
         return view('movimento_renda.showMovimento', ['movimento' => $movimento])->render();
     }
@@ -91,6 +94,9 @@ class MovimentoRendaController extends Controller
     public function edit($id)
     {
         $movimento = Movimento::findOrFail($id);
+        if ($movimento->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $contas = Conta::all();
         $categorias = Categoria::all();
 
@@ -109,6 +115,9 @@ class MovimentoRendaController extends Controller
     public function update(Request $request, $id)
     {
         $movimento = Movimento::findOrFail($id);
+        if ($movimento->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $movimento->nome = $request->nome;
         $movimento->valorAnterior = $movimento->valor;
         $movimento->valor = $request->valor;
@@ -140,6 +149,9 @@ class MovimentoRendaController extends Controller
     public function destroy($id)
     {
         $movimento = Movimento::findOrFail($id);
+        if ($movimento->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $conta = Conta::findOrFail($movimento->conta->id);
         $conta->valor = $conta->valor - $movimento->valor;
         $conta->save();

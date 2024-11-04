@@ -82,6 +82,9 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         $categoria = Categoria::findOrFail($id);
+        if ($categoria->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $grupos = Grupo::all();
 
         return view('categorias.editCategoria', ['categoria' => $categoria,
@@ -98,6 +101,9 @@ class CategoriaController extends Controller
     public function update(CategoriaRequest $request, $id)
     {
         $categoria = Categoria::findOrFail($id);
+        if ($categoria->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $categoria->nome = $request->nome;
         $categoria->user_id_update = Aplication::consultaIDUsuario();
         try {
@@ -119,7 +125,11 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        Categoria::findOrFail($id)->delete();
+        $categoria = Categoria::findOrFail($id);
+        if ($categoria->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
+        $categoria->delete();
         return redirect()->route('indexCategoria')->with('msg_alert','Categoria deletado com sucesso!');
     }
 }

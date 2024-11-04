@@ -71,6 +71,9 @@ class ContasController extends Controller
     public function show($id)
     {
         $conta = Conta::findOrFail($id);
+        if ($conta->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
 
         return view('contas.showConta', ['conta' => $conta])->render();
     }
@@ -84,6 +87,9 @@ class ContasController extends Controller
     public function edit($id)
     {
         $conta = Conta::findOrFail($id);
+        if ($conta->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $tipos = Tipo::all();
 
         return view('contas.editConta', ['conta' => $conta,
@@ -100,6 +106,9 @@ class ContasController extends Controller
     public function update(ContaRequest $request, $id)
     {
         $conta = Conta::findOrFail($id);
+        if ($conta->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $conta->nome = $request->nome;
         $conta->valor = $request->valor;
         $conta->user_id_update = Aplication::consultaIDUsuario();
@@ -117,6 +126,9 @@ class ContasController extends Controller
     public function storeMovimento($movimento)
     {
         $conta = Conta::findOrFail($movimento->conta->id);
+        if ($conta->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         if ($movimento->tipo == 'suprimento') {
             $conta->valor = $conta->valor + $movimento->valor;
         } elseif ($movimento->tipo == 'retirada') {
@@ -128,7 +140,9 @@ class ContasController extends Controller
     public function updateMovimento($movimento)
     {
         $conta = Conta::findOrFail($movimento->conta->id);
-
+        if ($conta->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         if ($movimento->tipo == 'suprimento') {
             $conta->valor = $conta->valor - $movimento->valorAnterior;
             $conta->valor = $conta->valor + $movimento->valor;
@@ -147,7 +161,11 @@ class ContasController extends Controller
      */
     public function destroy($id)
     {
-        Conta::findOrFail($id)->delete();
+        $conta = Conta::findOrFail($id);
+        if ($conta->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
+        $conta->delete();
         return redirect()->route('indexConta')->with('msg_alert','Conta Deletada com sucesso!');
     }
 }

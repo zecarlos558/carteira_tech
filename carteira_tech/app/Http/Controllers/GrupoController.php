@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GrupoRequest;
 use App\Models\Aplication;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class GrupoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GrupoRequest $request)
     {
         $grupo = new Grupo();
         $grupo->nome = $request->nome;
@@ -75,6 +76,9 @@ class GrupoController extends Controller
     public function edit($id)
     {
         $grupo = Grupo::findOrFail($id);
+        if ($grupo->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
 
         return view('grupos.editGrupo', ['grupo' => $grupo])->render();
     }
@@ -86,9 +90,12 @@ class GrupoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GrupoRequest $request, $id)
     {
         $grupo = Grupo::findOrFail($id);
+        if ($grupo->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
         $grupo->nome = $request->nome;
         $grupo->user_id_update = Aplication::consultaIDUsuario();
         try {
@@ -108,7 +115,11 @@ class GrupoController extends Controller
      */
     public function destroy($id)
     {
-        Grupo::findOrFail($id)->delete();
+        $grupo = Grupo::findOrFail($id);
+        if ($grupo->user_id_create != Aplication::consultaIDUsuario()) {
+            return abort(401);
+        }
+        $grupo->delete();
         return redirect()->route('indexGrupo')->with('msg_alert','Grupo Deletado com sucesso!');
     }
 }
