@@ -47,9 +47,8 @@ class AplicationController extends Controller
         $relatorio->construtorSaldo();
         $relatorio->calculaBarraProgresso();
 
-        $contas = Conta::where('user_id_create',$usuario->id)->orderBy('valor','desc')->get();
-        $movimentos = Movimento::where('user_id_create',$usuario->id)
-        ->orderBy('data','desc')->with('categoria')->limit(4)->get();
+        $contas = Conta::orderBy('valor','desc')->get();
+        $movimentos = Movimento::orderBy('data','desc')->with('categoria')->limit(4)->get();
 
         if (session()->missing('device')) {
             session(['device' => checkDevice()]);

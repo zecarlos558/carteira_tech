@@ -108,33 +108,25 @@ class Relatorio extends Model
 
     protected static function consultaTotalGastos()
     {
-        return DB::table('movimentos')
-        ->where('user_id_create',Aplication::consultaIDUsuario())
-        ->where('tipo','retirada')
+        return Movimento::retirada()
         ->select(DB::raw('count( movimentos.id ) as quantidade, sum( movimentos.valor ) as valorTotalSaida'))
         ;
     }
 
     protected static function consultaTotalRenda()
     {
-        return DB::table('movimentos')
-        ->where('user_id_create',Aplication::consultaIDUsuario())
-        ->where('tipo','suprimento')
+        return Movimento::suprimento()
         ->select(DB::raw('count( movimentos.id ) as quantidade, sum( movimentos.valor ) as valorTotalEntrada'))
         ;
     }
 
     protected static function consultaPorCategoria()
     {
-        return DB::table('movimentos')
-        ->join('categorias','categorias.id','movimentos.categoria_id')
-        ->where('movimentos.user_id_create',Aplication::consultaIDUsuario())
+        return Movimento::join('categorias','categorias.id','movimentos.categoria_id')
         ->select(DB::raw('categorias.id as id, categorias.nome as nome,
                          sum(movimentos.valor) as valorTotal, movimentos.tipo as tipo'))
         ->groupBy('categorias.id','categorias.nome','movimentos.tipo', 'movimentos.valor')
         ->orderBy('valor','desc')
         ;
     }
-
-
 }

@@ -20,12 +20,11 @@
                 </x-table.tr>
             </x-table.thead>
             <x-table.tbody>
-                @foreach ($contas as $conta)
+                @foreach ($contas->take(3) as $conta)
                     <x-table.tr>
                         <x-table.td-show>{{ $conta->nome }}</x-table.td-show>
                         <x-table.td>{{ $conta->getValor() }}</x-table.td>
                     </x-table.tr>
-                    @break($loop->index == 2)
                 @endforeach
                 <x-table.tr class="table-success">
                     <x-table.td-show>Total:</x-table.td-show>
