@@ -124,3 +124,6 @@ function FuncaoPesquisaTabela() {
     });
 }
 
+function sanitizeJSON(unsanitized) {
+    return unsanitized.replace(/\&quot;/g, "\"");
+}
