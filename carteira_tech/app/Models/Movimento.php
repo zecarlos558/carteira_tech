@@ -15,7 +15,7 @@ class Movimento extends Model
     public $valorAnterior;
     protected bool $withAdmin;
     public function __construct() {
-        $this->withAdmin = true;
+        $this->withAdmin = false;
         static::addGlobalScope(new UsuarioScope);
     }
 
