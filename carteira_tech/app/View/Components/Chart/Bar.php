@@ -13,11 +13,13 @@ class Bar extends Component
      */
 
     public $array;
+    public $tipo;
     public $id;
 
-    public function __construct($array, $id = null)
+    public function __construct($array, $id = null, $tipo = 'suprimento')
     {
-        $this->array = $array;
+        $this->array = is_array($array) ? json_encode($array) : $array;
+        $this->tipo = $tipo;
         $this->id = $id;
     }
 

@@ -18,10 +18,10 @@ class UsuarioScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->when($model->getWithAdmin() == true, function ($query) {
-            $query->whereIn('user_id_create',[1, Aplication::consultaIDUsuario()]);
-        }, function ($query) {
-            $query->whereIn('user_id_create',[Aplication::consultaIDUsuario()]);
+        $builder->when($model->getWithAdmin() == true, function ($query) use($model) {
+            $query->whereIn($model->getTable().'.user_id_create',[1, Aplication::consultaIDUsuario()]);
+        }, function ($query) use($model) {
+            $query->whereIn($model->getTable().'.user_id_create',[Aplication::consultaIDUsuario()]);
         });
     }
 }

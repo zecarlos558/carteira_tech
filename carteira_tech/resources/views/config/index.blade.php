@@ -4,7 +4,7 @@
 
 @section('content')
     <x-titulo_central> Painel de Configurações </x-titulo_central>
-    <div class="container" id="isa-container">
+    <div class="container" id="tech-container">
         <!-- Page Content-->
         <x-div.row>
             <x-div.col>

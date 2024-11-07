@@ -24,7 +24,7 @@
                                 <h3>Percentual das Entrada dos Planos</h3>
                             @endslot
                             @slot('corpo')
-                                @if ($array['nomes'] != null)
+                                @if ($array['doughnut']->count() > 0)
                                     <x-chart.doughnut :array="$array" />
                                 @else
                                     <div class="d-none d-lg-block" id="div_pai_center">
@@ -43,8 +43,8 @@
                                     <h3>Evolução das Entrada Mensal</h3>
                                 @endslot
                                 @slot('corpo')
-                                    @if ($array['valorTotal'] != null)
-                                        <x-chart.bar :array="$array" />
+                                    @if ($array['bar']->count() > 0)
+                                        <x-chart.bar :array="$array" tipo="{{$relatorio->tipo}}" />
                                     @else
                                         <div class="d-none d-lg-block" id="div_pai_center">
                                             <div id="div_filho_center">

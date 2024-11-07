@@ -42,9 +42,9 @@ class AplicationController extends Controller
         ->first();
 
         $relatorio = new Relatorio;
-        $relatorio->construtorSaida($dadosGastos);
-        $relatorio->construtorEntrada($dadosRenda);
-        $relatorio->construtorSaldo();
+        $relatorio->setValorSaida($dadosGastos);
+        $relatorio->setValorEntrada($dadosRenda);
+        $relatorio->setValorSaldo();
         $relatorio->calculaBarraProgresso();
 
         $contas = Conta::orderBy('valor','desc')->get();

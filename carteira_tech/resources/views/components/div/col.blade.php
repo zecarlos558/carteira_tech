@@ -1,3 +1,3 @@
-<div {{ $attributes->merge(['class' => 'col-sm'.  ( @$type ? $type : '' ) ]) }} >
+<div {{ $attributes->merge(['class' => 'col'.  ( @$type ? $type : '' ) ]) }} >
     {{$slot}}
 </div>

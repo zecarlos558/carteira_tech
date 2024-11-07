@@ -32,9 +32,9 @@ class RelatorioController extends Controller
         ->first();
 
         $relatorio = new Relatorio;
-        $relatorio->construtorSaida($dadosGastos);
-        $relatorio->construtorEntrada($dadosRenda);
-        $relatorio->construtorSaldo();
+        $relatorio->setValorSaida($dadosGastos);
+        $relatorio->setValorEntrada($dadosRenda);
+        $relatorio->setValorSaldo();
 
         $relatorioCategorias = Relatorio::consultaPorCategoria()
         ->whereMonth('data', '=', formatarData($data,'m'))
@@ -88,8 +88,9 @@ class RelatorioController extends Controller
             $data = date('Y-m-d');
         }
         $dadosRendaMensal = Relatorio::consultaTotalRenda()
-        ->addSelect(DB::raw('EXTRACT(YEAR_MONTH FROM data) as mes_ano'))
-        ->groupBy( DB::raw('EXTRACT(YEAR_MONTH FROM data)') )
+        ->addSelect(DB::raw("EXTRACT(YEAR_MONTH FROM data) as mes_ano"))
+        ->groupBy( DB::raw("EXTRACT(YEAR_MONTH FROM data)") )
+        ->orderBy('data', 'desc')
         ->get();
 
         $dados = $request->all();
@@ -104,7 +105,7 @@ class RelatorioController extends Controller
             ->get();
             $dadosRenda = $dadosRenda->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->first();
-            $relatorioCategorias = $relatorioCategorias->where('tipo','suprimento')
+            $relatorioCategorias = $relatorioCategorias->suprimento()
             ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
             $data = $dados;
@@ -118,46 +119,30 @@ class RelatorioController extends Controller
             $dadosRenda = $dadosRenda->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
             ->first();
-            $relatorioCategorias = $relatorioCategorias->where('tipo','suprimento')
+            $relatorioCategorias = $relatorioCategorias->suprimento()
             ->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
         }
 
+        $dadosRendaMensal->map(function ($dado) {
+            $data = formata_year_month($dado->mes_ano);
+            $dado->mes_ano = $data['mes'].'/'.$data['ano'];
+        });
         // Preenche valores para chart Saida Percentual
-        if (count($relatorioCategorias) > 0) {
-            $arraySaida = array();
-            foreach ($relatorioCategorias as $key => $consultaPlanosSaida) {
-                $arraySaida['nomes'][$key] = $consultaPlanosSaida->nome;
-                $arraySaida['percentual'][$key] = $consultaPlanosSaida->valorTotal;
-            }
-            $dadosChart['nomes'] = implode("|", $arraySaida['nomes']);
-            $dadosChart['percentual'] = implode("|", $arraySaida['percentual']);
-        } else {
-            $dadosChart['nomes'] = null;
-            $dadosChart['percentual'] = null;
-        }
+        $dadosChart['doughnut'] = $relatorioCategorias->pluck("valorTotal", "nome");
         // Preenche valores para chart Saidas por Mês
-        if (count($dadosRendaMensal) > 0) {
-            foreach ($dadosRendaMensal as $key => $progressoMensal) {
-                $dataSaida = formata_year_month($progressoMensal->mes_ano);
-                $arraySaida['valorTotal'][$key] = $progressoMensal->valorTotalEntrada;
-                $arraySaida['mes'][$key] = $dataSaida['mes'].'/'.$dataSaida['ano'];
-            }
-            $dadosChart['valorTotal'] = implode("|", $arraySaida['valorTotal']);
-            $dadosChart['mes'] = implode("|", $arraySaida['mes']);
-        } else {
-            $dadosChart['valorTotal'] = null;
-            $dadosChart['mes'] = null;
-        }
+        $dadosChart['bar'] = $dadosRendaMensal->pluck("valorTotal", "mes_ano");
 
         $relatorio = new Relatorio;
-        $relatorio->construtorEntrada($dadosRenda,'entrada');
+        $relatorio->setTipo('suprimento');
+        $relatorio->setValorEntrada($dadosRenda,'entrada');
         $relatorio->calculaBarraCategorias($relatorioCategorias);
 
         return view('relatorios.showRenda', ['data' => $data,
                                              'array' => $dadosChart,
                                              'movimentos' => $movimentos,
+                                             'relatorio' => $relatorio,
                                              'relatorioCategorias' => $relatorioCategorias])->render();
 
     }
@@ -168,6 +153,7 @@ class RelatorioController extends Controller
         $dadosGastoMensal = Relatorio::consultaTotalGastos()
         ->addSelect(DB::raw('EXTRACT(YEAR_MONTH FROM data) as mes_ano'))
         ->groupBy( DB::raw('EXTRACT(YEAR_MONTH FROM data)') )
+        ->orderBy('data', 'desc')
         ->get();
 
         $dados = $request->all();
@@ -178,11 +164,11 @@ class RelatorioController extends Controller
         if ( count($dados) > 0 && @$dados['opcao_data'] == 'personalizado') {
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
             $dados['dataFim'] = $dados['dataFim'].'-30';
-            $movimentos = $movimentos ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
+            $movimentos = $movimentos->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
             $dadosGasto = $dadosGasto->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->first();
-            $relatorioCategorias = $relatorioCategorias->where('tipo','retirada')
+            $relatorioCategorias = $relatorioCategorias->retirada()
             ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
             $data = $dados;
@@ -196,46 +182,31 @@ class RelatorioController extends Controller
             $dadosGasto = $dadosGasto->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
             ->first();
-            $relatorioCategorias = $relatorioCategorias->where('tipo','retirada')
+            $relatorioCategorias = $relatorioCategorias->retirada()
             ->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
         }
 
+        $dadosGastoMensal->map(function ($dado) {
+            $data = formata_year_month($dado->mes_ano);
+            $dado->mes_ano = $data['mes'].'/'.$data['ano'];
+        });
+        
         // Preenche valores para chart Saida Percentual
-        if (count($relatorioCategorias) > 0) {
-            $arraySaida = array();
-            foreach ($relatorioCategorias as $key => $consultaPlanosSaida) {
-                $arraySaida['nomes'][$key] = $consultaPlanosSaida->nome;
-                $arraySaida['percentual'][$key] = $consultaPlanosSaida->valorTotal;
-            }
-            $dadosChart['nomes'] = implode("|", $arraySaida['nomes']);
-            $dadosChart['percentual'] = implode("|", $arraySaida['percentual']);
-        } else {
-            $dadosChart['nomes'] = null;
-            $dadosChart['percentual'] = null;
-        }
+        $dadosChart['doughnut'] = $relatorioCategorias->pluck("valorTotal", "nome");
         // Preenche valores para chart Saidas por Mês
-        if (count($dadosGastoMensal) > 0) {
-            foreach ($dadosGastoMensal as $key => $progressoMensal) {
-                $dataSaida = formata_year_month($progressoMensal->mes_ano);
-                $arraySaida['valorTotal'][$key] = $progressoMensal->valorTotalSaida;
-                $arraySaida['mes'][$key] = $dataSaida['mes'].'/'.$dataSaida['ano'];
-            }
-            $dadosChart['valorTotal'] = implode("|", $arraySaida['valorTotal']);
-            $dadosChart['mes'] = implode("|", $arraySaida['mes']);
-        } else {
-            $dadosChart['valorTotal'] = null;
-            $dadosChart['mes'] = null;
-        }
+        $dadosChart['bar'] = $dadosGastoMensal->pluck("valorTotal", "mes_ano");
 
         $relatorio = new Relatorio;
-        $relatorio->construtorSaida($dadosGasto,'saida');
+        $relatorio->setTipo('retirada');
+        $relatorio->setValorSaida($dadosGasto,'saida');
         $relatorio->calculaBarraCategorias($relatorioCategorias);
 
         return view('relatorios.showGasto', ['data' => $data,
                                              'array' => $dadosChart,
                                              'movimentos' => $movimentos,
+                                             'relatorio' => $relatorio,
                                              'relatorioCategorias' => $relatorioCategorias])->render();
     }
 

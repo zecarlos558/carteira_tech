@@ -2,30 +2,25 @@
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
 
-    //recebe a string com elementos separados, vindos do PHP
-    string_nomes_array = "<?php echo @$array['nomes']; ?>";
-    //transforma esta string em um array próprio do Javascript
-    array_nomes = string_nomes_array.split("|");
+    function sanitizeJSON(unsanitized) {
+        return unsanitized.replace(/\&quot;/g, "\"");
+    }
 
-    //recebe a string com elementos separados, vindos do PHP
-    string_numeros_array = "<?php echo @$array['percentual']; ?>";
-    //transforma esta string em um array próprio do Javascript
-    array_numeros = string_numeros_array.split("|");
-
-    tamanho = array_nomes.length;
-    // Preenche o array com os valores dos nomes e percentual
-    arraySaida = [['Plano','Percentual']];
-    for (let index = 0; index < tamanho; index++) {
-        arraySaida.push([array_nomes[index], parseInt(array_numeros[index])]);
+    objeto = "{{ ($array) }}";
+    objeto = JSON.parse(sanitizeJSON(objeto));
+    array_doughnut = [['Plano','Percentual']];
+    for (let chave in objeto = objeto.doughnut) {
+        array_doughnut.push([chave, parseInt(objeto[chave])]);
     }
     function drawChart() {
 
-      var data = google.visualization.arrayToDataTable(arraySaida);
+      var data = google.visualization.arrayToDataTable(array_doughnut);
 
       var options = {
-        /*Exibir titulo
-        title: 'Percentual das Saídas dos Planos'
-        */
+        'chartArea': {'width': '100%', 'height': '100%', 'left' : '15%'}
+        //'legend': {'position': 'top'}
+        //title: 'Percentual das Saídas dos Planos',
+        //sliceVisibilityThreshold: .2
       };
 
       var chart = new google.visualization.PieChart(document.getElementById('piechartSaida'));
@@ -35,7 +30,7 @@
   </script>
 
 <div id="chartCanvas">
-    <div id="piechartSaida" style="height: 300px"></div>
+    <div id="piechartSaida"></div>
 </div>
 
 

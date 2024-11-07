@@ -25,12 +25,6 @@ body {
     padding-bottom: 0;
 }
 
-@media screen and (max-width: 480px) {
-    ion-icon {
-        font-size: 24px;
-    }
-}
-
 /* Modo Dark - Contraste
 
 .dark-mode {
@@ -851,8 +845,62 @@ footer p {
 
 }
 
+@media screen and (max-width: 480px) {
+    ion-icon {
+        font-size: 24px;
+    }
+
+    #chartCanvas #piechartSaida {
+        height: 250px;
+        width: 100%;
+    }
+
+    #myChart {
+        height: 250px;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #myChart #columnchart {
+        --width-columnchart: 70vw;
+        width: var(--width-columnchart);
+    }
+
+    #resumo #painel-header a{
+        padding: 5px;
+        margin: 0;
+    }
+    #resumo #painel-header a .card-header h4,
+    #resumo #painel-header a .card-body h1{
+        font-size: large;
+        padding: 0;
+        margin: 0;
+        line-height: 0.5;
+    }
+}
+
 @media (min-width: 992px) {
     .rounded-lg-3 {
         border-radius: .3rem;
+    }
+
+    #chartCanvas #piechartSaida {
+        height: 300px;
+        width: 45vw;
+    }
+
+    #chartCanvas #columnchart_values {
+        height: 300px;
+    }
+
+    #myChart {
+        width: 45vw;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    #myChart #columnchart {
+        --width-columnchart: 40vw;
+        width: var(--width-columnchart);
     }
 }

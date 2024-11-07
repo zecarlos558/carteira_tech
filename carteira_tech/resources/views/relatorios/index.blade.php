@@ -16,32 +16,32 @@
         <x-nav_pills.div-content>
 
             <x-nav_pills.content id="resumo" type="active">
-                <x-div.row type="">
-                    <x-div.col>
-                        <x-button.a class="btn-outline-info" href="{{ route('showRelatorioRenda', ['data' => $data]) }}">
+                <x-div.row type="justify-content-around" id="painel-header">
+                    <x-div.col type="-auto">
+                        <x-button.a class="btn-outline-success" href="{{ route('showRelatorioRenda', ['data' => $data]) }}">
                             <x-div.card class="bg-success" style="color: white">
                                 @slot('header')
                                     Renda
                                 @endslot
                                 @slot('corpo')
                                     <h1>
-                                        <x-label.span-default icon="pagamento" style="text-align: center">
-                                            {{ $relatorio->valorTotalEntrada }}</x-label.span>
+                                        <x-label.span-default style="text-align: center">
+                                            {{ $relatorio->getValorEntrada() }} R$</x-label.span>
                                     </h1>
                                 @endslot
                             </x-div.card>
                         </x-button.a>
                     </x-div.col>
-                    <x-div.col>
-                        <x-button.a class="btn-outline-info" href="{{ route('showRelatorioGasto') }}">
+                    <x-div.col type="-auto">
+                        <x-button.a class="btn-outline-danger" href="{{ route('showRelatorioGasto') }}">
                             <x-div.card class="bg-danger" style="color: white">
                                 @slot('header')
                                     Gastos
                                 @endslot
                                 @slot('corpo')
                                     <h1>
-                                        <x-label.span-default icon="pagamento" style="text-align: center">
-                                            {{ $relatorio->valorTotalSaida }}</x-label.span>
+                                        <x-label.span-default style="text-align: center">
+                                            {{ $relatorio->getValorSaida() }} R$</x-label.span>
                                     </h1>
                                 @endslot
                             </x-div.card>
@@ -49,10 +49,10 @@
                     </x-div.col>
                 </x-div.row>
                 <hr>
-                <x-div.input class="border" id="isa-container">
+                <x-div.input class="border" id="tech-container">
                     @foreach ($relatorioCategorias as $relatorios)
                         <h4>{{ $relatorios->nome }}</h4>
-                        <h5>{{ $relatorios->valorTotal }}</h5>
+                        <h5>{{ formatarNumero($relatorios->valorTotal) }} R$</h5>
                         <div class="progress pd-3 mb-3">
                             @if ($relatorios->tipo == "suprimento")
                                 <div class="progress-bar bg-success" role="progressbar"

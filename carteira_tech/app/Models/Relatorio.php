@@ -23,31 +23,44 @@ class Relatorio extends Model
 
     public $tipo;
 
-    public function construtorSaida($dados)
+    public function setValorSaida($dados)
     {
-        $this->valorTotalSaida = exibirValorNulo($dados->valorTotalSaida) ;
+        $this->valorTotalSaida = exibirValorNulo($dados->valorTotal);
     }
 
-    public function construtorEntrada($dados)
+    public function setValorEntrada($dados)
     {
-        $this->valorTotalEntrada = exibirValorNulo($dados->valorTotalEntrada) ;
+        $this->valorTotalEntrada = exibirValorNulo($dados->valorTotal);
     }
 
-    public function construtorSaldo()
+    public function setValorSaldo()
     {
         $this->saldoTotal = $this->valorTotalEntrada - $this->valorTotalSaida;
     }
 
-    public function getValorSaida() {
+    function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+    }
+
+    public function getValorSaida()
+    {
         return formatarNumero($this->valorTotalSaida);
     }
 
-    public function getValorEntrada() {
+    public function getValorEntrada()
+    {
         return formatarNumero($this->valorTotalEntrada);
     }
 
-    public function getValorSaldo() {
+    public function getValorSaldo()
+    {
         return formatarNumero($this->saldoTotal);
+    }
+
+    function getTipo()
+    {
+        return $this->tipo;
     }
 
     // Calcula Barra de Progresso do index
@@ -65,13 +78,12 @@ class Relatorio extends Model
             $this->barraProgressoEntrada = 0;
             $this->barraProgressoSaida = 0;
         }
-
     }
 
     // Calcula Barra de Progresso dos Categorias no resumo detalhado
-    public function calculaBarraCategorias($dados,$tipo=null)
+    public function calculaBarraCategorias($dados, $tipo = null)
     {
-        $maiorValor = maiorValorArray($dados,'valorTotal');
+        $maiorValor = $dados->max('valorTotal');
         $valorTotalEntrada = $this->valorTotalEntrada;
         $valorTotalSaida = $this->valorTotalSaida;
         $valorTotal = $valorTotalEntrada + $valorTotalSaida;
@@ -94,39 +106,37 @@ class Relatorio extends Model
 
     protected static function consultaGastos()
     {
-        return Movimento::where('tipo','retirada')->with('categoria')
-        ->where('user_id_update',Aplication::consultaIDUsuario())
-        ->orderBy('data','desc');
+        return Movimento::retirada()
+            ->orderBy('data', 'desc')->with('categoria');
     }
 
     protected static function consultaRenda()
     {
-        return Movimento::where('tipo','suprimento')->with('categoria')
-        ->where('user_id_update',Aplication::consultaIDUsuario())
-        ->orderBy('data','desc');
+        return Movimento::suprimento()
+            ->orderBy('data', 'desc')->with('categoria');
     }
 
     protected static function consultaTotalGastos()
     {
         return Movimento::retirada()
-        ->select(DB::raw('count( movimentos.id ) as quantidade, sum( movimentos.valor ) as valorTotalSaida'))
+            ->select(DB::raw('count( movimentos.id ) as quantidade, sum( movimentos.valor ) as valorTotal'))
         ;
     }
 
     protected static function consultaTotalRenda()
     {
         return Movimento::suprimento()
-        ->select(DB::raw('count( movimentos.id ) as quantidade, sum( movimentos.valor ) as valorTotalEntrada'))
+            ->select(DB::raw('count( movimentos.id ) as quantidade, sum( movimentos.valor ) as valorTotal'))
         ;
     }
 
     protected static function consultaPorCategoria()
     {
-        return Movimento::join('categorias','categorias.id','movimentos.categoria_id')
-        ->select(DB::raw('categorias.id as id, categorias.nome as nome,
-                         sum(movimentos.valor) as valorTotal, movimentos.tipo as tipo'))
-        ->groupBy('categorias.id','categorias.nome','movimentos.tipo', 'movimentos.valor')
-        ->orderBy('valor','desc')
+        return Movimento::join('categorias', 'categorias.id', 'movimentos.categoria_id')
+            ->select(DB::raw('categorias.id as id, categorias.nome as nome, movimentos.tipo as tipo, 
+                         sum(movimentos.valor) as valorTotal'))
+            ->groupBy('categorias.id', 'categorias.nome', 'movimentos.tipo')
+            ->orderBy('valor', 'asc')
         ;
     }
 }

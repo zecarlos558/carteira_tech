@@ -17,7 +17,7 @@ class Doughnut extends Component
 
     public function __construct($array, $id = null)
     {
-        $this->array = $array;
+        $this->array = is_array($array) ? json_encode($array) : $array;
         $this->id = $id;
     }
 
