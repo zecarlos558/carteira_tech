@@ -81,6 +81,8 @@
     <x-ionicons.icon name='eye-off-outline'></x-ionicons.icon>
     @elseif ($icon == 'pagamento')
     <x-ionicons.icon name='cash-outline'></x-ionicons.icon>
+    @elseif ($icon == 'movimento')
+    <x-ionicons.icon name='cash-outline'></x-ionicons.icon>
     @elseif ($icon == 'dolar')
     <x-ionicons.icon name='logo-usd'></x-ionicons.icon>
     @elseif ($icon == 'ticket')
