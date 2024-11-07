@@ -1,4 +1,3 @@
-
 <?php
 
     function verificaCountObjeto($objeto,$search = null)
@@ -288,3 +287,13 @@
         return $array;
     }
 
+
+    function utf8_decoder($string)
+    {
+        try {
+            $string_decode = mb_convert_encoding($string, 'ISO-8859-1', 'UTF-8');
+        } catch (\Exception $e) {
+            return "Erro na codificação da string: $string - " . $e->getMessage();
+        }
+        return $string_decode;
+    }
