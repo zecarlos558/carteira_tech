@@ -64,6 +64,7 @@
                                 <h3>Transações</h3>
                             @endslot
                             @slot('corpo')
+                            @if ($movimentos->count() > 0)
                                 <x-div.table style="height: 350px;" idTabela="condensada">
                                     <x-table.tbody>
                                         @foreach ($movimentos as $movimento)
@@ -82,6 +83,13 @@
                                         @endforeach
                                     </x-table.tbody>
                                 </x-div.table>
+                            @else
+                                <div class="d-none d-lg-block" id="div_pai_center">
+                                    <div id="div_filho_center">
+                                        <h5>Não foi encontrado dados para essa consulta!</h5>
+                                    </div>
+                                </div>
+                            @endif
                             @endslot
                         </x-div.card>
                     </x-div.col>
@@ -91,6 +99,7 @@
                                 <h3>Categorias</h3>
                             @endslot
                             @slot('corpo')
+                            @if ($relatorioCategorias->count() > 0)
                                 <x-div.input id="card_body" style="height: 350px;">
                                     @foreach ($relatorioCategorias as $relatorios)
                                         <h4>{{ $relatorios->nome }}</h4>
@@ -103,6 +112,13 @@
                                         </div>
                                     @endforeach
                                 </x-div.input>
+                            @else
+                                <div class="d-none d-lg-block" id="div_pai_center">
+                                    <div id="div_filho_center">
+                                        <h5>Não foi encontrado dados para essa consulta!</h5>
+                                    </div>
+                                </div>
+                            @endif
                             @endslot
                         </x-div.card>
                     </x-div.col>

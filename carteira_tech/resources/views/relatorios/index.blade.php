@@ -33,7 +33,7 @@
                         </x-button.a>
                     </x-div.col>
                     <x-div.col type="-auto">
-                        <x-button.a class="btn-outline-danger" href="{{ route('showRelatorioGasto') }}">
+                        <x-button.a class="btn-outline-danger" href="{{ route('showRelatorioGasto', ['data' => $data]) }}">
                             <x-div.card class="bg-danger" style="color: white">
                                 @slot('header')
                                     Gastos

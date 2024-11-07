@@ -149,7 +149,11 @@ class RelatorioController extends Controller
 
     public function showGasto(Request $request)
     {
-        $data = date('y-m-d');
+        if ($request->data != null) {
+            $data = formatarData($request->data, 'Y-m-d');
+        } else {
+            $data = date('Y-m-d');
+        }
         $dadosGastoMensal = Relatorio::consultaTotalGastos()
         ->addSelect(DB::raw('EXTRACT(YEAR_MONTH FROM data) as mes_ano'))
         ->groupBy( DB::raw('EXTRACT(YEAR_MONTH FROM data)') )
