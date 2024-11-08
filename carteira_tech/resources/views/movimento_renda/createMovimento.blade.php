@@ -5,7 +5,7 @@
     @endslot
     <x-div.principal>
         @slot('titulo')
-            Preencha os dados da Transação - Suprimento
+            Transação - Suprimento
         @endslot
         <x-div.form action="{{ route('storeMovimentoRenda') }}" method="POST">
             @slot('metodo')
@@ -15,21 +15,21 @@
             <x-input.text value="{{ old('nome') }}" name="nome" id="nome" placeholder="Nome do Movimento" />
 
             <x-div.row>
-                <x-div.col>
+                <x-div.col type="-md">
                     <x-label.label class="form-label" for="valor">Valor da Transação:</x-label.label>
                     <div class="input-group">
                         <x-label.span class="input-group-text" id="span_suprimento">+RS</x-label.span>
                         <x-input.number value="{{ old('valor') }}" name="valor" id="valor" placeholder="Valor do Movimento" />
                     </div>
                 </x-div.col>
-                <x-div.col>
+                <x-div.col type="-md">
                     <x-label.label for="data" class="form-label">Data da Renda</x-label.label>
                     <x-input.date id="data" name="data" value="{{ date('Y-m-d') }}"></x-input>
                 </x-div.col>
             </x-div.row>
 
             <x-div.row>
-                <x-div.col>
+                <x-div.col type="-md">
                     <x-label.label for="conta" >Tipo da Conta:</x-label.label>
                     <x-input.select id="conta" name="conta" >
                         <x-input.option value="">Selecione a conta</x-input.option>
@@ -42,7 +42,7 @@
                         @endforeach
                     </x-input.select>
                 </x-div.col>
-                <x-div.col>
+                <x-div.col type="-md">
                     <x-label.label for="categoria" >Tipo de Categoria:</x-label.label>
                     <x-input.select id="categoria" name="categoria" >
                         <x-input.option value="">Selecione a Categoria</x-input.option>
