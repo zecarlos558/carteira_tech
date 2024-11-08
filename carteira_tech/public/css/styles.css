@@ -548,6 +548,16 @@ a {
     margin-bottom: 8px;
 }
 
+#span_suprimento {
+    background-color: green;
+    color: white;
+}
+
+#span_retirada {
+    background-color: red;
+    color: white;
+}
+
 /* Style para esconder Botão*/
 #botaoParcelamento {
     display: none;
@@ -623,9 +633,10 @@ a {
 .fab a {
     cursor: pointer;
     justify-content: start;
-    width: 48px;
+    width: 50px;
     height: 48px;
     border-radius: 30px;
+    padding: 6px 0 0 0;
     background-color: #cb60b3;
     border: none;
     box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
@@ -638,7 +649,7 @@ a {
 }
 
 .fab a ion-icon {
-    font-size: 26px;
+    font-size: 35px;
 }
 
 .fab a:focus {
@@ -742,7 +753,7 @@ a {
     opacity: 1;
 }
 
-/* Style para página do comprovante (FIM) */
+/* Style para botão de transação (FIM) */
 
 footer {
     text-align: center;

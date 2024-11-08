@@ -1,6 +1,8 @@
 @isset($icon)
     @if ($icon == 'criar')
     <x-ionicons.icon name='add-circle-outline' ></x-ionicons.icon>
+    @elseif ($icon == 'add_movimento')
+    <x-ionicons.icon name='add-outline' ></x-ionicons.icon>
     @elseif ($icon == 'editar')
     <x-ionicons.icon name='create-outline' ></x-ionicons.icon>
     @elseif ($icon == 'deletar')
@@ -21,6 +23,8 @@
     <x-ionicons.icon name='refresh-circle-outline' ></x-ionicons.icon>
     @elseif ($icon == 'remover')
     <x-ionicons.icon name='remove-circle-outline' ></x-ionicons.icon>
+    @elseif ($icon == 'sub_movimento')
+    <x-ionicons.icon name='remove-outline' ></x-ionicons.icon>
     @elseif ($icon == 'status')
     <x-ionicons.icon name='checkbox-outline' ></x-ionicons.icon>
     @elseif ($icon == 'grupo')
