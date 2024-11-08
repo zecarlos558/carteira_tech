@@ -47,6 +47,7 @@ class Movimento extends Model
                 ->orWhere('descricao', 'like', "%".$dados['descricao']."%");
             });
         })
+        ->when(!empty($dados['conta_id']), fn($q) => $q->where('conta_id', '=', $dados['conta_id']))
         ->when(!empty($dados['categoria_id']), fn($q) => $q->where('categoria_id', '=', $dados['categoria_id']))
         ->when(!empty($dados['tipo']), fn($q) => $q->tipo($dados['tipo']))
         ->with('conta', 'categoria');

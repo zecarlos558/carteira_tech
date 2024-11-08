@@ -45,7 +45,7 @@
                     <x-div.col type="auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='conta'>Conta</x-label.span>
-                            <x-input.select id="conta" name="conta" >
+                            <x-input.select id="conta_id" name="conta_id" >
                                 <x-input.option value="">Selecione a conta</x-input.option>
                                 @foreach ($tipo_contas as $key => $contas)
                                 <optgroup label="{{$key}}">
