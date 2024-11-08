@@ -12,10 +12,12 @@ class Option extends Component
      * @return void
      */
     public $value;
+    public $other;
 
-    public function __construct($value=null,)
+    public function __construct($value=null, $other=null)
     {
         $this->value = $value;
+        $this->other = $other;
     }
 
     /**
