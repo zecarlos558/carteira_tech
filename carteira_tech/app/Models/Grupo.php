@@ -32,11 +32,11 @@ class Grupo extends Model
         return $grupos->paginate($offset);
     }
 
-    function getWithAdmin() {
+    public function getWithAdmin() {
         return $this->withAdmin;
     }
 
-    function setWithAdmin($withAdmin) {
+    public function setWithAdmin($withAdmin) {
         return $this->withAdmin = $withAdmin;
     }
 }

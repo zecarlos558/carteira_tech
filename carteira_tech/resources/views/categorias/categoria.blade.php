@@ -69,7 +69,7 @@
                                     {{ $categoria->nome }}</x-button.a>
                             </x-div.button>
                         </x-table.td>
-                        <x-table.td> {{ @$categoria->grupos[0]->nome }} </x-table.td>
+                        <x-table.td> {{ @$categoria->grupo->nome }} </x-table.td>
 
                         @if ($categoria->user_id_create == auth()->user()->id)
                             <x-table.td-button>

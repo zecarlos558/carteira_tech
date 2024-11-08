@@ -65,11 +65,11 @@ class Movimento extends Model
         $query->tipo('suprimento');
     }
     
-    function getWithAdmin() {
+    public function getWithAdmin() {
         return $this->withAdmin;
     }
 
-    function setWithAdmin($withAdmin) {
+    public function setWithAdmin($withAdmin) {
         return $this->withAdmin = $withAdmin;
     }
 }

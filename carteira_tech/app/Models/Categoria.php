@@ -12,7 +12,8 @@ class Categoria extends Model
 
     protected $guarded = [];
     protected bool $withAdmin;
-    public function __construct() {
+    public function __construct()
+    {
         $this->withAdmin = true;
         static::addGlobalScope(new UsuarioScope);
     }
@@ -44,20 +45,26 @@ class Categoria extends Model
     protected static function filtroIndex($dados)
     {
         $offset = request('offset') ?? 10;
-        $categorias = Categoria::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%".$dados['descricao']."%"))
-        ->when(!empty($dados['grupo_id']), function ($query) use ($dados) {
-            $query->whereHas('grupos', fn($q) => $q->where('id', '=', $dados['grupo_id']));
-        })
-        ->with('grupos');
+        $categorias = Categoria::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%" . $dados['descricao'] . "%"))
+            ->when(!empty($dados['grupo_id']), function ($query) use ($dados) {
+                $query->whereHas('grupos', fn($q) => $q->where('id', '=', $dados['grupo_id']));
+            })->with('grupos');
 
         return $categorias->paginate($offset);
     }
 
-    function getWithAdmin() {
+    public function getWithAdmin()
+    {
         return $this->withAdmin;
     }
 
-    function setWithAdmin($withAdmin) {
+    public function setWithAdmin($withAdmin)
+    {
         return $this->withAdmin = $withAdmin;
+    }
+
+    public function getGrupoAttribute()
+    {
+        return $this->grupos->first();
     }
 }

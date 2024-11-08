@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Aplication;
 use App\Models\Categoria;
+use App\Models\Conta;
 use App\Models\Movimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,10 +24,12 @@ class MovimentoController extends Controller
         }
 
         $movimentos = Movimento::filtroIndex($dados);
-        $categorias = Categoria::all();
+        $tipo_contas = Conta::with('tipos')->get()->groupBy('tipo.nome');
+        $grupo_categorias = Categoria::with('grupos')->get()->groupBy('grupo.nome');
 
         return view('movimentos.movimento', ['movimentos' => $movimentos,
-                                             'categorias' => $categorias,
+                                             'tipo_contas' => $tipo_contas,
+                                             'grupo_categorias' => $grupo_categorias,
                                              'data' => $dados['data']])->render();
     }
 

@@ -31,7 +31,7 @@
                     <x-div.col type="auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='movimento'>Movimento</x-label.span>
-                            <x-input.text type="text" value="{{ old('descricao') }}" placeholder="Procurar Movimento"
+                            <x-input.text type="text" value="{{ old('descricao') }}" placeholder="Pesquisar"
                                 name="descricao" id="descricao"></x-input.text>
                         </div>
                     </x-div.col>
@@ -44,11 +44,33 @@
                     </x-div.col>
                     <x-div.col type="auto">
                         <div class="input-group">
+                            <x-label.span class="input-group-text" icon='conta'>Conta</x-label.span>
+                            <x-input.select id="conta" name="conta" >
+                                <x-input.option value="">Selecione a conta</x-input.option>
+                                @foreach ($tipo_contas as $key => $contas)
+                                <optgroup label="{{$key}}">
+                                    @foreach ($contas as $conta)
+                                        <x-input.option value="{{$conta->id}}">{{$conta->nome}}</x-input.option>
+                                    @endforeach
+                                </optgroup>
+                                @endforeach
+                            </x-input.select>
+                        </div>
+                    </x-div.col>
+                </x-div.row>
+                <x-div.row>
+
+                    <x-div.col type="auto">
+                        <div class="input-group">
                             <x-label.span class="input-group-text" icon='categoria'>Categoria</x-label.span>
                             <x-input.select id="categoria_id" name="categoria_id">
                                 <x-input.option value="">Selecione</x-input.option>
-                                @foreach ($categorias as $categoria)
-                                    <x-input.option value="{{ $categoria->id }}">{{ $categoria->nome }}</x-input.option>
+                                @foreach ($grupo_categorias as $key => $categorias)
+                                    <optgroup label="{{$key}}">
+                                        @foreach ($categorias as $categoria)
+                                            <x-input.option value="{{$categoria->id}}">{{$categoria->nome}}</x-input.option>
+                                        @endforeach
+                                    </optgroup>
                                 @endforeach
                             </x-input.select>
                         </div>

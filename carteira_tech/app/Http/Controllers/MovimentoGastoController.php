@@ -30,11 +30,11 @@ class MovimentoGastoController extends Controller
      */
     public function create()
     {
-        $contas = Conta::all();
-        $categorias = Categoria::all();
+        $tipo_contas = Conta::with('tipos')->get()->groupBy('tipo.nome');
+        $grupo_categorias = Categoria::with('grupos')->get()->groupBy('grupo.nome');
 
-        return view('movimento_gasto.createMovimento', ['contas' => $contas,
-                                                        'categorias' => $categorias])->render();
+        return view('movimento_gasto.createMovimento', ['tipo_contas' => $tipo_contas,
+                                                        'grupo_categorias' => $grupo_categorias])->render();
     }
 
     /**
@@ -97,12 +97,12 @@ class MovimentoGastoController extends Controller
         if ($movimento->user_id_create != Aplication::consultaIDUsuario()) {
             return abort(401);
         }
-        $contas = Conta::all();
-        $categorias = Categoria::all();
+        $tipo_contas = Conta::with('tipos')->get()->groupBy('tipo.nome');
+        $grupo_categorias = Categoria::with('grupos')->get()->groupBy('grupo.nome');
 
         return view('movimento_gasto.editMovimento', ['movimento' => $movimento,
-                                                        'contas' => $contas,
-                                                        'categorias' => $categorias])->render();
+                                                        'tipo_contas' => $tipo_contas,
+                                                        'grupo_categorias' => $grupo_categorias])->render();
     }
 
     /**

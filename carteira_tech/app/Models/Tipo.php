@@ -32,11 +32,11 @@ class Tipo extends Model
         return $tipos->paginate($offset);
     }
 
-    function getWithAdmin() {
+    public function getWithAdmin() {
         return $this->withAdmin;
     }
 
-    function setWithAdmin($withAdmin) {
+    public function setWithAdmin($withAdmin) {
         return $this->withAdmin = $withAdmin;
     }
 }

@@ -31,16 +31,24 @@
             <x-label.label for="conta" >Tipo da Conta:</x-label.label>
             <x-input.select id="conta" name="conta" >
                 <x-input.option value="">Selecione a conta</x-input.option>
-                @foreach ($contas as $conta)
-                <x-input.option value="{{$conta->id}}" >{{$conta->nome}}</x-input.option>
+                @foreach ($tipo_contas as $key => $contas)
+                <optgroup label="{{$key}}">
+                    @foreach ($contas as $conta)
+                        <x-input.option value="{{$conta->id}}" >{{$conta->nome}}</x-input.option>
+                    @endforeach
+                </optgroup>
                 @endforeach
             </x-input.select>
 
             <x-label.label for="categoria" >Tipo de Categoria:</x-label.label>
             <x-input.select id="categoria" name="categoria" >
                 <x-input.option value="">Selecione a Categoria</x-input.option>
-                @foreach ($categorias as $categoria)
-                <x-input.option value="{{$categoria->id}}" >{{$categoria->nome}}</x-input.option>
+                @foreach ($grupo_categorias as $key => $categorias)
+                    <optgroup label="{{$key}}">
+                        @foreach ($categorias as $categoria)
+                            <x-input.option value="{{$categoria->id}}">{{$categoria->nome}}</x-input.option>
+                        @endforeach
+                    </optgroup>
                 @endforeach
             </x-input.select>
 

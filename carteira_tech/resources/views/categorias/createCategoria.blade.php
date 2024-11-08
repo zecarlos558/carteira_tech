@@ -19,7 +19,7 @@
             <x-input.select id="grupo" name="grupo" >
                 <x-input.option value="">Selecione o grupo</x-input.option>
                 @foreach ($grupos as $grupo)
-                <x-input.option value="{{$grupo->id}}" >{{$grupo->nome}}</x-input.option>
+                    <x-input.option value="{{$grupo->id}}" >{{$grupo->nome}}</x-input.option>
                 @endforeach
             </x-input.select>
 

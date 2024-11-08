@@ -56,11 +56,15 @@ class Conta extends Model
         return $contas->paginate($offset);
     }
 
-    function getWithAdmin() {
+    public function getWithAdmin() {
         return $this->withAdmin;
     }
 
-    function setWithAdmin($withAdmin) {
+    public function setWithAdmin($withAdmin) {
         return $this->withAdmin = $withAdmin;
+    }
+
+    public function getTipoAttribute() {
+        return $this->tipos->first();
     }
 }

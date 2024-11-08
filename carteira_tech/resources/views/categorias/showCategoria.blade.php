@@ -20,7 +20,7 @@
                     </x-table.tr>
                     <x-table.tr>
                         <x-table.td-show>Grupo:</x-table.td-show>
-                        <x-table.td>{{ $categoria->grupos[0]->nome }}</x-table.td>
+                        <x-table.td>{{ $categoria->grupo->nome }}</x-table.td>
                     </x-table.tr>
                     <x-table.tr>
                         <x-table.td-show>Data de Criação:</x-table.td-show>
