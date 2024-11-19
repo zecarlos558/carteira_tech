@@ -12,6 +12,17 @@ class Aplication extends Model
 
     protected $guarded = [];
 
+    protected static function filtroIndex($dados)
+    {
+        $offset = request('offset') ?? 10;
+        $usuarios = User::when(!empty($dados['descricao']), fn($q) => $q->where('name', 'like', "%" . $dados['descricao'] . "%"))
+            ->when(!empty($dados['funcao_id']), function ($query) use ($dados) {
+                $query->whereHas('roles', fn($q) => $q->where('id', '=', $dados['funcao_id']));
+            })->with('roles');
+
+        return $usuarios->paginate($offset);
+    }
+
     protected static function consultaIDUsuario()
     {
         return auth()->user()->id;

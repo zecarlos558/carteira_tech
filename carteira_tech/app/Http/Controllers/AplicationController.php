@@ -63,18 +63,17 @@ class AplicationController extends Controller
     public function dashboard()
     {
         $usuario = Aplication::consultaUsuario();
-        $usuario->funcao = $usuario->getRoleNames()->first();
 
         return view('dashboard',['user' => $usuario]);
     }
 
-    public function painelControle()
+    public function painelControle(Request $request)
     {
-        $roles = Role::all()->pluck('name');
-        $funcao = retornaRole(Aplication::consultaFuncao(),$roles);
-        $users = User::all();
+        $dados = $request->all();
+        $roles = Role::all();
+        $users = Aplication::filtroIndex($dados);
 
-        return view('aplication.painelControle' ,['usuarios' => $users]);
+        return view('aplication.painelControle' ,['usuarios' => $users, 'funcoes' => $roles]);
     }
 
     /**
@@ -127,7 +126,6 @@ class AplicationController extends Controller
     public function show($id)
     {
         $usuario = User::findOrFail($id);
-        $usuario->funcao = $usuario->getRoleNames()->first();
 
         return view('aplication.showUsuario' ,['usuario' => $usuario]);
     }
