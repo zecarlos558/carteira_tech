@@ -11,24 +11,12 @@
             <x-div.table-show>
                 <x-table.tbody>
                     <x-table.tr>
-                        <x-table.td-show>ID:</x-table.td-show>
-                        <x-table.td>{{ $categoria->id }}</x-table.td>
-                    </x-table.tr>
-                    <x-table.tr>
                         <x-table.td-show>Nome:</x-table.td-show>
                         <x-table.td>{{ $categoria->nome }}</x-table.td>
                     </x-table.tr>
                     <x-table.tr>
                         <x-table.td-show>Grupo:</x-table.td-show>
                         <x-table.td>{{ $categoria->grupo->nome }}</x-table.td>
-                    </x-table.tr>
-                    <x-table.tr>
-                        <x-table.td-show>Data de Criação:</x-table.td-show>
-                        <x-table.td>{{ $categoria->created_at }}</x-table.td>
-                    </x-table.tr>
-                    <x-table.tr>
-                        <x-table.td-show>Data de Atualização:</x-table.td-show>
-                        <x-table.td>{{ $categoria->updated_at }}</x-table.td>
                     </x-table.tr>
                 </x-table.tbody>
             </x-div.table-show>

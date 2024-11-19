@@ -100,4 +100,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Movimento_renda');
     }
 
+    public function getFuncaoAttribute()
+    {
+        return $this->roles->first();
+    }
 }

@@ -11,10 +11,6 @@
             <x-div.table-show>
                 <x-table.tbody>
                     <x-table.tr>
-                        <x-table.td-show>ID:</x-table.td-show>
-                        <x-table.td>{{ $usuario->id }}</x-table.td>
-                    </x-table.tr>
-                    <x-table.tr>
                         <x-table.td-show>Nome:</x-table.td-show>
                         <x-table.td>{{ $usuario->name }}</x-table.td>
                     </x-table.tr>
@@ -22,9 +18,15 @@
                         <x-table.td-show>Email:</x-table.td-show>
                         <x-table.td>{{ $usuario->email }}</x-table.td>
                     </x-table.tr>
+                    @can(['read usuario', 'edit usuario'])
+                        <x-table.tr>
+                            <x-table.td-show>Nível de Acesso:</x-table.td-show>
+                            <x-table.td>{{ $usuario->funcao->name }}</x-table.td>
+                        </x-table.tr>
+                    @endcan
                     <x-table.tr>
-                        <x-table.td-show>Nível de Acesso:</x-table.td-show>
-                        <x-table.td>{{ $usuario->funcao }}</x-table.td>
+                        <x-table.td-show>Email Autenticado:</x-table.td-show>
+                        <x-table.td>{{ ($usuario->email_verified_at) ? 'Verificado' : 'Não verificado' }}</x-table.td>
                     </x-table.tr>
                 </x-table.tbody>
             </x-div.table-show>

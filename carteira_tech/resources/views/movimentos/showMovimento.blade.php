@@ -11,10 +11,6 @@
             <x-div.table-show>
                 <x-table.tbody>
                     <x-table.tr>
-                        <x-table.td-show>ID:</x-table.td-show>
-                        <x-table.td>{{ $movimento->id }}</x-table.td>
-                    </x-table.tr>
-                    <x-table.tr>
                         <x-table.td-show>Nome:</x-table.td-show>
                         <x-table.td>{{ $movimento->nome }}</x-table.td>
                     </x-table.tr>
@@ -35,12 +31,8 @@
                         <x-table.td>{{ $movimento->categoria->nome }}</x-table.td>
                     </x-table.tr>
                     <x-table.tr>
-                        <x-table.td-show>Data de Criação:</x-table.td-show>
-                        <x-table.td>{{ $movimento->created_at }}</x-table.td>
-                    </x-table.tr>
-                    <x-table.tr>
-                        <x-table.td-show>Data de Atualização:</x-table.td-show>
-                        <x-table.td>{{ $movimento->updated_at }}</x-table.td>
+                        <x-table.td-show>Data:</x-table.td-show>
+                        <x-table.td>{{ $movimento->getData() }}</x-table.td>
                     </x-table.tr>
                 </x-table.tbody>
             </x-div.table-show>

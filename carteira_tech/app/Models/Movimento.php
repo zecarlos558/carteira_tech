@@ -73,4 +73,8 @@ class Movimento extends Model
     public function setWithAdmin($withAdmin) {
         return $this->withAdmin = $withAdmin;
     }
+
+    function getData() {
+        return formatarData($this->data, 'd/m/Y');
+    }
 }
