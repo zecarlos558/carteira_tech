@@ -172,10 +172,10 @@
 
     function exibirValorNulo($dado)
     {
-        if ($dado == null) {
-            $dado = 0;
+        if ($dado != null && $dado !== 0) {
+            $dado;
         } else {
-
+            $dado = 0.00000001;
         }
         return $dado;
     }
