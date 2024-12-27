@@ -65,6 +65,12 @@ class Movimento extends Model
     public function scopeSuprimento ($query) {
         $query->tipo('suprimento');
     }
+
+    public function scopeLancamentoEntreContas ($query) {
+        $query->whereHas('categoria', function ($qy) {
+            $qy->whereHas('grupos', fn($q) => $q->where('nome', '<>', 'Lançamento entre Contas'));
+        });
+    }
     
     public function getWithAdmin() {
         return $this->withAdmin;

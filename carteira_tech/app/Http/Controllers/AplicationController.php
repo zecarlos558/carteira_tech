@@ -33,10 +33,12 @@ class AplicationController extends Controller
         }
         $usuario = Aplication::consultaUsuario();
         $dadosRenda = Relatorio::consultaTotalRenda()
+        ->lancamentoEntreContas()
         ->whereMonth('data', '=', formatarData($data,'m'))
         ->whereYear('data', '=', formatarData($data,'Y'))
         ->first();
         $dadosGastos = Relatorio::consultaTotalGastos()
+        ->lancamentoEntreContas()
         ->whereMonth('data', '=', formatarData($data,'m'))
         ->whereYear('data', '=', formatarData($data,'Y'))
         ->first();
