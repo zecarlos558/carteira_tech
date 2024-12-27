@@ -145,3 +145,4 @@
         </x-div.row>
     </x-card.footer>
 </x-div.table-list>
+<x-div.paginacao :dados="$movimentos"></x-div.paginacao>
