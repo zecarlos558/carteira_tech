@@ -17,6 +17,7 @@
     @slot('filtro')
         <x-div.principal id="filtro" class="collapse mt-2">
             <form autocomplete="off">
+                <x-input.text id="offset_busca" name="offset_busca" value="{{$offset ?? session()->get('offset')}}" style="display: none;"></x-input.text>
                 <x-div.row>
                     <x-div.col type="auto">
                         <div class="input-group">
