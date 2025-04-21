@@ -18,9 +18,10 @@ class TipoController extends Controller
     public function index(Request $request)
     {
         $dados = $request->all();
+        $dados = resolveOfsset($dados);
         $tipos = Tipo::filtroIndex($dados);
 
-        return view('tipos.tipo', ['tipos' => $tipos])->render();
+        return view('tipos.tipo', ['tipos' => $tipos, 'offset' => $dados['offset']])->render();
     }
 
     /**

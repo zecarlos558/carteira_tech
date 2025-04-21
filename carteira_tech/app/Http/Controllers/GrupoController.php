@@ -18,9 +18,10 @@ class GrupoController extends Controller
     public function index(Request $request)
     {
         $dados = $request->all();
+        $dados = resolveOfsset($dados);
         $grupos = Grupo::filtroIndex($dados);
 
-        return view('grupos.grupo', ['grupos' => $grupos])->render();
+        return view('grupos.grupo', ['grupos' => $grupos, 'offset' => $dados['offset']])->render();
     }
 
     /**

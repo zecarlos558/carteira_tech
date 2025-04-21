@@ -27,9 +27,8 @@ class Grupo extends Model
 
     protected static function filtroIndex($dados)
     {
-        $offset = request('offset') ?? 10;
         $grupos = Grupo::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', $dados['descricao']));
-        return $grupos->paginate($offset);
+        return $dados['offset'] != 'todos' ? $grupos->paginate($dados['offset']) : $grupos->get();
     }
 
     public function getWithAdmin() {

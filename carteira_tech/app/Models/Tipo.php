@@ -27,9 +27,8 @@ class Tipo extends Model
 
     protected static function filtroIndex($dados)
     {
-        $offset = request('offset') ?? 10;
         $tipos = Tipo::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', $dados['descricao']));
-        return $tipos->paginate($offset);
+        return $dados['offset'] != 'todos' ? $tipos->paginate($dados['offset']) : $tipos->get();
     }
 
     public function getWithAdmin() {

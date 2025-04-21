@@ -44,13 +44,11 @@ class Categoria extends Model
 
     protected static function filtroIndex($dados)
     {
-        $offset = request('offset') ?? 10;
         $categorias = Categoria::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%" . $dados['descricao'] . "%"))
             ->when(!empty($dados['grupo_id']), function ($query) use ($dados) {
                 $query->whereHas('grupos', fn($q) => $q->where('id', '=', $dados['grupo_id']));
             })->with('grupos');
-
-        return $categorias->paginate($offset);
+        return $dados['offset'] != 'todos' ? $categorias->paginate($dados['offset']) : $categorias->get();
     }
 
     public function getWithAdmin()

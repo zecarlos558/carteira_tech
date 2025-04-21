@@ -35,7 +35,6 @@ class Movimento extends Model
 
     protected static function filtroIndex($dados)
     {
-        $offset = request('offset') ?? 10;
         $movimentos = Movimento::select("*", DB::raw("(IF(movimentos.tipo = 'suprimento', +valor, -valor)) AS total"))
         ->when(!empty($dados['data']), function ($query) use($dados) {
             $query->whereMonth('data', '=', formatarData($dados['data'],'m'))
@@ -51,7 +50,7 @@ class Movimento extends Model
         ->when(!empty($dados['categoria_id']), fn($q) => $q->where('categoria_id', '=', $dados['categoria_id']))
         ->when(!empty($dados['tipo']), fn($q) => $q->tipo($dados['tipo']))
         ->with('conta', 'categoria');
-        return $movimentos->orderBy('data','desc')->paginate($offset);
+        return $dados['offset'] != 'todos' ? $movimentos->orderBy('data','desc')->paginate($dados['offset']) : $movimentos->orderBy('data','desc')->get();
     }
 
     public function scopeTipo($query, $tipo) {

@@ -73,9 +73,10 @@ class AplicationController extends Controller
     {
         $dados = $request->all();
         $roles = Role::all();
+        $dados = resolveOfsset($dados);
         $users = Aplication::filtroIndex($dados);
 
-        return view('aplication.painelControle' ,['usuarios' => $users, 'funcoes' => $roles]);
+        return view('aplication.painelControle' ,['usuarios' => $users, 'funcoes' => $roles, 'offset' => $dados['offset']]);
     }
 
     /**

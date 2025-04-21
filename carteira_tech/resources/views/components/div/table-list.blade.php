@@ -21,7 +21,7 @@
 
     <div class="row justify-content-between">
         <div class="col-auto">
-            <x-center_search> Pesquisar </x-center_search>
+            <x-div.center-search> Pesquisar </x-div.center-search>
         </div>
         <div class="col-auto">
             @isset($filtro)

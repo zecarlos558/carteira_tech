@@ -20,11 +20,13 @@ class ContasController extends Controller
     public function index(Request $request)
     {
         $dados = $request->all();
+        $dados = resolveOfsset($dados);
         $contas = Conta::filtroIndex($dados);
         $tipos = Tipo::all();
 
         return view('contas.conta', ['contas' => $contas,
-                                     'tipos' => $tipos])->render();
+                                     'tipos' => $tipos,
+                                     'offset' => $dados['offset']])->render();
     }
 
     /**

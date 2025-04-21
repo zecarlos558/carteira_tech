@@ -25,6 +25,8 @@ class Paginacao extends Component
      */
     public function render()
     {
-        return view('components.div.paginacao');
+        if (isPaginator($this->dados)) {
+            return view('components.div.paginacao');
+        }
     }
 }

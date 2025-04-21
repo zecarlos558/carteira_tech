@@ -297,3 +297,26 @@
         }
         return $string_decode;
     }
+
+    function isPaginator($collection) {
+        if ($collection instanceof \Illuminate\Pagination\LengthAwarePaginator || 
+            $collection instanceof \Illuminate\Pagination\AbstractPaginator || 
+            $collection instanceof \Illuminate\Pagination\Paginator) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function resolveOfsset($dados) {
+        if (!is_array($dados)) {
+            return $dados;
+        } elseif (!is_null(request('offset'))) {
+            $dados['offset'] = request('offset');
+        } elseif (!is_null(request('offset_busca'))) {
+            $dados['offset'] = request('offset_busca');
+        } else {
+            $dados['offset'] = session()->get('offset');
+        }
+        return $dados;
+    }

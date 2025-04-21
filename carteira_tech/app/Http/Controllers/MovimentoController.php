@@ -22,6 +22,7 @@ class MovimentoController extends Controller
         if ($request->data == null) {
             $dados['data'] = date('Y-m-d');
         }
+        $dados = resolveOfsset($dados);
 
         $movimentos = Movimento::filtroIndex($dados);
         $tipo_contas = Conta::with('tipos')->get()->groupBy('tipo.nome');
@@ -30,7 +31,8 @@ class MovimentoController extends Controller
         return view('movimentos.movimento', ['movimentos' => $movimentos,
                                              'tipo_contas' => $tipo_contas,
                                              'grupo_categorias' => $grupo_categorias,
-                                             'data' => $dados['data']])->render();
+                                             'data' => $dados['data'],
+                                             'offset' => $dados['offset']])->render();
     }
 
     /**

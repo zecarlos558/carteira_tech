@@ -19,11 +19,13 @@ class CategoriaController extends Controller
     public function index(Request $request)
     {
         $dados = $request->all();
+        $dados = resolveOfsset($dados);
         $categorias = Categoria::filtroIndex($dados);
         $grupos = Grupo::all();
 
         return view('categorias.categoria', ['categorias' => $categorias,
-                                             'grupos' => $grupos])->render();
+                                             'grupos' => $grupos,
+                                             'offset' => $dados['offset']])->render();
     }
 
     /**

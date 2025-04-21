@@ -14,13 +14,11 @@ class Aplication extends Model
 
     protected static function filtroIndex($dados)
     {
-        $offset = request('offset') ?? 10;
         $usuarios = User::when(!empty($dados['descricao']), fn($q) => $q->where('name', 'like', "%" . $dados['descricao'] . "%"))
             ->when(!empty($dados['funcao_id']), function ($query) use ($dados) {
                 $query->whereHas('roles', fn($q) => $q->where('id', '=', $dados['funcao_id']));
             })->with('roles');
-
-        return $usuarios->paginate($offset);
+        return $dados['offset'] != 'todos' ? $usuarios->paginate($dados['offset']) : $usuarios->get();
     }
 
     protected static function consultaIDUsuario()

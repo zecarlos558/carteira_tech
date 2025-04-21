@@ -47,13 +47,11 @@ class Conta extends Model
 
     protected static function filtroIndex($dados)
     {
-        $offset = request('offset') ?? 10;
         $contas = Conta::when(!empty($dados['descricao']), fn($q) => $q->where('nome', 'like', "%" . $dados['descricao'] . "%"))
             ->when(!empty($dados['tipo_id']), function ($query) use ($dados) {
                 $query->whereHas('tipos', fn($q) => $q->where('id', $dados['tipo_id']));
             })->with('tipos');
-
-        return $contas->paginate($offset);
+        return $dados['offset'] != 'todos' ? $contas->paginate($dados['offset']) : $contas->get();
     }
 
     public function getWithAdmin() {
