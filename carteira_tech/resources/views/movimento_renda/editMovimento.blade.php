@@ -21,8 +21,8 @@
                         <x-label.span class="input-group-text" id="span_suprimento">+RS</x-label.span>
                         <x-input.number value="{{ $movimento->valor }}" name="valor" id="valor" placeholder="Valor do Movimento" />
                     </div>
-                </x-div.col type="-md">
-                <x-div.col>
+                </x-div.col>
+                <x-div.col type="-md">
                     <x-label.label for="data" class="form-label">Data da Renda</x-label.label>
                     <x-input.date id="data" name="data" value="{{ $movimento->data ? date('Y-m-d', strtotime($movimento->data)) : date('Y-m-d') }}"></x-input>
                 </x-div.col>
