@@ -856,7 +856,7 @@ footer p {
 
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     ion-icon {
         font-size: 24px;
     }
@@ -888,6 +888,19 @@ footer p {
         margin: 0;
         line-height: 0.5;
     }
+
+    #search-container form .row {
+        flex-wrap: nowrap;
+    }
+
+    #search-container form .row .col-auto {
+        max-width: 57% !important;
+    }
+
+    #search-container form .row .col-auto .input-group button ion-icon {
+        font-size: 18px !important;
+    }
+
 }
 
 @media (min-width: 992px) {
