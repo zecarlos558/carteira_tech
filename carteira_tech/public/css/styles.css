@@ -897,10 +897,20 @@ footer p {
         max-width: 57% !important;
     }
 
+    #search-container form .row .col-auto .input-group button {
+        max-height: max-content;
+        margin: 0px;
+        padding-bottom: 0.6vh;
+    }
+
     #search-container form .row .col-auto .input-group button ion-icon {
         font-size: 18px !important;
     }
 
+    #search-container form .row .col-auto .input-group select {
+        max-height: max-content;
+        margin: 0px;
+    }
 }
 
 @media (min-width: 992px) {
