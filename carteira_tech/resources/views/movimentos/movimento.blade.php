@@ -65,7 +65,7 @@
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='categoria'>Categoria</x-label.span>
                             <x-input.select id="categoria_id" name="categoria_id">
-                                <x-input.option value="">Selecione</x-input.option>
+                                <x-input.option value="">Selecione a categoria</x-input.option>
                                 @foreach ($grupo_categorias as $key => $categorias)
                                     <optgroup label="{{$key}}">
                                         @foreach ($categorias as $categoria)
@@ -80,7 +80,7 @@
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='tipo'>Tipo</x-label.span>
                             <x-input.select id="tipo" name="tipo">
-                                <x-input.option value="">Selecione</x-input.option>
+                                <x-input.option value="">Selecione o tipo</x-input.option>
                                 <x-input.option value="suprimento">Suprimento</x-input.option>
                                 <x-input.option value="retirada">Retirada</x-input.option>
                             </x-input.select>
