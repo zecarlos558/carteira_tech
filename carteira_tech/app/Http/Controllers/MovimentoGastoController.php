@@ -9,6 +9,7 @@ use App\Models\Conta;
 use App\Models\Movimento;
 use App\Models\Movimento_gasto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class MovimentoGastoController extends Controller
@@ -120,6 +121,7 @@ class MovimentoGastoController extends Controller
         }
         $movimento->nome = $request->nome;
         $movimento->valorAnterior = $movimento->valor;
+        $movimento->contaAnterior = ($movimento->conta_id != $request->conta) ? $movimento->conta_id : null;
         $movimento->valor = $request->valor;
         $movimento->data = $request->data;
         $movimento->descricao = $request->descricao;
@@ -127,15 +129,17 @@ class MovimentoGastoController extends Controller
         $movimento->categoria_id = $request->categoria;
         $movimento->user_id_update = Aplication::consultaIDUsuario();
 
+        DB::beginTransaction();
         try {
+            $conta = new ContasController();
+            $conta->updateMovimento($movimento);
             $movimento->save();
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::channel('main')->error($e->getMessage());
             return redirect()->route('editMovimentoGasto')->with('msg_alert','Campos Inseridos invalidos!');
         }
-
-        $conta = new ContasController();
-        $conta->updateMovimento($movimento);
+        DB::commit();
 
         return redirect()->route('inicial')->with('msg_alert','Movimento alterado com sucesso!');
     }

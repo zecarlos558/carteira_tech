@@ -141,6 +141,19 @@ class ContasController extends Controller
 
     public function updateMovimento($movimento)
     {
+        if ((isset($movimento->contaAnterior) && $movimento->contaAnterior) && ($movimento->conta_id != $movimento->contaAnterior)) {
+            $contaAnterior = Conta::findOrFail($movimento->contaAnterior);
+            if ($contaAnterior->user_id_create != Aplication::consultaIDUsuario()) {
+                return abort(401);
+            }
+            if ($movimento->tipo == 'suprimento') {
+                $contaAnterior->valor = $contaAnterior->valor - $movimento->valorAnterior;
+            } elseif ($movimento->tipo == 'retirada') {
+                $contaAnterior->valor = $contaAnterior->valor + $movimento->valorAnterior;
+            }
+            $contaAnterior->save();
+            $movimento->valorAnterior = 0;
+        }
         $conta = Conta::findOrFail($movimento->conta->id);
         if ($conta->user_id_create != Aplication::consultaIDUsuario()) {
             return abort(401);

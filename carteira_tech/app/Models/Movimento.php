@@ -13,6 +13,7 @@ class Movimento extends Model
 
     protected $guarded = [];
     public $valorAnterior;
+    public $contaAnterior;
     protected bool $withAdmin;
     public function __construct() {
         $this->withAdmin = false;
