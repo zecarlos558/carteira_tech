@@ -22,7 +22,7 @@
                             @endif
                         @endforeach
                     </x-input.select>
-                    <x-button.button class="btn-success" icon="listar"></x-button.button>
+                    <x-button.button class="btn-success" icon="listar" style="font-size: medium;"></x-button.button>
                 </div>
             </x-div.col>
         </x-div.row>

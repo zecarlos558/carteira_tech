@@ -77,7 +77,7 @@
                     @endslot
                     <div class="input-group" id="mensal">
                         <x-label.span class="input-group-text" icon='calendario'>Data Mês</x-label.span>
-                        <x-input.date-month id="data" name="data" value="{{ date('Y-m') }}">
+                        <x-input.date-month id="data" name="data" value="{{ date('Y-m', strtotime($data)) }}">
                         </x-input.date-month>
                     </div>
                     @slot('rodape')
@@ -85,8 +85,6 @@
                     @endslot
                 </x-div.form>
             </x-nav_pills.content>
-
         </x-nav_pills.div-content>
-
     </x-div.principal>
 </x-div.main>

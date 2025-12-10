@@ -50,7 +50,7 @@ class AplicationController extends Controller
         $relatorio->calculaBarraProgresso();
 
         $contas = Conta::orderBy('valor','desc')->get();
-        $movimentos = Movimento::orderBy('data','desc')->with('categoria')->limit(4)->get();
+        $movimentos = Movimento::orderBy('data','desc')->with('categoria')->limit(5)->get();
 
         if (session()->missing('device')) {
             session(['device' => checkDevice()]);

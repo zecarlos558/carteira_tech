@@ -316,7 +316,7 @@
         } elseif (!is_null(request('offset_busca'))) {
             $dados['offset'] = request('offset_busca');
         } else {
-            $dados['offset'] = session()->get('offset');
+            $dados['offset'] = session()->get('offset') ?? 'todos';
         }
         return $dados;
     }

@@ -9,28 +9,30 @@
         @endslot
         @slot('rodape')
         <x-div.button>
-            <x-button.a icon="pesquisar" href="{{ route('indexConta') }}">Ver Contas</x-button.a>
+            <x-button.a icon="pesquisar" href="{{ route('indexConta') }}">Contas</x-button.a>
         </x-div.button>
         @endslot
-        <x-div.table-show>
-            <x-table.thead>
+        <x-div.table-show style="max-height: 27vh; overflow-y: auto;">
+            <x-table.thead class="sticky-top">
                 <x-table.tr>
                     <x-table.th scope="col">Nome</x-table.th>
                     <x-table.th scope="col">Valor</x-table.th>
                 </x-table.tr>
             </x-table.thead>
             <x-table.tbody>
-                @foreach ($contas->take(3) as $conta)
+                @foreach ($contas as $conta)
                     <x-table.tr>
                         <x-table.td-show>{{ $conta->nome }}</x-table.td-show>
                         <x-table.td>{{ $conta->getValor() }}</x-table.td>
                     </x-table.tr>
                 @endforeach
+            </x-table.tbody>
+            <x-table.tfooter class="sticky-bottom">
                 <x-table.tr class="table-success">
                     <x-table.td-show>Total:</x-table.td-show>
                     <x-table.td>{{ $contas->sum('valor') }}</x-table.td>
                 </x-table.tr>
-            </x-table.tbody>
+            </x-table.tfooter>
         </x-div.table-show>
 
         <x-div.row>
@@ -66,7 +68,7 @@
                     @endslot
                     @slot('rodape')
                         <x-div.button>
-                            <x-button.a icon="pesquisar" href="{{ route('indexRelatorio') }}">Ver Painel</x-button.a>
+                            <x-button.a icon="pesquisar" href="{{ route('indexRelatorio') }}">Painel</x-button.a>
                         </x-div.button>
                     @endslot
                 </x-div.card>
@@ -99,7 +101,7 @@
                     @endslot
                     @slot('rodape')
                         <x-div.button>
-                            <x-button.a  href="{{ route('indexMovimento') }}" icon="pesquisar">Ver Transações</x-button.a>
+                            <x-button.a  href="{{ route('indexMovimento') }}" icon="pesquisar">Transações</x-button.a>
                         </x-div.button>
                     @endslot
                 </x-div.card>

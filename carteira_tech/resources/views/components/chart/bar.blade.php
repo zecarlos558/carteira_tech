@@ -34,6 +34,20 @@
         isStacked: 'true', // percent,
         chartArea: {'width': '90%', 'height': '80%', 'bottom' : '30'},
         legend: { position: "none" },
+        // Define a fonte e estilo para o eixo horizontal (hAxis)
+        hAxis: {
+            textStyle: {
+                fontName: 'Calibri',
+                fontSize: (checkDevice() ? 10 : 14),
+            },
+        },
+        // Define a fonte e estilo para o eixo vertical (vAxis)
+        vAxis: {
+            textStyle: {
+                fontName: 'Calibri',
+                fontSize: (checkDevice() ? 10 : 14),
+            },
+        },
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
       chart.draw(view, options);

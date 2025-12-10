@@ -5,7 +5,7 @@
     @endslot
 
     @slot('titulo')
-        Lista de Movimentos - {{ ucfirst(formataDataRelatorio($data)) }}
+        Lista de Movimentos - {{ ucfirst(formataDataRelatorio(@$parametros['data'])) }}
     @endslot
     <h5>{{ verificaCountObjeto($movimentos) }}</h5>
     @slot('botao')
@@ -27,19 +27,19 @@
     @slot('filtro')
         <x-div.principal id="filtro" class="collapse mt-2">
             <form autocomplete="off">
-                <x-input.text id="offset_busca" name="offset_busca" value="{{$offset ?? session()->get('offset')}}" style="display: none;"></x-input.text>
+                <x-input.text id="offset_busca" name="offset_busca" value="{{@$parametros['offset'] ?? session()->get('offset')}}" style="display: none;"></x-input.text>
                 <x-div.row>
                     <x-div.col type="auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='movimento'>Movimento</x-label.span>
-                            <x-input.text type="text" value="{{ old('descricao') }}" placeholder="Pesquisar"
+                            <x-input.text type="text" value="{{ @$parametros['descricao'] }}" placeholder="Pesquisar"
                                 name="descricao" id="descricao"></x-input.text>
                         </div>
                     </x-div.col>
                     <x-div.col type="auto">
                         <div class="input-group">
                             <x-label.span class="input-group-text" icon='calendario'>Data</x-label.span>
-                            <x-input.date-month id="data" name="data" value="{{ date('Y-m') }}">
+                            <x-input.date-month id="data" name="data" value="{{ date('Y-m', strtotime(@$parametros['data'])) }}">
                             </x-input.date-month>
                         </div>
                     </x-div.col>
@@ -51,7 +51,11 @@
                                 @foreach ($tipo_contas as $key => $contas)
                                 <optgroup label="{{$key}}">
                                     @foreach ($contas as $conta)
-                                        <x-input.option value="{{$conta->id}}">{{$conta->nome}}</x-input.option>
+                                        @if (@$parametros['conta_id'] == $conta->id)
+                                            <x-input.option value="{{$conta->id}}" selected>{{$conta->nome}}</x-input.option>
+                                        @else
+                                            <x-input.option value="{{$conta->id}}">{{$conta->nome}}</x-input.option>
+                                        @endif
                                     @endforeach
                                 </optgroup>
                                 @endforeach
@@ -69,7 +73,11 @@
                                 @foreach ($grupo_categorias as $key => $categorias)
                                     <optgroup label="{{$key}}">
                                         @foreach ($categorias as $categoria)
-                                            <x-input.option value="{{$categoria->id}}">{{$categoria->nome}}</x-input.option>
+                                            @if (@$parametros['categoria_id'] == $categoria->id)
+                                                <x-input.option value="{{$categoria->id}}" selected>{{$categoria->nome}}</x-input.option>
+                                            @else
+                                                <x-input.option value="{{$categoria->id}}">{{$categoria->nome}}</x-input.option>
+                                            @endif
                                         @endforeach
                                     </optgroup>
                                 @endforeach
@@ -81,8 +89,13 @@
                             <x-label.span class="input-group-text" icon='tipo'>Tipo</x-label.span>
                             <x-input.select id="tipo" name="tipo">
                                 <x-input.option value="">Selecione o tipo</x-input.option>
-                                <x-input.option value="suprimento">Suprimento</x-input.option>
-                                <x-input.option value="retirada">Retirada</x-input.option>
+                                @foreach ($tipo_movimentos as $tipo_movimento)
+                                    @if (@$parametros['tipo'] == $tipo_movimento['codigo'])
+                                        <x-input.option value="{{$tipo_movimento['codigo']}}" selected>{{$tipo_movimento['descricao']}}</x-input.option>
+                                    @else
+                                        <x-input.option value="{{$tipo_movimento['codigo']}}">{{$tipo_movimento['descricao']}}</x-input.option>
+                                    @endif
+                                @endforeach
                             </x-input.select>
                         </div>
                     </x-div.col>

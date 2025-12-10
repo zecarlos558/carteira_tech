@@ -4,7 +4,6 @@
         DETALHE DO RELATÓRIO
     @endslot
     <x-div.principal>
-
         @slot('titulo')
             <x-nav_pills.div-menu>
                 <x-nav_pills.menu type="active" href="renda">Renda</x-nav_pills.menu>
@@ -12,7 +11,7 @@
             </x-nav_pills.div-menu>
         @endslot
         @slot('rodape')
-            {{ formataDataRelatorio($data) }}
+            {{ formataDataRelatorio($parametros['data']) }}
         @endslot
         <x-nav_pills.div-content>
 
@@ -137,19 +136,19 @@
                     </x-input.select>
                     <div class="input-group" id="mensal">
                         <x-label.span class="input-group-text" icon='calendario'>Data Mês</x-label.span>
-                        <x-input.date-month id="data" name="data" value="{{ date('Y-m') }}">
+                        <x-input.date-month id="data" name="data" value="{{ date('Y-m', strtotime(@$parametros['data'])) }}">
                         </x-input.date-month>
                     </div>
                     <div id="personalizado" style="display: none;">
                         <x-div.row>
                             <x-div.col>
                                 <x-label.span class="input-group-text" icon='calendario'>Data Inicio</x-label.span>
-                                <x-input.date-month id="dataInicio" name="dataInicio" value="{{ date('Y-m') }}">
+                                <x-input.date-month id="dataInicio" name="dataInicio" value="{{ date('Y-m', strtotime(@$parametros['dataInicio'] ?? date('Y-m'))) }}">
                                 </x-input.date-month>
                             </x-div.col>
                             <x-div.col>
                                 <x-label.span class="input-group-text" icon='calendario'>Data Fim</x-label.span>
-                                <x-input.date-month id="dataFim" name="dataFim" value="{{ date('Y-m') }}">
+                                <x-input.date-month id="dataFim" name="dataFim" value="{{ date('Y-m', strtotime(@$parametros['dataFim'] ?? date('Y-m'))) }}">
                                 </x-input.date-month>
                             </x-div.col>
                         </x-div.row>
@@ -159,9 +158,14 @@
                     @endslot
                 </x-div.form>
             </x-nav_pills.content>
-
         </x-nav_pills.div-content>
-
-
+        <script>
+            $(document).ready(function() {
+                opcao_data = "{{ @$parametros['opcao_data'] }}";
+                if (opcao_data) {
+                    $('#opcao_data').val(opcao_data).trigger('change');
+                }
+            });
+        </script>
     </x-div.principal>
 </x-div.chart>

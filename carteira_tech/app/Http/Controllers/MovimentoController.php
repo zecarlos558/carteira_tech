@@ -25,14 +25,17 @@ class MovimentoController extends Controller
         $dados = resolveOfsset($dados);
 
         $movimentos = Movimento::filtroIndex($dados);
+        $tipo_movimentos = [["codigo" => "suprimento", "descricao" => "Suprimento"], ["codigo" => "retirada", "descricao" => "Retirada"]];
         $tipo_contas = Conta::with('tipos')->get()->groupBy('tipo.nome');
         $grupo_categorias = Categoria::with('grupos')->get()->groupBy('grupo.nome');
 
-        return view('movimentos.movimento', ['movimentos' => $movimentos,
-                                             'tipo_contas' => $tipo_contas,
-                                             'grupo_categorias' => $grupo_categorias,
-                                             'data' => $dados['data'],
-                                             'offset' => $dados['offset']])->render();
+        return view('movimentos.movimento', [
+            'movimentos' => $movimentos,
+            'tipo_movimentos' => $tipo_movimentos,
+            'tipo_contas' => $tipo_contas,
+            'grupo_categorias' => $grupo_categorias,
+            'parametros' => $dados
+        ])->render();
     }
 
     /**

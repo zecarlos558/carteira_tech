@@ -95,14 +95,14 @@ class RelatorioController extends Controller
         ->orderBy('data', 'desc')
         ->get();
 
-        $dados = $request->all();
+        $dados = $request->all(['data', 'opcao_data', 'dataInicio', 'dataFim']);
         $movimentos = Relatorio::consultaRenda();
         $dadosRenda = Relatorio::consultaTotalRenda();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
 
         if ( count($dados) > 0 && @$dados['opcao_data'] == 'personalizado') {
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
-            $dados['dataFim'] = $dados['dataFim'].'-30';
+            $dados['dataFim'] = date($dados['dataFim'].'-t');
             $movimentos = $movimentos->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
             $dadosRenda = $dadosRenda->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
@@ -112,7 +112,7 @@ class RelatorioController extends Controller
             ->get();
             $data = $dados;
         } else {
-            if (isset($dados['opcao_data']) == 'mensal') {
+            if (isset($dados['opcao_data']) && $dados['opcao_data'] == 'mensal') {
                 $data = $dados['data'];
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
@@ -141,7 +141,7 @@ class RelatorioController extends Controller
         $relatorio->setValorEntrada($dadosRenda,'entrada');
         $relatorio->calculaBarraCategorias($relatorioCategorias);
 
-        return view('relatorios.showRenda', ['data' => $data,
+        return view('relatorios.showRenda', ['parametros' => $dados,
                                              'array' => $dadosChart,
                                              'movimentos' => $movimentos,
                                              'relatorio' => $relatorio,
@@ -162,14 +162,14 @@ class RelatorioController extends Controller
         ->orderBy('data', 'desc')
         ->get();
 
-        $dados = $request->all();
+        $dados = $request->all(['data', 'opcao_data', 'dataInicio', 'dataFim']);
         $movimentos = Relatorio::consultaGastos();
         $dadosGasto = Relatorio::consultaTotalGastos();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
 
         if ( count($dados) > 0 && @$dados['opcao_data'] == 'personalizado') {
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
-            $dados['dataFim'] = $dados['dataFim'].'-30';
+            $dados['dataFim'] = date($dados['dataFim'].'-t');
             $movimentos = $movimentos->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->get();
             $dadosGasto = $dadosGasto->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
@@ -179,7 +179,7 @@ class RelatorioController extends Controller
             ->get();
             $data = $dados;
         } else {
-            if (isset($dados['opcao_data']) == 'mensal') {
+            if (isset($dados['opcao_data']) && $dados['opcao_data'] == 'mensal') {
                 $data = $dados['data'];
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
@@ -209,7 +209,7 @@ class RelatorioController extends Controller
         $relatorio->setValorSaida($dadosGasto,'saida');
         $relatorio->calculaBarraCategorias($relatorioCategorias);
 
-        return view('relatorios.showGasto', ['data' => $data,
+        return view('relatorios.showGasto', ['parametros' => $dados,
                                              'array' => $dadosChart,
                                              'movimentos' => $movimentos,
                                              'relatorio' => $relatorio,
