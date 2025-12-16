@@ -113,7 +113,7 @@ class MovimentoRendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MovimentoRequest $request, $id)
     {
         $movimento = Movimento::findOrFail($id);
         if ($movimento->user_id_create != Aplication::consultaIDUsuario()) {

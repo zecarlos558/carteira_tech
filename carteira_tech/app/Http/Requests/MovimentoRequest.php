@@ -6,6 +6,15 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class MovimentoRequest extends FormRequest
 {
+
+    protected function prepareForValidation()
+    {
+        // remover máscara de valor antes da validação
+        $this->merge([
+            'valor' => str_replace(',', '.', str_replace('.', '', $this->valor))
+        ]);
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *

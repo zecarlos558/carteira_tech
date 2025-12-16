@@ -1,7 +1,7 @@
 {{-- Script feito com Google Chart--}}
 <script>
   window.onload = function () {
-    google.charts.load("current", {packages:['corechart']});
+    google.charts.load("current", {packages:['corechart'], language: 'pt-BR'});
     google.charts.setOnLoadCallback(drawChart);
 
     var chartColors = {'retirada' : 'red', 'suprimento' : 'blue'};
@@ -20,37 +20,37 @@
     }
 
     function drawChart() {
-      var data = google.visualization.arrayToDataTable(array_bar);
+        var data = google.visualization.arrayToDataTable(array_bar);
 
-      var view = new google.visualization.DataView(data);
-      view.setColumns([0, 1,
-                      { calc: "stringify",
-                        sourceColumn: 1,
-                        type: "string",
-                        role: "annotation" },
-                      2]);
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+                        { calc: "stringify",
+                          sourceColumn: 1,
+                          type: "string",
+                          role: "annotation" },
+                        2]);
 
-      var options = {
-        isStacked: 'true', // percent,
-        chartArea: {'width': '90%', 'height': '80%', 'bottom' : '30'},
-        legend: { position: "none" },
-        // Define a fonte e estilo para o eixo horizontal (hAxis)
-        hAxis: {
-            textStyle: {
-                fontName: 'Calibri',
-                fontSize: (checkDevice() ? 10 : 14),
-            },
-        },
-        // Define a fonte e estilo para o eixo vertical (vAxis)
-        vAxis: {
-            textStyle: {
-                fontName: 'Calibri',
-                fontSize: (checkDevice() ? 10 : 14),
-            },
-        },
-      };
-      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-      chart.draw(view, options);
+        var options = {
+          isStacked: 'true', // percent,
+          chartArea: {'width': '90%', 'height': '80%', 'bottom' : '30'},
+          legend: { position: "none" },
+          // Define a fonte e estilo para o eixo horizontal (hAxis)
+          hAxis: {
+              textStyle: {
+                  fontName: 'Calibri',
+                  fontSize: (checkDevice() ? 10 : 14),
+              },
+          },
+          // Define a fonte e estilo para o eixo vertical (vAxis)
+          vAxis: {
+              textStyle: {
+                  fontName: 'Calibri',
+                  fontSize: (checkDevice() ? 10 : 14),
+              },
+          },
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+        chart.draw(view, options);
     }
   }
 </script>

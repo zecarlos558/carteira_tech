@@ -15,7 +15,7 @@
             <x-input.text value="{{ $conta->nome }}" name="nome" id="nome" placeholder="Nome do Conta" />
 
             <x-label.label class="form-label" for="valor">Valor da Conta:</x-label.label>
-            <x-input.number value="{{$conta->valor}}" name="valor" id="valor" placeholder="Valor da Conta" />
+            <x-input.number-moeda value="{{$conta->getValor()}}" name="valor" id="valor" placeholder="Valor da Conta" />
 
             <x-label.label for="tipo" >Tipo da Conta:</x-label.label>
             <x-input.select id="tipo" name="tipo" >

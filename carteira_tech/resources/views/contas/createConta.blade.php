@@ -15,7 +15,7 @@
             <x-input.text value="{{ old('nome') }}" name="nome" id="nome" placeholder="Nome da Conta" />
 
             <x-label.label class="form-label" for="valor">Valor de abertura:</x-label.label>
-            <x-input.number value="" name="valor" id="valor" placeholder="Valor da Conta" />
+            <x-input.number-moeda value="" name="valor" id="valor" placeholder="Valor da Conta" />
 
             <x-label.label for="tipo" >Tipo da Conta:</x-label.label>
             <x-input.select id="tipo" name="tipo" >

@@ -99,7 +99,7 @@
 
     function formatarNumero($numero)
     {
-        return number_format($numero, 2, '.','');
+        return number_format($numero, 2, ',', '.');
     }
 
     function formatoData($data, $formato = 'd/m/y H:i')

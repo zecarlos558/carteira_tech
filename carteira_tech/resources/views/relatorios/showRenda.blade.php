@@ -77,7 +77,7 @@
                                                 <x-table.td style="display: flex; color: blue;">
                                                     {{ formatarData($movimento->data) }} </x-table.td>
                                                 <x-table.td style="display: flex; color: green">R$
-                                                    -{{ $movimento->valor }} </x-table.td>
+                                                    -{{ $movimento->getValor() }} </x-table.td>
                                             </x-table.tr>
                                         @endforeach
                                     </x-table.tbody>
@@ -102,7 +102,7 @@
                                 <x-div.input id="card_body" style="height: 350px;">
                                     @foreach ($relatorioCategorias as $relatorios)
                                         <h4>{{ $relatorios->nome }}</h4>
-                                        <h5>{{ $relatorios->valorTotal }}</h5>
+                                        <h5>{{ formatarNumero($relatorios->valorTotal) }}</h5>
                                         <div class="progress pd-3 mb-3">
                                             <div class="progress-bar bg-primary" role="progressbar"
                                                 style="width: {{ $relatorios->barraProgresso }}%"

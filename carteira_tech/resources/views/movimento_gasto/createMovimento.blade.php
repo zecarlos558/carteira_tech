@@ -19,7 +19,7 @@
                     <x-label.label class="form-label" for="valor">Valor da Transação:</x-label.label>
                     <div class="input-group">
                         <x-label.span class="input-group-text" id="span_retirada">-RS</x-label.span>
-                        <x-input.number value="{{ old('valor') }}" name="valor" id="valor" placeholder="Valor do Movimento" />
+                        <x-input.number-moeda value="{{ old('valor') }}" name="valor" id="valor" placeholder="Valor do Movimento" />
                     </div>
                 </x-div.col>
                 <x-div.col type="-md">

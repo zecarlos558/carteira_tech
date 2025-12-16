@@ -30,7 +30,7 @@
             <x-table.tfooter class="sticky-bottom">
                 <x-table.tr class="table-success">
                     <x-table.td-show>Total:</x-table.td-show>
-                    <x-table.td>{{ $contas->sum('valor') }}</x-table.td>
+                    <x-table.td>{{ formatarNumero($contas->sum('valor')) }}</x-table.td>
                 </x-table.tr>
             </x-table.tfooter>
         </x-div.table-show>

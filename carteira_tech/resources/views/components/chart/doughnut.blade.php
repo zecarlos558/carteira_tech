@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', {'packages':['corechart'], language: 'pt-BR'});
     google.charts.setOnLoadCallback(drawChart);
 
     function sanitizeJSON(unsanitized) {
@@ -14,20 +14,27 @@
     }
     function drawChart() {
 
-      var data = google.visualization.arrayToDataTable(array_doughnut);
+        var data = google.visualization.arrayToDataTable(array_doughnut);
 
-      var options = {
-        'chartArea': {'width': '100%', 'height': '100%', 'left' : '15%'}
-        //'legend': {'position': 'top'}
-        //title: 'Percentual das Saídas dos Planos',
-        //sliceVisibilityThreshold: .2
-      };
+        // Cria o formatador de moeda para o padrão brasileiro
+        var formatter = new google.visualization.NumberFormat({
+            prefix: 'R$ ',
+            decimalSymbol: ',',
+            groupingSymbol: '.'
+        });
 
-      var chart = new google.visualization.PieChart(document.getElementById('piechartSaida'));
+        // Aplica o formatador na coluna de 'Vendas' (índice 1)
+        formatter.format(data, 1);
 
-      chart.draw(data, options);
+        var options = {
+            'chartArea': {'width': '100%', 'height': '100%', 'left' : '15%'}
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechartSaida'));
+
+        chart.draw(data, options);
     }
-  </script>
+</script>
 
 <div id="chartCanvas">
     <div id="piechartSaida"></div>
@@ -35,8 +42,8 @@
 
 
 {{-- Script feito com chartjs
-    <div id="chartCanvas" >
-    <canvas id="myChartSaida" ></canvas>
+<div id="chartCanvas">
+    <canvas id="myChartSaida"></canvas>
 </div>
 <script>
     var chartColors = {
