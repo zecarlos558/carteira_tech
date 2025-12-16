@@ -125,23 +125,23 @@
         <x-table.tbody>
             @foreach ($movimentos as $movimento)
                 <x-table.tr>
-                    <x-table.th scope="row">{{ $loop->index + 1 }}</x-table.th>
+                    <x-table.th class="align-middle text-center" scope="row">{{ $loop->index + 1 }}</x-table.th>
                     <x-table.td>
                         <x-div.button>
                             @if ($movimento->tipo == 'suprimento')
-                                <x-button.a class="btn-link" href="{{ route('showMovimentoRenda', $movimento->id) }}">
+                                <x-button.a class="btn-link btn-sm" href="{{ route('showMovimentoRenda', $movimento->id) }}">
                                     {{ $movimento->nome }}</x-button.a>
                             @else
-                                <x-button.a class="btn-link" href="{{ route('showMovimentoGasto', $movimento->id) }}">
+                                <x-button.a class="btn-link btn-sm" href="{{ route('showMovimentoGasto', $movimento->id) }}">
                                     {{ $movimento->nome }}</x-button.a>
                             @endif
                         </x-div.button>
                     </x-table.td>
                     @if (session()->get('device'))
-                    <x-table.td> {{ formatarData($movimento->data) }} <br> {{ $movimento->getValor() }} R$ </x-table.td>
+                    <x-table.td style="min-width: 100px;"> {{ formatarData($movimento->data) }} <br> R$ {{ $movimento->getValor() }} </x-table.td>
                     @else
                     <x-table.td> {{ formatarData($movimento->data) }} </x-table.td>
-                    <x-table.td> {{ $movimento->getValor() }} R$ </x-table.td>
+                    <x-table.td> R$ {{ $movimento->getValor() }} </x-table.td>
                     @endif
                     <x-table.td style="display: flex; padding-bottom: 0px;">{{ $movimento->categoria->nome }}
                     </x-table.td>

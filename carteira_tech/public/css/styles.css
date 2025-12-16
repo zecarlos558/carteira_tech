@@ -335,7 +335,7 @@ img.displayed {
 }
 
 #tabela tbody td {
-    padding: 10px;
+    padding: 5px;
     border: 5px;
     border-radius: 3px;
 }
@@ -422,14 +422,10 @@ img.displayed {
     padding-left: 0;
     margin: 0 auto;
     margin-bottom: 0;
-    /*
-    display: grid;
-    grid-template-columns: 100px 100px;
-    */
 }
 
 #container_button button {
-    font-size: 16px;
+    font-size: clamp(14px, 2.5vw, 16px) !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -437,7 +433,7 @@ img.displayed {
 }
 
 #container_button a {
-    font-size: 16px;
+    font-size: clamp(14px, 2.5vw, 16px) !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;

@@ -16,7 +16,7 @@
                     </x-table.tr>
                     <x-table.tr>
                         <x-table.td-show>Valor:</x-table.td-show>
-                        <x-table.td>{{ $movimento->getValor()}} R$</x-table.td>
+                        <x-table.td>R$ {{ $movimento->getValor()}}</x-table.td>
                     </x-table.tr>
                     <x-table.tr>
                         <x-table.td-show>Tipo:</x-table.td-show>

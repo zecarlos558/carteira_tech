@@ -73,7 +73,7 @@
                                                     <h5>{{ $movimento->nome }}</h5>
                                                 </x-table.td>
                                                 <x-table.td></x-table.td>
-                                                <x-table.td style="display: flex; color: blue;">
+                                                <x-table.td style="display: flex; color: blue; min-width:100px;">
                                                     {{ formatarData($movimento->data) }} </x-table.td>
                                                 <x-table.td style="display: flex; color: red">R$
                                                     -{{ $movimento->getValor() }} </x-table.td>
