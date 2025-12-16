@@ -863,8 +863,11 @@ footer p {
 }
 
 @media screen and (max-width: 768px) {
+    body#corpo {
+        font-size: clamp(14px, 2.5vw, 48px) !important;
+    }
     ion-icon {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     #chartCanvas #piechartSaida {
