@@ -114,6 +114,8 @@ class RelatorioController extends Controller
         } else {
             if (isset($dados['opcao_data']) && $dados['opcao_data'] == 'mensal') {
                 $data = $dados['data'];
+            } else {
+                $dados['opcao_data'] = "mensal";
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
@@ -182,6 +184,8 @@ class RelatorioController extends Controller
         } else {
             if (isset($dados['opcao_data']) && $dados['opcao_data'] == 'mensal') {
                 $data = $dados['data'];
+            } else {
+                $dados['opcao_data'] = "mensal";
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
