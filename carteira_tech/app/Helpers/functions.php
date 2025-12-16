@@ -1,11 +1,11 @@
 <?php
 
-    function verificaCountObjeto($objeto,$search = null)
+    function verificaCountObjeto($objeto, $search = null)
     {
-        if (count( (array) $objeto) == 0 & $search == null) {
-           echo "Não há registros disponíveis!".$search;
-        } elseif(count( (array) $objeto) == 0 & $search != "") {
-            echo "Não há registros para essa busca '".$search."' !";
+        if (count((array) $objeto) == 0 & $search == null) {
+            echo "Não há registros disponíveis!" . $search;
+        } elseif (count((array) $objeto) == 0 & $search != "") {
+            echo "Não há registros para essa busca '" . $search . "' !";
         } elseif (count($objeto) == 0) {
             echo "Não há registros para essa busca!";
         } else {
@@ -15,13 +15,13 @@
 
     function checkDevice()
     {
-        $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
-        $ipad = strpos($_SERVER['HTTP_USER_AGENT'],"iPad");
-        $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");
-        $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
-        $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
-        $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
-        $symbian =  strpos($_SERVER['HTTP_USER_AGENT'],"Symbian");
+        $iphone = strpos($_SERVER['HTTP_USER_AGENT'], "iPhone");
+        $ipad = strpos($_SERVER['HTTP_USER_AGENT'], "iPad");
+        $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
+        $palmpre = strpos($_SERVER['HTTP_USER_AGENT'], "webOS");
+        $berry = strpos($_SERVER['HTTP_USER_AGENT'], "BlackBerry");
+        $ipod = strpos($_SERVER['HTTP_USER_AGENT'], "iPod");
+        $symbian =  strpos($_SERVER['HTTP_USER_AGENT'], "Symbian");
 
         if ($iphone || $ipad || $android || $palmpre || $ipod || $berry || $symbian == true) {
             return true;
@@ -32,8 +32,8 @@
 
     function checkButton($valor)
     {
-        $icons = array("criar","editar","deletar","filtrar");
-        return (in_array($valor,$icons));
+        $icons = array("criar", "editar", "deletar", "filtrar");
+        return (in_array($valor, $icons));
     }
 
     function formatarPermissoes($permissoes)
@@ -41,9 +41,9 @@
         $textoPermissoes = "";
         foreach ($permissoes as $key => $permissao) {
             if (empty($textoPermissoes)) {
-                $textoPermissoes = $textoPermissoes."".$permissao;
+                $textoPermissoes = $textoPermissoes . "" . $permissao;
             } else {
-                $textoPermissoes = $textoPermissoes.", ".$permissao;
+                $textoPermissoes = $textoPermissoes . ", " . $permissao;
             }
         }
         return $textoPermissoes;
@@ -51,10 +51,10 @@
 
     function formataNomeMenu($nome)
     {
-        if (count ( explode(" ",$nome) ) == 1) {
+        if (count(explode(" ", $nome)) == 1) {
             $nome = $nome[0];
         } else {
-            $nome = strstr($nome, ' ', true)[0] . trim(strstr($nome, ' ')[1]) ;
+            $nome = strstr($nome, ' ', true)[0] . trim(strstr($nome, ' ')[1]);
         }
         return $nome;
     }
@@ -62,9 +62,9 @@
     function retornaMaiorPermissao($permissoes)
     {
         $maiorPermissao = '';
-        if ( (in_array('super',$permissoes)) ) {
+        if ((in_array('super', $permissoes))) {
             $maiorPermissao = 'super';
-        } elseif ( (!in_array('super',$permissoes)) && (in_array('admin',$permissoes)) ) {
+        } elseif ((!in_array('super', $permissoes)) && (in_array('admin', $permissoes))) {
             $maiorPermissao = 'admin';
         } else {
             $maiorPermissao = 'user';
@@ -72,7 +72,7 @@
         return $maiorPermissao;
     }
 
-    function retornaRole($role,$roles=['Super Admin','super','admin','manager','seller','user'])
+    function retornaRole($role, $roles = ['Super Admin', 'super', 'admin', 'manager', 'seller', 'user'])
     {
         $funcoes = [];
         foreach ($roles as $key => $value) {
@@ -91,7 +91,7 @@
     function retornaArrayPermissoes($permissoes)
     {
         $tipoPermissao = array();
-        foreach($permissoes as $permissao){
+        foreach ($permissoes as $permissao) {
             array_push($tipoPermissao, $permissao);
         }
         return $tipoPermissao;
@@ -114,21 +114,24 @@
 
     function formataDataRelatorio($data, $formato = 'd/m/y')
     {
-        if (isset($data['dataInicio'])) {
-            return formataMes(formatarData($data['dataInicio'],'m')).' de '.formatarData($data['dataInicio'],'y')
-            . ' - '.
-            formataMes(formatarData($data['dataFim'],'m')).' de '.formatarData($data['dataFim'],'y');
+        if ((isset($data['dataInicio']) && !empty($data['dataInicio'])) && (isset($data['dataFim']) && !empty($data['dataFim'])) &&
+            (isset($data['opcao_data']) && $data['opcao_data'] == 'personalizado')) {
+            return formataMes(formatarData($data['dataInicio'], 'm')) . ' de ' . formatarData($data['dataInicio'], 'y')
+                . ' - ' .
+                formataMes(formatarData($data['dataFim'], 'm')) . ' de ' . formatarData($data['dataFim'], 'y');
+        } elseif (isset($data['data']) && !empty($data['data']) && (isset($data['opcao_data']) && $data['opcao_data'] == 'mensal')) {
+            return formataMes(formatarData($data['data'], 'm')) . ' de ' . formatarData($data['data'], 'Y');
         } else {
-            return formataMes(formatarData($data,'m')).' de '.formatarData($data,'Y');
+            return formataMes(formatarData($data, 'm')) . ' de ' . formatarData($data, 'Y');
         }
-
     }
 
-    function removerAcentos($string){
-        return preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string);
+    function removerAcentos($string)
+    {
+        return preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/"), explode(" ", "a A e E i I o O u U n N"), $string);
     }
 
-     function formataPesquisa($request)
+    function formataPesquisa($request)
     {
         if ($request) {
             $id = explode(" ", $request);
@@ -144,9 +147,9 @@
         $textoConsulta = "";
         foreach ($consultas as $key => $consulta) {
             if (empty($textoConsulta)) {
-                $textoConsulta = $textoConsulta."".$consulta."";
+                $textoConsulta = $textoConsulta . "" . $consulta . "";
             } else {
-                $textoConsulta = $textoConsulta.", ".$consulta."";
+                $textoConsulta = $textoConsulta . ", " . $consulta . "";
             }
         }
         return $textoConsulta;
@@ -181,25 +184,22 @@
     }
 
     function maiorValorArray($array, $keyToSearch)
-{
-    $currentMax = NULL;
-    foreach($array as $arr)
     {
-        foreach($arr as $key => $value)
-        {
-            if ($key == $keyToSearch && ($value >= $currentMax))
-            {
-                $currentMax = $value;
+        $currentMax = NULL;
+        foreach ($array as $arr) {
+            foreach ($arr as $key => $value) {
+                if ($key == $keyToSearch && ($value >= $currentMax)) {
+                    $currentMax = $value;
+                }
             }
         }
+        return $currentMax;
     }
-    return $currentMax;
-}
 
     function somaChaveArray($array = null, $chave = null)
     {
         $soma = 0;
-        foreach ($array as $key => $valor){
+        foreach ($array as $key => $valor) {
             $soma += $valor->$chave;
         }
         return $soma;
@@ -215,8 +215,8 @@
     function formata_year_month($data)
     {
         $dataString = (string) $data;
-        $anoData = substr($dataString,0,4);
-        $mesData = substr($dataString,4,6);
+        $anoData = substr($dataString, 0, 4);
+        $mesData = substr($dataString, 4, 6);
         $dataFormatada['mes'] = $mesData;
         $dataFormatada['ano'] = $anoData;
         return $dataFormatada;
@@ -247,7 +247,7 @@
         if ($nome == null) {
             $nome = '0';
         }
-        $nome_completo = str_pad($nome, $tamanho,' ');
+        $nome_completo = str_pad($nome, $tamanho, ' ');
 
         return $nome_completo;
     }
@@ -262,7 +262,7 @@
         return '______________________________';
     }
 
-    function buscaValorMatriz($arrays,$chave,$valor)
+    function buscaValorMatriz($arrays, $chave, $valor)
     {
         if (is_array($arrays)) {
             foreach ($arrays as $key => $array) {
@@ -272,7 +272,7 @@
                     $array = array();
                 }
             }
-        } elseif(is_object($arrays)) {
+        } elseif (is_object($arrays)) {
             foreach ($arrays as $key => $array) {
                 if ($array->{$chave} == $valor) {
                     $array = array($array);
@@ -282,7 +282,6 @@
                 }
             }
         } else {
-
         }
         return $array;
     }
@@ -298,17 +297,21 @@
         return $string_decode;
     }
 
-    function isPaginator($collection) {
-        if ($collection instanceof \Illuminate\Pagination\LengthAwarePaginator || 
-            $collection instanceof \Illuminate\Pagination\AbstractPaginator || 
-            $collection instanceof \Illuminate\Pagination\Paginator) {
+    function isPaginator($collection)
+    {
+        if (
+            $collection instanceof \Illuminate\Pagination\LengthAwarePaginator ||
+            $collection instanceof \Illuminate\Pagination\AbstractPaginator ||
+            $collection instanceof \Illuminate\Pagination\Paginator
+        ) {
             return true;
         } else {
             return false;
         }
     }
 
-    function resolveOfsset($dados) {
+    function resolveOfsset($dados)
+    {
         if (!is_array($dados)) {
             return $dados;
         } elseif (!is_null(request('offset'))) {

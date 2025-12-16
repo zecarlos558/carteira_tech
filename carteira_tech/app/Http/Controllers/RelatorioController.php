@@ -126,6 +126,7 @@ class RelatorioController extends Controller
             ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
         }
+        $dados['desc_data'] = formataDataRelatorio($dados);
 
         $dadosRendaMensal->map(function ($dado) {
             $data = formata_year_month($dado->mes_ano);
@@ -193,6 +194,7 @@ class RelatorioController extends Controller
             ->whereYear('data', '=', formatarData($data,'Y'))
             ->get();
         }
+        $dados['desc_data'] = formataDataRelatorio($dados);
 
         $dadosGastoMensal->map(function ($dado) {
             $data = formata_year_month($dado->mes_ano);

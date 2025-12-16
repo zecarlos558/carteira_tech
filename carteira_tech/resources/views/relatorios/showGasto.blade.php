@@ -11,7 +11,7 @@
             </x-nav_pills.div-menu>
         @endslot
         @slot('rodape')
-            {{ formataDataRelatorio($parametros['data']) }}
+            {{ $parametros['desc_data'] }}
         @endslot
         <x-nav_pills.div-content>
             <x-nav_pills.content id="gasto" type="active">
