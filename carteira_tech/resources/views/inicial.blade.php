@@ -85,14 +85,14 @@
                                 <x-table.tr>
                                     <x-table.td style="display: flex">{{$movimento->categoria->nome}}</x-table.td>
                                     <x-table.td style="display: flex">
-                                        <h5>{{ $movimento->nome }}</h5>
+                                        <h6>{{ $movimento->nome }}</h6>
                                     </x-table.td>
                                     <x-table.td></x-table.td>
-                                    <x-table.td style="display: flex; color: blue;" > {{formatarData($movimento->data)}} </x-table.td>
+                                    <x-table.td class="align-middle" style="display: flex; color: blue; min-width:100px;" > {{formatarData($movimento->data)}} </x-table.td>
                                     @if ($movimento->tipo == 'suprimento')
-                                    <x-table.td style="display: flex; color: green" >R$  +{{$movimento->getValor()}} </x-table.td>
+                                    <x-table.td style="display: flex; color: green;" >R$  +{{$movimento->getValor()}} </x-table.td>
                                     @else
-                                    <x-table.td style="display: flex; color: red" >R$  -{{$movimento->getValor()}} </x-table.td>
+                                    <x-table.td style="display: flex; color: red;" >R$  -{{$movimento->getValor()}} </x-table.td>
                                     @endif
                                 </x-table.tr>
                             @endforeach

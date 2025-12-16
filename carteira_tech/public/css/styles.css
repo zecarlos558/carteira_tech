@@ -866,6 +866,31 @@ footer p {
     body#corpo {
         font-size: clamp(14px, 2.5vw, 48px) !important;
     }
+
+    body#corpo h1 {
+        font-size: 2rem;
+    }
+
+    body#corpo h2 {
+        font-size: 1.8rem;
+    }
+
+    body#corpo h3 {
+        font-size: 1.5rem;
+    }
+
+    body#corpo h4 {
+        font-size: 1.25rem;
+    }
+
+    body#corpo h5 {
+        font-size: 1.10rem;
+    }
+
+    body#corpo h6 {
+        font-size: 0.9rem;
+    }
+
     ion-icon {
         font-size: 20px;
     }
@@ -886,12 +911,13 @@ footer p {
         width: var(--width-columnchart);
     }
 
-    #resumo #painel-header a{
+    #resumo #painel-header a {
         padding: 5px;
         margin: 0;
     }
+
     #resumo #painel-header a .card-header h4,
-    #resumo #painel-header a .card-body h1{
+    #resumo #painel-header a .card-body h1 {
         font-size: large;
         padding: 0;
         margin: 0;
