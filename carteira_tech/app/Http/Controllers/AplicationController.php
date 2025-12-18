@@ -44,8 +44,8 @@ class AplicationController extends Controller
         ->first();
 
         $relatorio = new Relatorio;
-        $relatorio->setValorSaida($dadosGastos);
-        $relatorio->setValorEntrada($dadosRenda);
+        $relatorio->setValorSaida($dadosGastos->valorTotal);
+        $relatorio->setValorEntrada($dadosRenda->valorTotal);
         $relatorio->setValorSaldo();
         $relatorio->calculaBarraProgresso();
 

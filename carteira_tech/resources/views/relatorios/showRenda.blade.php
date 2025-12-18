@@ -15,6 +15,44 @@
         @endslot
         <x-nav_pills.div-content>
             <x-nav_pills.content id="renda" type="active">
+                <x-div.row type="justify-content-around mb-3" id="painel-header">
+                    <x-div.col type="6 text-center">
+                            <x-div.card class="bg-primary" style="color: white">
+                                @slot('header')
+                                    Renda Total
+                                @endslot
+                                @slot('corpo')
+                                    @if (session()->get('device'))
+                                        <h4>
+                                            <x-label.span-default style="text-align: center">R$ {{ formatarNumero($relatorio->valorTotalEntrada) }}</x-label.span>
+                                        </h4>
+                                    @else
+                                        <h1>
+                                            <x-label.span-default style="text-align: center">R$ {{ formatarNumero($relatorio->valorTotalEntrada) }}</x-label.span>
+                                        </h1>
+                                    @endif
+                                @endslot
+                            </x-div.card>
+                    </x-div.col>
+                    <x-div.col type="6 text-center">
+                            <x-div.card class="bg-warning" style="color: white">
+                                @slot('header')
+                                    Média Mensal
+                                @endslot
+                                @slot('corpo')
+                                    @if (session()->get('device'))
+                                        <h4>
+                                            <x-label.span-default style="text-align: center">R$ {{ formatarNumero($relatorio->mediaMensal) }}</x-label.span>
+                                        </h4>
+                                    @else
+                                        <h1>
+                                            <x-label.span-default style="text-align: center">R$ {{ formatarNumero($relatorio->mediaMensal) }}</x-label.span>
+                                        </h1>
+                                    @endif
+                                @endslot
+                            </x-div.card>
+                    </x-div.col>
+                </x-div.row>
                 <x-div.row>
                     <x-div.col>
                         <x-div.card>
@@ -124,7 +162,7 @@
             </x-nav_pills.content>
 
             <x-nav_pills.content id="filtro" type="fade">
-                <x-div.form action="{{ route('showRelatorioRenda') }}" method="get">
+                <x-div.form action="{{ route('showRelatorioRenda') }}" method="post">
                     @slot('header')
                         Consultar Dados por Data
                     @endslot

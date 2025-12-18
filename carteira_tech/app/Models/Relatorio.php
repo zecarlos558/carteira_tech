@@ -23,14 +23,14 @@ class Relatorio extends Model
 
     public $tipo;
 
-    public function setValorSaida($dados)
+    public function setValorSaida($valorTotal)
     {
-        $this->valorTotalSaida = exibirValorNulo($dados->valorTotal);
+        $this->valorTotalSaida = exibirValorNulo($valorTotal);
     }
 
-    public function setValorEntrada($dados)
+    public function setValorEntrada($valorTotal)
     {
-        $this->valorTotalEntrada = exibirValorNulo($dados->valorTotal);
+        $this->valorTotalEntrada = exibirValorNulo($valorTotal);
     }
 
     public function setValorSaldo()

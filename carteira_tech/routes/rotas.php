@@ -180,8 +180,8 @@ Route::prefix('relatorio')->middleware('auth')->group(function () {
         Route::group(['middleware' => ['permission:read relatorio']], function () {
             Route::any('/', 'index')->name('indexRelatorio');
             Route::get('/show/{id}', 'show')->name('showRelatorio');
-            Route::get('/showRenda', 'showRenda')->name('showRelatorioRenda');
-            Route::get('/showGasto', 'showGasto')->name('showRelatorioGasto');
+            Route::any('/showRenda', 'showRenda')->name('showRelatorioRenda');
+            Route::any('/showGasto', 'showGasto')->name('showRelatorioGasto');
         });
         Route::group(['middleware' => ['permission:create relatorio']], function () {
             Route::get('/create', 'create')->name('createRelatorio');

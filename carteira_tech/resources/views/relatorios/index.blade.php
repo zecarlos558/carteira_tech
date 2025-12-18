@@ -49,25 +49,33 @@
                     </x-div.col>
                 </x-div.row>
                 <hr>
-                <x-div.input class="border" id="tech-container">
-                    @foreach ($relatorioCategorias as $relatorios)
-                        <h4>{{ $relatorios->nome }}</h4>
-                        <h5>{{ formatarNumero($relatorios->valorTotal) }} R$</h5>
-                        <div class="progress pd-3 mb-3">
-                            @if ($relatorios->tipo == "suprimento")
-                                <div class="progress-bar bg-success" role="progressbar"
-                                    style="width: {{ $relatorios->barraProgresso }}%"
-                                    aria-valuenow="{{ $relatorios->barraProgresso }}" aria-valuemin="0" aria-valuemax="100">
-                                </div>
-                            @else
-                                <div class="progress-bar bg-danger" role="progressbar"
-                                    style="width: {{ $relatorios->barraProgresso }}%"
-                                    aria-valuenow="{{ $relatorios->barraProgresso }}" aria-valuemin="0" aria-valuemax="100">
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                </x-div.input>
+                <x-div.card>
+                    @slot('header')
+                        <x-div.row type="justify-content-between">
+                            <x-div.col type="-auto">Categorias</x-div.col>
+                            <x-div.col type="-auto">Saldo Total: {{ $relatorio->getValorSaldo() }}</x-div.col>
+                        </x-div.row>
+                    @endslot
+                    @slot('corpo')
+                        @foreach ($relatorioCategorias as $relatorios)
+                            <h4>{{ $relatorios->nome }}</h4>
+                            <h5>{{ formatarNumero($relatorios->valorTotal) }} R$</h5>
+                            <div class="progress pd-3 mb-3">
+                                @if ($relatorios->tipo == "suprimento")
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                        style="width: {{ $relatorios->barraProgresso }}%"
+                                        aria-valuenow="{{ $relatorios->barraProgresso }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                @else
+                                    <div class="progress-bar bg-danger" role="progressbar"
+                                        style="width: {{ $relatorios->barraProgresso }}%"
+                                        aria-valuenow="{{ $relatorios->barraProgresso }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    @endslot
+                </x-div.card>
             </x-nav_pills.content>
 
             <x-nav_pills.content id="filtro" type="fade">
