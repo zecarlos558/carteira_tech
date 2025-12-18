@@ -111,6 +111,7 @@ class RelatorioController extends Controller
             $data = date('Y-m-d');
         }
         $dadosRendaMensal = Relatorio::consultaTotalRenda()
+            ->lancamentoEntreContas()
             ->addSelect(DB::raw("EXTRACT(YEAR_MONTH FROM data) as mes_ano"))
             ->groupBy(DB::raw("EXTRACT(YEAR_MONTH FROM data)"))
             ->orderBy('data', 'desc')
@@ -193,6 +194,7 @@ class RelatorioController extends Controller
             $data = date('Y-m-d');
         }
         $dadosGastoMensal = Relatorio::consultaTotalGastos()
+            ->lancamentoEntreContas()
             ->addSelect(DB::raw('EXTRACT(YEAR_MONTH FROM data) as mes_ano'))
             ->groupBy(DB::raw('EXTRACT(YEAR_MONTH FROM data)'))
             ->orderBy('data', 'desc')
