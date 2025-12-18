@@ -117,7 +117,8 @@ class RelatorioController extends Controller
             ->orderBy('data', 'desc')
             ->get();
 
-        $dados = $request->all(['data', 'opcao_data', 'dataInicio', 'dataFim']);
+        $dados = $request->all(['opcao_data', 'dataInicio', 'dataFim']);
+        $dados["data"] = $data;
         $movimentos = Relatorio::consultaRenda();
         $dadosRenda = Relatorio::consultaTotalRenda()->lancamentoEntreContas();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
@@ -200,7 +201,8 @@ class RelatorioController extends Controller
             ->orderBy('data', 'desc')
             ->get();
 
-        $dados = $request->all(['data', 'opcao_data', 'dataInicio', 'dataFim']);
+        $dados = $request->all(['opcao_data', 'dataInicio', 'dataFim']);
+        $dados["data"] = $data;
         $movimentos = Relatorio::consultaGastos();
         $dadosGasto = Relatorio::consultaTotalGastos()->lancamentoEntreContas();
         $relatorioCategorias = Relatorio::consultaPorCategoria();
