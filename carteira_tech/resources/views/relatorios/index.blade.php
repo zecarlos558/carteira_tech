@@ -11,14 +11,14 @@
         </x-nav_pills.div-menu>
         @endslot
         @slot('rodape')
-        {{ formataDataRelatorio($data) }}
+            {{ $parametros['desc_data'] }}
         @endslot
         <x-nav_pills.div-content>
 
             <x-nav_pills.content id="resumo" type="active">
                 <x-div.row type="justify-content-around" id="painel-header">
                     <x-div.col type="-auto">
-                        <x-button.a class="btn-outline-success" href="{{ route('showRelatorioRenda', ['data' => $data]) }}">
+                        <x-button.a class="btn-outline-success" href="{{ route('showRelatorioRenda', $parametros) }}">
                             <x-div.card class="bg-success" style="color: white">
                                 @slot('header')
                                     Renda
@@ -33,7 +33,7 @@
                         </x-button.a>
                     </x-div.col>
                     <x-div.col type="-auto">
-                        <x-button.a class="btn-outline-danger" href="{{ route('showRelatorioGasto', ['data' => $data]) }}">
+                        <x-button.a class="btn-outline-danger" href="{{ route('showRelatorioGasto', $parametros) }}">
                             <x-div.card class="bg-danger" style="color: white">
                                 @slot('header')
                                     Gastos
@@ -71,14 +71,33 @@
             </x-nav_pills.content>
 
             <x-nav_pills.content id="filtro" type="fade">
-                <x-div.form action="{{ route('indexRelatorio') }}" method="get">
+                <x-div.form action="{{ route('indexRelatorio') }}" method="post">
                     @slot('header')
                         Consultar Dados por Data
                     @endslot
+                    <x-label.label for="opcao_data">Tipo da Consulta:</x-label.label>
+                    <x-input.select id="opcao_data" name="opcao_data" onChange="selecionaData();">
+                        <x-input.option value="mensal">Mensal</x-input.option>
+                        <x-input.option value="personalizado">Personalizado</x-input.option>
+                    </x-input.select>
                     <div class="input-group" id="mensal">
                         <x-label.span class="input-group-text" icon='calendario'>Data Mês</x-label.span>
-                        <x-input.date-month id="data" name="data" value="{{ date('Y-m', strtotime($data)) }}">
+                        <x-input.date-month id="data" name="data" value="{{ date('Y-m', strtotime(@$parametros['data'])) }}">
                         </x-input.date-month>
+                    </div>
+                    <div id="personalizado" style="display: none;">
+                        <x-div.row>
+                            <x-div.col>
+                                <x-label.span class="input-group-text" icon='calendario'>Data Inicio</x-label.span>
+                                <x-input.date-month id="dataInicio" name="dataInicio" value="{{ date('Y-m', strtotime(@$parametros['dataInicio'] ?? date('Y-m'))) }}">
+                                </x-input.date-month>
+                            </x-div.col>
+                            <x-div.col>
+                                <x-label.span class="input-group-text" icon='calendario'>Data Fim</x-label.span>
+                                <x-input.date-month id="dataFim" name="dataFim" value="{{ date('Y-m', strtotime(@$parametros['dataFim'] ?? date('Y-m'))) }}">
+                                </x-input.date-month>
+                            </x-div.col>
+                        </x-div.row>
                     </div>
                     @slot('rodape')
                         <x-button.button type="submit" class="btn-primary" icon='pesquisar'>Consultar</x-button.button>
@@ -86,5 +105,13 @@
                 </x-div.form>
             </x-nav_pills.content>
         </x-nav_pills.div-content>
+        <script>
+            $(document).ready(function() {
+                opcao_data = "{{ @$parametros['opcao_data'] }}";
+                if (opcao_data) {
+                    $('#opcao_data').val(opcao_data).trigger('change');
+                }
+            });
+        </script>
     </x-div.principal>
 </x-div.main>

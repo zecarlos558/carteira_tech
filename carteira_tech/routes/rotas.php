@@ -178,7 +178,7 @@ Route::prefix('relatorio')->middleware('auth')->group(function () {
     Route::controller(RelatorioController::class)->group(function () {
         //Route::get('/inicial', 'index')->name('indexAplication');
         Route::group(['middleware' => ['permission:read relatorio']], function () {
-            Route::get('/', 'index')->name('indexRelatorio');
+            Route::any('/', 'index')->name('indexRelatorio');
             Route::get('/show/{id}', 'show')->name('showRelatorio');
             Route::get('/showRenda', 'showRenda')->name('showRelatorioRenda');
             Route::get('/showGasto', 'showGasto')->name('showRelatorioGasto');

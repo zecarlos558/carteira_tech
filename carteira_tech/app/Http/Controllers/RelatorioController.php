@@ -16,21 +16,33 @@ class RelatorioController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->data != null) {
-            $data = $request->data;
-        } else {
-            $data = date('Y-m-d');
+        $parametros = $request->except("_token");
+        $parametros['data'] = $request->data ?? date('Y-m-d');
+        $parametros["opcao_data"] = $request->opcao_data ?? "mensal";
+        if ($parametros["opcao_data"] == "personalizado") {
+            $parametros['dataInicio'] = $parametros['dataInicio'].'-01';
+            $parametros['dataFim'] = date($parametros['dataFim'].'-t');
         }
 
         $dadosRenda = Relatorio::consultaTotalRenda()
         ->lancamentoEntreContas()
-        ->whereMonth('data', '=', formatarData($data,'m'))
-        ->whereYear('data', '=', formatarData($data,'Y'))
+        ->when($parametros["opcao_data"] == "mensal", function ($query) use($parametros) {
+            $query->whereMonth('data', '=', formatarData($parametros['data'],'m'))
+            ->whereYear('data', '=', formatarData($parametros['data'],'Y'));
+        })
+        ->when($parametros["opcao_data"] == "personalizado", function ($query) use($parametros) {
+            $query->whereBetween('data', [$parametros['dataInicio'], $parametros['dataFim']]);
+        })
         ->first();
         $dadosGastos = Relatorio::consultaTotalGastos()
         ->lancamentoEntreContas()
-        ->whereMonth('data', '=', formatarData($data,'m'))
-        ->whereYear('data', '=', formatarData($data,'Y'))
+        ->when($parametros["opcao_data"] == "mensal", function ($query) use($parametros) {
+            $query->whereMonth('data', '=', formatarData($parametros['data'],'m'))
+            ->whereYear('data', '=', formatarData($parametros['data'],'Y'));
+        })
+        ->when($parametros["opcao_data"] == "personalizado", function ($query) use($parametros) {
+            $query->whereBetween('data', [$parametros['dataInicio'], $parametros['dataFim']]);
+        })
         ->first();
 
         $relatorio = new Relatorio;
@@ -39,14 +51,20 @@ class RelatorioController extends Controller
         $relatorio->setValorSaldo();
 
         $relatorioCategorias = Relatorio::consultaPorCategoria()
-        ->whereMonth('data', '=', formatarData($data,'m'))
-        ->whereYear('data', '=', formatarData($data,'Y'))
-        ->get();
+        ->when($parametros["opcao_data"] == "mensal", function ($query) use($parametros) {
+            $query->whereMonth('data', '=', formatarData($parametros['data'],'m'))
+            ->whereYear('data', '=', formatarData($parametros['data'],'Y'));
+        })
+        ->when($parametros["opcao_data"] == "personalizado", function ($query) use($parametros) {
+            $query->whereBetween('data', [$parametros['dataInicio'], $parametros['dataFim']]);
+        })
+        ->get()->sortByDesc("valorTotal");
 
         $relatorio->calculaBarraCategorias($relatorioCategorias);
+        $parametros['desc_data'] = formataDataRelatorio($parametros);
 
         return view('relatorios.index', ['relatorio' => $relatorio,
-                                         'data' => $data,
+                                         'parametros' => $parametros,
                                          'relatorioCategorias' => $relatorioCategorias])->render();
     }
 
@@ -104,12 +122,13 @@ class RelatorioController extends Controller
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
             $dados['dataFim'] = date($dados['dataFim'].'-t');
             $movimentos = $movimentos->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
+            ->orderBy("data", "desc")
             ->get();
             $dadosRenda = $dadosRenda->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->first();
             $relatorioCategorias = $relatorioCategorias->suprimento()
             ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
-            ->get();
+            ->get()->sortByDesc("valorTotal");
             $data = $dados;
         } else {
             if (isset($dados['opcao_data']) && $dados['opcao_data'] == 'mensal') {
@@ -119,6 +138,7 @@ class RelatorioController extends Controller
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
+            ->orderBy("data", "desc")
             ->get();
             $dadosRenda = $dadosRenda->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
@@ -126,7 +146,7 @@ class RelatorioController extends Controller
             $relatorioCategorias = $relatorioCategorias->suprimento()
             ->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
-            ->get();
+            ->get()->sortByDesc("valorTotal");
         }
         $dados['desc_data'] = formataDataRelatorio($dados);
 
@@ -174,12 +194,13 @@ class RelatorioController extends Controller
             $dados['dataInicio'] = $dados['dataInicio'].'-01';
             $dados['dataFim'] = date($dados['dataFim'].'-t');
             $movimentos = $movimentos->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
+            ->orderBy("data", "desc")
             ->get();
             $dadosGasto = $dadosGasto->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
             ->first();
             $relatorioCategorias = $relatorioCategorias->retirada()
             ->whereBetween('data', [$dados['dataInicio'], $dados['dataFim']])
-            ->get();
+            ->get()->sortByDesc("valorTotal");
             $data = $dados;
         } else {
             if (isset($dados['opcao_data']) && $dados['opcao_data'] == 'mensal') {
@@ -189,6 +210,7 @@ class RelatorioController extends Controller
             }
             $movimentos = $movimentos->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
+            ->orderBy("data", "desc")
             ->get();
             $dadosGasto = $dadosGasto->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
@@ -196,7 +218,7 @@ class RelatorioController extends Controller
             $relatorioCategorias = $relatorioCategorias->retirada()
             ->whereMonth('data', '=', formatarData($data,'m'))
             ->whereYear('data', '=', formatarData($data,'Y'))
-            ->get();
+            ->get()->sortByDesc("valorTotal");
         }
         $dados['desc_data'] = formataDataRelatorio($dados);
 
