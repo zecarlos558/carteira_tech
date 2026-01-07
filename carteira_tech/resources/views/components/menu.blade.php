@@ -94,6 +94,19 @@
                                 </ul>
                             </li>
                         @endif
+                        @if ((auth()->user()->can('read relatorio')) || (auth()->user()->can('create relatorio')))
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><x-ionicons.ionic icon='relatorio'></x-ionicons.ionic>Relatórios</a>
+                                <ul class="dropdown-menu">
+                                    @can('read relatorio')
+                                    <li><a class="dropdown-item" id="indexRelatorio" href="{{ route('indexRelatorio') }}">Painel Financeiro</a></li>
+                                    @endcan
+                                    @can('create relatorio')
+                                    <li><a class="dropdown-item" id="createRelatorio" href="{{ route('createRelatorio') }}">Financeiro Personalizado (.PDF)</a></li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
                         <x-card_session class="d-xl-none"></x-card_session>
                     </ul>
                 </div>
