@@ -17,7 +17,7 @@ class Radio extends Component
     public $name;
     public $id;
 
-   public function __construct($id,$name,$class,$value=null)
+   public function __construct($id,$name,$class=null,$value=null)
    {
        $this->class = $class;
        $this->value = $value;
