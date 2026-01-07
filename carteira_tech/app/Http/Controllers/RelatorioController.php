@@ -405,7 +405,7 @@ class RelatorioController extends Controller
             $data = DateTime::createFromFormat('Y-m-d', $dados['data'])->format('Ym');
             return $query->filter(fn($q) => $q->mes_ano_datetime->format('Ym') == $data);
         });
-        $relatorio->mediaMensal = $mediaMensal->sum("valorTotal") / $mediaMensal->count();
+        $relatorio->mediaMensal = $mediaMensal->sum("valorTotal") / divisaoZero($mediaMensal->count());
 
         return view('relatorios.showRenda', [
             'parametros' => $dados,
@@ -491,7 +491,7 @@ class RelatorioController extends Controller
             $data = DateTime::createFromFormat('Y-m-d', $dados['data'])->format('Ym');
             return $query->filter(fn($q) => $q->mes_ano_datetime->format('Ym') == $data);
         });
-        $relatorio->mediaMensal = $mediaMensal->sum("valorTotal") / $mediaMensal->count();
+        $relatorio->mediaMensal = $mediaMensal->sum("valorTotal") / divisaoZero($mediaMensal->count());
 
         return view('relatorios.showGasto', [
             'parametros' => $dados,
