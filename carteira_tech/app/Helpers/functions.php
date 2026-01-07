@@ -297,6 +297,21 @@
         return $string_decode;
     }
 
+    function truncate($str, $length = 10, $trailing = '...', $cortarcombr = null)
+    {
+        $length -= mb_strlen($trailing);
+        if (mb_strlen($str) > $length) {
+            if (!empty($cortarcombr)) {
+                return mb_substr($str, 0, $length + mb_strlen($trailing)) . '<br>' . mb_substr($str, $cortarcombr, $length) . $trailing;
+            } else {
+                return mb_substr($str, 0, $length) . $trailing;
+            }
+        } else {
+            $res = $str;
+        }
+        return $res;
+    }
+
     function isPaginator($collection)
     {
         if (
