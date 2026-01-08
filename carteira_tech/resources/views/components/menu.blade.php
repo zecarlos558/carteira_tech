@@ -102,7 +102,7 @@
                                     <li><a class="dropdown-item" id="indexRelatorio" href="{{ route('indexRelatorio') }}">Painel Financeiro</a></li>
                                     @endcan
                                     @can('create relatorio')
-                                    <li><a class="dropdown-item" id="createRelatorio" href="{{ route('createRelatorio') }}">Financeiro Personalizado (.PDF)</a></li>
+                                    <li><a class="dropdown-item" id="createRelatorio" href="{{ route('createRelatorio') }}">Financeiro Personalizado</a></li>
                                     @endcan
                                 </ul>
                             </li>

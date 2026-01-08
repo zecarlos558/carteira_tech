@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Planilha;
 use App\Classes\Tcpdf;
+use App\Classes\XLS;
 use App\Models\Categoria;
 use App\Models\Conta;
 use App\Models\Movimento;
@@ -103,6 +105,9 @@ class RelatorioController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "formato_relatorio" => "required|in:PDF,XLS"
+        ]);
         $parametros = $request->all();
         if ($parametros["opcao_data"] == "personalizado") {
             $parametros['dataInicio'] = $parametros['dataInicio'] . '-01';
@@ -124,8 +129,8 @@ class RelatorioController extends Controller
                 $query->whereHas("conta", fn($q) => $q->where("id", "=", $parametros["conta_id"]));
             })
             ->when($parametros["tipo"], fn($q) => $q->where("tipo", "=", $parametros["tipo"]))
-            ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%".strtolower(($parametros["descricao"]))."%"])
-                ->orWhereRaw("(lower(descricao)) like ?", ["%".strtolower(($parametros["descricao"]))."%"]))
+            ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"])
+                ->orWhereRaw("(lower(descricao)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"]))
             ->first();
         $dadosGastos = Relatorio::consultaTotalGastos()
             ->lancamentoEntreContas()
@@ -143,8 +148,8 @@ class RelatorioController extends Controller
                 $query->whereHas("conta", fn($q) => $q->where("id", "=", $parametros["conta_id"]));
             })
             ->when($parametros["tipo"], fn($q) => $q->where("tipo", "=", $parametros["tipo"]))
-            ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%".strtolower(($parametros["descricao"]))."%"])
-                ->orWhereRaw("(lower(descricao)) like ?", ["%".strtolower(($parametros["descricao"]))."%"]))
+            ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"])
+                ->orWhereRaw("(lower(descricao)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"]))
             ->first();
 
         $relatorio = new Relatorio;
@@ -167,33 +172,70 @@ class RelatorioController extends Controller
                 $query->whereHas("conta", fn($q) => $q->where("id", "=", $parametros["conta_id"]));
             })
             ->when($parametros["tipo"], fn($q) => $q->where("tipo", "=", $parametros["tipo"]))
-            ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%".strtolower(($parametros["descricao"]))."%"])
-                ->orWhereRaw("(lower(descricao)) like ?", ["%".strtolower(($parametros["descricao"]))."%"]))
+            ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"])
+                ->orWhereRaw("(lower(descricao)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"]))
             ->get()->sortByDesc("valorTotal");
 
         $relatorio->calculaBarraCategorias($relatorioCategorias);
 
+        $ultimaChave = count($relatorioCategorias) - 1;
+        if ($request->exibe_transacao == "true" && $ultimaChave >= 0) {
+            $movimentos_tipos = Movimento::when($parametros["opcao_data"] == "mensal", function ($query) use ($parametros) {
+                $query->whereMonth('data', '=', formatarData($parametros['data'], 'm'))
+                    ->whereYear('data', '=', formatarData($parametros['data'], 'Y'));
+            })
+                ->when($parametros["opcao_data"] == "personalizado", function ($query) use ($parametros) {
+                    $query->whereBetween('data', [$parametros['dataInicio'], $parametros['dataFim']]);
+                })
+                ->when($parametros["categoria_id"], function ($query) use ($parametros) {
+                    $query->whereHas("categoria", fn($q) => $q->where("id", "=", $parametros["categoria_id"]));
+                })
+                ->when($parametros["conta_id"], function ($query) use ($parametros) {
+                    $query->whereHas("conta", fn($q) => $q->where("id", "=", $parametros["conta_id"]));
+                })
+                ->when($parametros["tipo"], fn($q) => $q->where("tipo", "=", $parametros["tipo"]))
+                ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"])
+                    ->orWhereRaw("(lower(descricao)) like ?", ["%" . strtolower(($parametros["descricao"])) . "%"]))
+                ->select("id", "nome", "descricao", "valor", "data", "tipo", "categoria_id")
+                ->with(["categoria" => fn($q) => $q->select("id", "nome")])
+                ->orderBy("data", "desc")->orderby("valor", "desc")
+                ->get()->groupBy("tipo");
+        } else {
+            $movimentos_tipos = collect([]);
+        }
+        switch ($parametros['formato_relatorio']) {
+            case 'PDF':
+                return $this->financeiroPersonalizadoPDF($parametros, $relatorio, $relatorioCategorias, $movimentos_tipos);
+                break;
+            case 'XLS':
+                return $this->financeiroPersonalizadoXLS($parametros, $relatorio, $relatorioCategorias, $movimentos_tipos);
+                break;
+        }
+    }
+
+    public function financeiroPersonalizadoPDF($parametros, $relatorio, $relatorioCategorias, $movimentos_tipos)
+    {
         $pdf = new Tcpdf();
         $pdf->SetFont('helvetica', 'BI', 12);
         $pdf->setTitle("Relatório Financeiro - Carteira Tech");
         $pdf->AddPage();
         $pdf->Ln(10);
-        $descricao_data = formataDataRelatorio($request->all());
+        $descricao_data = formataDataRelatorio($parametros);
         $pdf->Cell(0, 5, "Referência: $descricao_data", 0, 1, "L");
-        if ($request->categoria_id) {
-            $categoria = Categoria::find($request->categoria_id);
+        if ($parametros['categoria_id']) {
+            $categoria = Categoria::find($parametros['categoria_id']);
             $pdf->Cell(0, 5, "Categoria: $categoria->nome", 0, 1, "L");
         }
-        if ($request->conta_id) {
-            $conta = Conta::find($request->conta_id);
+        if ($parametros['conta_id']) {
+            $conta = Conta::find($parametros['conta_id']);
             $pdf->Cell(0, 5, "Conta: $conta->nome", 0, 1, "L");
         }
-        if ($request->tipo) {
-            $tipo = ucfirst($request->tipo);
+        if ($parametros['tipo']) {
+            $tipo = ucfirst($parametros['tipo']);
             $pdf->Cell(0, 5, "Tipo: $tipo", 0, 1, "L");
         }
-        if ($request->descricao) {
-            $pdf->Cell(0, 5, "Descrição: $request->descricao", 0, 1, "L");
+        if ($parametros['descricao']) {
+            $pdf->Cell(0, 5, "Descrição: " . $parametros['descricao'], 0, 1, "L");
         }
         $pdf->SetFont('times', 'B', 15);
         $pdf->Ln(6);
@@ -246,36 +288,15 @@ class RelatorioController extends Controller
                 $margin_left, // x inicial
                 $margin_top, // y inicial
                 $page_width - $margin_left - $margin_right, // largura
-                $margin_bottom - $margin_top + 5, // altura
+                $margin_bottom - $margin_top + 15, // altura
                 'D',
                 array("L" => $estilo_borda_pagina, "R" => $estilo_borda_pagina, "B" => ($ultimaChave ==  $key ? $estilo_borda_pagina : [])),
                 array()
             );
         }
-        if ($request->exibe_transacao == "true" && $ultimaChave >= 0) {
+        if ($movimentos_tipos->isNotEmpty()) {
             $pdf->SetFont('helvetica', 'B', 12);
             $pdf->SetLineStyle(array('width' => 0.25, 'color' => array(0, 0, 0)));
-            $movimentos_tipos = Movimento::when($parametros["opcao_data"] == "mensal", function ($query) use ($parametros) {
-                $query->whereMonth('data', '=', formatarData($parametros['data'], 'm'))
-                    ->whereYear('data', '=', formatarData($parametros['data'], 'Y'));
-            })
-                ->when($parametros["opcao_data"] == "personalizado", function ($query) use ($parametros) {
-                    $query->whereBetween('data', [$parametros['dataInicio'], $parametros['dataFim']]);
-                })
-                ->when($parametros["categoria_id"], function ($query) use ($parametros) {
-                    $query->whereHas("categoria", fn($q) => $q->where("id", "=", $parametros["categoria_id"]));
-                })
-                ->when($parametros["conta_id"], function ($query) use ($parametros) {
-                    $query->whereHas("conta", fn($q) => $q->where("id", "=", $parametros["conta_id"]));
-                })
-                ->when($parametros["tipo"], fn($q) => $q->where("tipo", "=", $parametros["tipo"]))
-            ->when($parametros["descricao"], fn($q) => $q->whereRaw("(lower(movimentos.nome)) like ?", ["%".strtolower(($parametros["descricao"]))."%"])
-                ->orWhereRaw("(lower(descricao)) like ?", ["%".strtolower(($parametros["descricao"]))."%"]))
-                ->select("id", "nome", "descricao", "valor", "data", "tipo", "categoria_id")
-                ->with(["categoria" => fn($q) => $q->select("id", "nome")])
-                ->orderBy("data", "desc")->orderby("valor", "desc")
-                ->get()->groupBy("tipo");
-
             $pdf->Ln(10);
             $pdf->SetFillColor(205, 205, 205);
             $pdf->Cell(0, 6, "Transações", 1, 1, "C", 1);
@@ -317,8 +338,177 @@ class RelatorioController extends Controller
                 $pdf->Ln();
             }
         }
+        $pdf->Output("Relatório Financeiro.pdf", "I");
+    }
 
-        $pdf->Output("Relatório Financeiro", "I");
+    public function financeiroPersonalizadoXLS($parametros, $relatorio, $relatorioCategorias, $movimentos_tipos)
+    {
+        $planilha = new Planilha();
+        $sheet = $planilha->getActiveSheet();
+        $sheet = $planilha->Header($sheet);
+        $indice = 4;
+        $descricao_data = formataDataRelatorio($parametros);
+        $sheet->setCellValue('A' . $indice, "Referência: $descricao_data")->getStyle('A' . $indice);
+        $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        if ($parametros['categoria_id']) {
+            $indice++;
+            $categoria = Categoria::find($parametros['categoria_id']);
+            $sheet->setCellValue('A' . $indice, "Categoria: $categoria->nome")->getStyle('A' . $indice);
+            $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        }
+        if ($parametros['conta_id']) {
+            $indice++;
+            $conta = Conta::find($parametros['conta_id']);
+            $sheet->setCellValue('A' . $indice, "Conta: $conta->nome")->getStyle('A' . $indice);
+            $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        }
+        if ($parametros['tipo']) {
+            $indice++;
+            $tipo = ucfirst($parametros['tipo']);
+            $sheet->setCellValue('A' . $indice, "Tipo: $tipo")->getStyle('A' . $indice);
+            $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        }
+        if ($parametros['descricao']) {
+            $indice++;
+            $sheet->setCellValue('A' . $indice, "Descrição: " . $parametros['descricao'])->getStyle('A' . $indice);
+            $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        }
+        $indice++;
+        $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        $indice++;
+        $style_renda_cabecalho = [
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_PATTERN_DARKGRAY,
+                'startColor' => [
+                    'argb' => "99CC32"
+                ]
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_DOTTED,
+                    'color' => ['argb' => "000000"]
+                ]
+            ],
+            'font' => [
+                'bold' => true,
+                'italic' => false,
+                'name' => 'Verdana',
+                'color' => ['argb' => "FFFFFF"]
+            ]
+        ];
+        $style_gasto_cabecalho = [
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_PATTERN_DARKGRAY,
+                'startColor' => [
+                    'argb' => "FF0000"
+                ]
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_DOTTED,
+                    'color' => ['argb' => "000000"]
+                ]
+            ],
+            'font' => [
+                'bold' => true,
+                'italic' => false,
+                'name' => 'Verdana',
+                'color' => ['argb' => "FFFFFF"]
+            ]
+        ];
+        $sheet->setCellValue('A' . $indice, "RENDA")->getStyle('A' . $indice)->applyFromArray($style_renda_cabecalho);
+        $sheet->mergeCells('A' . $indice . ':E' . $indice);
+        $sheet->setCellValue('F' . $indice, "GASTO")->getStyle('F' . $indice)->applyFromArray($style_gasto_cabecalho);
+        $sheet->mergeCells('F' . $indice . ':J' . $indice);
+        $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_CENTER);
+        $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setVertical($planilha->VERTICAL_CENTER);
+        $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_CENTER);
+        $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setVertical($planilha->VERTICAL_CENTER);
+        $indice++;
+        $style_valores_corpo = [
+            'font' => [
+                'bold' => true,
+                'italic' => false,
+                'name' => 'Verdana',
+                'size' => 12
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                    'color' => ['argb' => "000000"]
+                ]
+            ]
+        ];
+        $sheet->setCellValue('A' . $indice, $relatorio->getValorEntrada())->getStyle('A' . $indice)->applyFromArray($style_valores_corpo);
+        $sheet->mergeCells('A' . $indice . ':E' . $indice + 1);
+        $sheet->setCellValue('F' . $indice, $relatorio->getValorSaida())->getStyle('F' . $indice)->applyFromArray($style_valores_corpo);
+        $sheet->mergeCells('F' . $indice . ':J' . $indice + 1);
+        $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_CENTER);
+        $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setVertical($planilha->VERTICAL_CENTER);
+        $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_CENTER);
+        $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setVertical($planilha->VERTICAL_CENTER);
+        $indice = $indice + 2;
+        $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        $indice++;
+        $sheet->setCellValue('A' . $indice, "Categorias")->getStyle('A' . $indice)->applyFromArray($planilha->style_titulo);
+        $sheet->mergeCells('A' . $indice . ':E' . $indice);
+        $sheet->setCellValue('F' . $indice, "Saldo Total: " . $relatorio->getValorSaldo())->getStyle('F' . $indice)->applyFromArray($planilha->style_titulo);
+        $sheet->mergeCells('F' . $indice . ':J' . $indice);
+        $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_RIGHT);
+        $indice++;
+        foreach ($relatorioCategorias as $key => $categoria) {
+            $sheet->setCellValue('A' . $indice, "$categoria->nome =>" . ($categoria->tipo == "suprimento" ? " + " : " - ") . formatarNumero($categoria->valorTotal))->getStyle('A' . $indice);
+            $sheet->mergeCells('A' . $indice . ':J' . $indice);
+            $indice++;
+        }
+        $sheet->mergeCells('A' . $indice . ':J' . $indice);
+        $indice++;
+        if ($movimentos_tipos->isNotEmpty()) {
+            $sheet->setCellValue('A' . $indice, "Transações")->getStyle('A' . $indice)->applyFromArray($planilha->style_titulo);
+            $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setVertical($planilha->VERTICAL_CENTER);
+            $sheet->mergeCells('A' . $indice . ':J' . $indice);
+            $indice++;
+            $sheet->setCellValue('A' . $indice, "Suprimento")->getStyle('A' . $indice)->applyFromArray($style_renda_cabecalho);
+            $sheet->mergeCells('A' . $indice . ':E' . $indice);
+            $sheet->setCellValue('F' . $indice, "Retirada")->getStyle('F' . $indice)->applyFromArray($style_gasto_cabecalho);
+            $sheet->mergeCells('F' . $indice . ':J' . $indice);
+            $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $indice . ':E' . $indice)->getAlignment()->setVertical($planilha->VERTICAL_CENTER);
+            $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_CENTER);
+            $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setVertical($planilha->VERTICAL_CENTER);
+            $indice++;
+            $max_value = $movimentos_tipos->max(fn($q) => $q->count());
+            for ($i = 0; $i < $max_value; $i++) {
+                foreach (['suprimento', 'retirada'] as $key => $tipo) {
+                    if (isset($movimentos_tipos[$tipo][$i])) {
+                        $movimento = $movimentos_tipos[$tipo][$i];
+                        $descricao_categoria[$tipo] = $movimento->categoria->nome;
+                        $descricao_movimento[$tipo] = $movimento->nome;
+                        $data_movimento[$tipo] = formatarData($movimento->data);
+                        $valor_movimento[$tipo] = $movimento->getValor();
+                    } else {
+                        $descricao_categoria[$tipo] = $descricao_movimento[$tipo] = $data_movimento[$tipo] = $valor_movimento[$tipo] = "";
+                    }
+                }
+                $sheet->setCellValue('A' . $indice, $descricao_categoria['suprimento'] . "\n" . $descricao_movimento['suprimento'])->getStyle('A' . $indice);
+                $sheet->mergeCells('A' . $indice . ':C' . $indice + 1);
+                $sheet->setCellValue('D' . $indice, $data_movimento['suprimento'] . "\n" . $valor_movimento['suprimento'])->getStyle('A' . $indice);
+                $sheet->mergeCells('D' . $indice . ':E' . $indice + 1);
+                $sheet->setCellValue('F' . $indice, $descricao_categoria['retirada'] . "\n" . $descricao_movimento['retirada'])->getStyle('A' . $indice);
+                $sheet->mergeCells('F' . $indice . ':H' . $indice + 1);
+                $sheet->setCellValue('I' . $indice, $data_movimento['retirada'] . "\n" . $valor_movimento['retirada'])->getStyle('A' . $indice);
+                $sheet->mergeCells('I' . $indice . ':J' . $indice + 1);
+                $indice = $indice + 2;
+            }
+        }
+
+        $xls = new XLS($planilha);
+        try {
+            $xls->gerar("relatorio_financeiro");
+        } catch (\Exception $e) {
+            abort(500, $e->getMessage());
+        }
     }
 
     /**

@@ -77,6 +77,11 @@
                 <x-input.radio id="exibe_transacao_true" name="exibe_transacao" value="true">Sim</x-input.radio>
                 <x-input.radio id="exibe_transacao_false" name="exibe_transacao" value="false" checked>Não</x-input.radio>
             </x-div.col>
+            <x-div.col type="-sm-auto col-md-3">
+                <x-label.label>Formato</x-label.label>
+                <x-input.radio id="formato_relatorio_true" name="formato_relatorio" value="PDF" checked>PDF</x-input.radio>
+                <x-input.radio id="formato_relatorio_false" name="formato_relatorio" value="XLS">XLS</x-input.radio>
+            </x-div.col>
         </x-div.row>
         @slot('rodape')
             <x-button.button type="submit" class="btn-primary" icon='pesquisar'>Gerar Relatório</x-button.button>
