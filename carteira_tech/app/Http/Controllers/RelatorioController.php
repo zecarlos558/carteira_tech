@@ -438,8 +438,17 @@ class RelatorioController extends Controller
         $sheet->getStyle('F' . $indice . ':J' . $indice)->getAlignment()->setHorizontal($planilha->HORIZONTAL_RIGHT);
         $indice++;
         foreach ($relatorioCategorias as $key => $categoria) {
-            $sheet->setCellValue('A' . $indice, "$categoria->nome =>" . ($categoria->tipo == "suprimento" ? " + " : " - ") . formatarNumero($categoria->valorTotal))->getStyle('A' . $indice);
-            $sheet->mergeCells('A' . $indice . ':J' . $indice);
+            $sheet->setCellValue('A' . $indice, "$categoria->nome")->getStyle('A' . $indice);
+            $sheet->mergeCells('A' . $indice . ':E' . $indice);
+            $style_valor_categoria = array(
+                'font' => [
+                    'bold' => true,
+                    'color' => ['argb' => ($categoria->tipo == "suprimento" ? "99CC32" : "FF0000")]
+                ]
+            );
+            $sheet->setCellValue('F' . $indice, ($categoria->tipo == "suprimento" ? " + " : " - ") . formatarNumero($categoria->valorTotal))
+                ->getStyle('F' . $indice)->applyFromArray($style_valor_categoria);
+            $sheet->mergeCells('F' . $indice . ':J' . $indice);
             $indice++;
         }
         $sheet->mergeCells('A' . $indice . ':J' . $indice);
