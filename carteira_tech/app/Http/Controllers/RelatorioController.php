@@ -258,24 +258,12 @@ class RelatorioController extends Controller
         $pdf->SetLineStyle(array('width' => 0.25, 'color' => array(0, 0, 0)));
         $pdf->Cell(90, 7, "Categorias", "TBL", 0, "L", 1);
         $pdf->Cell(90, 7, "Saldo Total: " . $relatorio->getValorSaldo(), "TBR", 1, "R", 1);
-        // Obtém as margens e dimensões da página
-        $page_width = $pdf->getPageWidth();
-        $page_height = $pdf->getPageHeight();
-        $margin_left = $pdf->getMargins()['left'];
-        $margin_right = $pdf->getMargins()['right'];
         $margem_x_original = $pdf->GetX();
-        $margin_top = $pdf->GetY();
         $margem_x_categorias = $margem_x_original + 5;
-        $estilo_borda_pagina = array(
-            'width' => 0.1,
-            'cap' => 'butt',
-            'join' => 'miter',
-            'dash' => 0,
-            'color' => array(0, 0, 0)
-        );
         $pdf->SetFont('helvetica', 'BI', 11);
         $ultimaChave = count($relatorioCategorias) - 1;
         foreach ($relatorioCategorias->values() as $key => $categoria) {
+            $pdf->Cell(0, 10, "", "LR", 0, "C");
             $pdf->setX($margem_x_categorias);
             $pdf->Cell(0, 5, "$categoria->nome =>" . ($categoria->tipo == "suprimento" ? " + " : " - ") . formatarNumero($categoria->valorTotal), 0, 1, "L");
             $color_array = $categoria->tipo == "suprimento" ? array(0, 255, 0)  : array(255, 0, 0);
@@ -283,16 +271,9 @@ class RelatorioController extends Controller
             $barra_progresso = round(($categoria->barraProgresso * ($pdf->getPageWidth() - 40)) / 100, 1);
             $pdf->RoundedRect($pdf->GetX(), $pdf->GetY(), $barra_progresso, 3, $barra_progresso > 2 ? 1.5 : 0.2, '1111', 'DF', array(), $color_array);
             $pdf->ln(5);
-            $margin_bottom = $pdf->GetY();
-            $pdf->Rect(
-                $margin_left, // x inicial
-                $margin_top, // y inicial
-                $page_width - $margin_left - $margin_right, // largura
-                $margin_bottom - $margin_top + 15, // altura
-                'D',
-                array("L" => $estilo_borda_pagina, "R" => $estilo_borda_pagina, "B" => ($ultimaChave ==  $key ? $estilo_borda_pagina : [])),
-                array()
-            );
+            if ($ultimaChave ==  $key) {
+                $pdf->Cell(0, 1, "", "T", 0, "C");
+            }
         }
         if ($movimentos_tipos->isNotEmpty()) {
             $pdf->SetFont('helvetica', 'B', 12);
